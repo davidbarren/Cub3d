@@ -6,7 +6,7 @@
 #    By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/07/01 10:21:16 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/07/10 17:01:59 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,10 @@ HEADERS	:= -I $(LIBMLX)/include
 
 SRCS = $(SRCDIR)/main.c\
 
-CSRCS = $(SRCDIR)/parsing.c\
+CSRCS = $(SRCDIR)/scene_loading.c\
+		$(SRCDIR)/debug.c\
+		$(SRCDIR)/errors.c\
+		$(SRCDIR)/scene_parsing.c\
 
 OBJS= $(SRCS:.c=.o)
 

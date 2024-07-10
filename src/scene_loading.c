@@ -1,76 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   scene_loading.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/01 12:39:56 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:23:08 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-void	error_exit(int status)
-{
-	if (status == OPEN_FAILURE)
-	{
-		ft_printerror("Error opening input file, exiting");
-		exit (EXIT_FAILURE);
-	}
-	if (status == CLOSE_FAILURE)
-	{
-		ft_printerror("Error closing input file, exiting");
-		exit (EXIT_FAILURE);
-	}
-	if (status == SPLIT_FAILURE)
-	{
-		ft_printerror("Error loading map from input file, exiting");
-		exit (EXIT_FAILURE);
-	}
-}
-
-int	file_validation(char *filename)
+void	file_validation(t_file *filedata, int argc, char **av)
 {
 	char	*temp;
 
-	temp = ft_strrchr(filename, 0) - 4;
+	if (argc != 2)
+		error_exit(BAD_ARGS);
+	filedata->filename = av[1];
+
+	temp = ft_strrchr(filedata->filename, 0) - 4;
 	if (ft_strcmp(temp, ".cub"))
-	{
-		printf("file must be a .cub file\n");
-		return (0);
-	}
-	return (1);
+		error_exit(BAD_FORMAT);
 }
 
-void	load_map(t_file *filedata)
+void	scene_opening(t_file *filedata)
 {
-	char	*temp;
-	char	*mapline;
-	char	*oneline;
-	int		fd;
+	int	fd;
 
-	mapline = NULL;
+	if (access(filedata->filename, F_OK))
+		error_exit(NONEXISTING_FILE);
 	fd = open(filedata->filename, O_RDONLY);
 	if (fd == -1)
 		error_exit(OPEN_FAILURE);
+	load_scene(filedata, fd);
+	close (fd);
+	if (fd == -1)
+		error_exit(CLOSE_FAILURE);
+}
+
+void	load_scene(t_file *filedata, int fd)
+{
+	char	*temp;
+	char	*fullscene;
+	char	*oneline;
+
+	fullscene = NULL;
 	oneline = get_next_line(fd);
 	temp = oneline;
 	if (!oneline)
 		return ;
 	while (oneline)
 	{
-		mapline = ft_strjoin_flex(mapline, oneline, 3);
+		fullscene = ft_strjoin_flex(fullscene, oneline, 3);
 		oneline = get_next_line(fd);
 	}
 	free(temp);
-	printf("content of mapline:%s\n", mapline);
-	filedata->map = ft_split(mapline, '\n');
-	if (!filedata->map)
+	filedata->scene_data = ft_split(fullscene, '\n');
+	if (!filedata->scene_data)
 		error_exit(SPLIT_FAILURE);
-	free(mapline);
-	close (fd);
-	if (fd == -1)
-		error_exit(CLOSE_FAILURE);
+	free(fullscene);
 }

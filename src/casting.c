@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   casting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/01 09:11:12 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/10 18:29:04 by dbarrene         ###   ########.fr       */
+/*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
+/*   Updated: 2024/07/10 15:02:16 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+void	cast_rays(void)
 {
-	t_file	filedata;
-
-	file_validation(&filedata, argc, argv);
-	scene_opening(&filedata);
-	scene_parsing(&filedata);
-//	free_2d(filedata.scene_data);
-	return (0);
+	printf("we gonna do someting in this function eventually :)");
 }

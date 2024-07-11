@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:11:32 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/11 17:34:13 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/12 00:22:25 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ void	free_data_content(t_gamedata *data);
 void	print_paths(t_paths *paths);
 int		verify_paths_data(t_paths *paths);
 int		load_map(t_file *scenedata, t_gamedata *data);
+int		is_border(char *line);
 #endif

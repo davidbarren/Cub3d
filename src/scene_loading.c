@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/11 19:25:04 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/12 00:22:46 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	load_scene(t_file *filedata, int fd)
 	{
 		fullscene = ft_strjoin_flex(fullscene, oneline, 3);
 		oneline = get_next_line(fd);
-		if (oneline && *oneline == '1' && !in_map)
+		if (oneline && is_border(oneline) && !in_map)
 			in_map = 1;
 		if (oneline && *oneline == '\n' && in_map)
 			in_map = 2;

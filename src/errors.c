@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:58:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/10 18:22:44 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:16:53 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,27 @@ void	error_exit(int status)
 	}
 	if (status == BAD_FORMAT || status == BAD_ARGS)
 	{
-		ft_printerror("Error: input file must exist and have a .cub extension\n");
+		ft_printerror("Error: input file must exist with a .cub extension\n");
 		exit (EXIT_FAILURE);
+	}
+}
+
+void	error_free(int status, t_gamedata *data, t_file *scenedata)
+{
+	if (status == BAD_SCENE)
+	{
+		ft_printerror("Error: incorrect file content\n");
+		free_2d(scenedata->scene_data);
+		free_data_content(data);
+		free(data);
+		exit(EXIT_FAILURE);
+	}
+	if (status == BAD_RGB)
+	{
+		ft_printerror("Error: RGB values must be within 0 and 255\n");
+		free_2d(scenedata->scene_data);
+		free_data_content(data);
+		free(data);
+		exit(EXIT_FAILURE);
 	}
 }

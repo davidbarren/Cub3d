@@ -6,7 +6,7 @@
 #    By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/07/10 17:01:59 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/07/11 18:54:07 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ CSRCS = $(SRCDIR)/scene_loading.c\
 		$(SRCDIR)/debug.c\
 		$(SRCDIR)/errors.c\
 		$(SRCDIR)/scene_parsing.c\
+		$(SRCDIR)/freeing.c\
 
 OBJS= $(SRCS:.c=.o)
 
@@ -40,13 +41,13 @@ libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 	
 $(OBJS): $(SRCS)
-	cc -Wall -Wextra -Werror -c $(@:.o=.c) -o $@
+	cc $(CFLAGS) -c $(@:.o=.c) -o $@
 
 $(LIBFT):
 	make -C $(LIBFTPATH)
 
 $(NAME): $(LIBFT) $(OBJS)
-	cc -Wall -Wextra -Werror $(SRCS) $(CSRCS) $(LIBS) $(INCLUDES) $(HEADERS) $(LIBFT) -o $@
+	cc $(CFLAGS) $(SRCS) $(CSRCS) $(LIBS) $(INCLUDES) $(HEADERS) $(LIBFT) -o $@
 
 clean:
 	rm -f $(OBJS)

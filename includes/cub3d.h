@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:11:32 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/10 18:23:49 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:34:13 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ enum e_errors
 	NONEXISTING_FILE,
 	BAD_FORMAT,
 	BAD_ARGS,
+	BAD_RGB,
+	BAD_SCENE,
+	INVALID_MAP,
+
 };
 
 typedef struct s_paths
@@ -48,7 +52,8 @@ typedef struct s_file
 {
 	char		*filename;
 	char		**scene_data;
-	t_paths	*textures;
+	t_paths		*textures;
+	int			map_index;
 
 }	t_file;
 
@@ -71,22 +76,13 @@ typedef struct s_spritedata
 	mlx_image_t *west_wall_img;
 }	t_spritedata;
 
-typedef struct s_colorscheme
-{
-	int r;
-	int g;
-	int b;
-
-}	t_colorscheme;
-
 typedef struct s_gamedata
 {
-	char		*filename;
+	t_player	*playerdata;
 	char		**map;
 	t_paths		*paths;
-	t_colorscheme *floor;
-	t_colorscheme *ceiling;
-
+	uint8_t		floor[3];
+	uint8_t		ceiling[3];
 }	t_gamedata;
 
 void	file_validation(t_file *filedata, int argc, char **av);
@@ -95,5 +91,10 @@ void	print_2d(char **arr);
 void	scene_opening(t_file *filedata);
 void	load_scene(t_file *filedata, int fd);
 void	error_exit(int status);
+void	error_free(int status, t_gamedata *data, t_file *scenedata);
 void	scene_parsing(t_file *scenedata);
+void	free_data_content(t_gamedata *data);
+void	print_paths(t_paths *paths);
+int		verify_paths_data(t_paths *paths);
+int		load_map(t_file *scenedata, t_gamedata *data);
 #endif

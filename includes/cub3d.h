@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:11:32 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/12 00:22:25 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:54:37 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,12 @@ typedef struct s_file
 	char		**scene_data;
 	t_paths		*textures;
 	int			map_index;
-
 }	t_file;
 
 typedef struct s_player
 {
 	double x_pos;
 	double y_pos;
-
 }	t_player;
 
 typedef struct s_spritedata

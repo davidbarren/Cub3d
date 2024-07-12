@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/11 17:51:20 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/12 14:54:00 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 int	is_border(char *line)
 {
+	if (!line)
+		return (0);
+	if (line[0] == '\n')
+		return (0);
 	while (*line)
 	{
-		if (*line != '1' && *line != ' ')
+		if (*line != '1' && *line != ' ' && *line != '\n') 
 			return (0);
 		line++;
 	}
@@ -57,7 +61,6 @@ void	load_paths(t_file *scenedata, t_paths *paths)
 	}
 	scenedata->map_index = i;
 	printf("index where map begins:%d\n", i);
-	print_2d(scene);
 }
 
 int	load_colorschemes(char *str, unsigned char *target)
@@ -73,7 +76,7 @@ int	load_colorschemes(char *str, unsigned char *target)
 			temp++;
 		else
 		{
-			if (ft_atoi(temp) < 0 || ft_atoi(temp) > 255)
+			if (ft_atoi(temp) < 0 || ft_atoi(temp) > 255) 
 				return (1);
 			target[i] = ft_atoi(temp);
 			i++;
@@ -88,6 +91,15 @@ int	load_colorschemes(char *str, unsigned char *target)
 	return (0);
 }
 
+/*
+	TODO:
+increment pointer to skip non-digits
+make ft_strtok and split by commas
+if not 3 tokens then return error
+change atoi so that it returns error whenever it encounters nondigit since
+tokens that are only  digits are passed to it
+
+*/
 void	scene_parsing(t_file *scenedata)
 {
 	t_gamedata	*data;

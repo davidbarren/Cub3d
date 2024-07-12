@@ -59,20 +59,17 @@ void	load_scene(t_file *filedata, int fd)
 		if (oneline && is_border(oneline) && !in_map)
 			in_map = 1;
 		if (oneline && *oneline == '\n' && in_map)
-			in_map = 2;
+			in_map = INVALID_MAP;
 	}
 	free(temp);
-	if (in_map != 2)
+	if (in_map != INVALID_MAP)
 		filedata->scene_data = ft_split(fullscene, '\n');
 	free(fullscene);
-	if (in_map == 2)
-	{
-		printf("bad map\n");
-		exit (EXIT_FAILURE);
-	}
-
+	if (in_map == INVALID_MAP)
+		error_exit(INVALID_MAP);
 	if (!filedata->scene_data)
 		error_exit(SPLIT_FAILURE);
+	printf("value of in_map:%d\n", in_map);
 }
 
 int	verify_paths_data(t_paths *paths)
@@ -123,7 +120,7 @@ int	load_map(t_file *scenedata, t_gamedata *data)
 {
 	if (copy_map(scenedata, data))
 		return (1);
-	print_2d(data->map);
+//	print_2d(data->map);
 	free_2d(scenedata->scene_data);
 //	if (verify_map(data))
 //		return (1);

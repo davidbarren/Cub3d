@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:11:32 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/11 17:34:13 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:54:37 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,12 @@ typedef struct s_file
 	char		**scene_data;
 	t_paths		*textures;
 	int			map_index;
-
 }	t_file;
 
 typedef struct s_player
 {
 	double x_pos;
 	double y_pos;
-
 }	t_player;
 
 typedef struct s_spritedata
@@ -97,4 +95,5 @@ void	free_data_content(t_gamedata *data);
 void	print_paths(t_paths *paths);
 int		verify_paths_data(t_paths *paths);
 int		load_map(t_file *scenedata, t_gamedata *data);
+int		is_border(char *line);
 #endif

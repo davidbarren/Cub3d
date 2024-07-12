@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:11:32 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/12 13:54:37 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:41:33 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "parsing.h"
 # include <stdio.h>
 # include <math.h>
-
+# include <string.h>
 /****************************
  * *********TYPEDEFS*********
  * *************************/

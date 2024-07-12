@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/12 14:54:00 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/12 20:15:49 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,29 +60,80 @@ void	load_paths(t_file *scenedata, t_paths *paths)
 		i++;
 	}
 	scenedata->map_index = i;
-	printf("index where map begins:%d\n", i);
+//	printf("index where map begins:%d\n", i);
 }
+
+int	ft_atoi_rgb(char *str)
+{
+	int	result;
+
+	result = 0;
+	while (*str == ' ')
+		str++;
+	if (*str == '-')
+		return (-1);
+	while (*str >= 48 && *str <= 57)
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+		if (result > 255)
+			return (-1);
+	}
+	if (*str)
+		return (-1);
+	return (result);
+}
+
+char	*ft_strtok(char *str, char delim)
+{
+	static char *ptr;
+	char		*token;
+
+	if (!str)
+		token = ptr;
+	if (str)
+	{
+		ptr = str;
+		token = ptr;
+	}
+	if (!ptr || !*ptr)
+		return (NULL);
+	while (*ptr && *ptr != delim)
+		ptr++;
+	if (*ptr)
+	{
+		*ptr = 0;
+		ptr++;
+	}
+	else 
+		return (NULL);
+	return (token);
+}
+
 
 int	load_colorschemes(char *str, unsigned char *target)
 {
 	char	*temp;
 	int		i;
+	int		result;
+	char	*token;
 
 	i = 0;
 	temp = str;
-	while (*temp)
+
+	while (!ft_isdigit(*temp))
+		temp++;
+	token = ft_strtok(temp, ',');
+	printf("value of token after 1st call:%s\n", token);
+	while (token && i < 3)
 	{
-		if (!ft_isdigit(*temp))
-			temp++;
-		else
-		{
-			if (ft_atoi(temp) < 0 || ft_atoi(temp) > 255) 
-				return (1);
-			target[i] = ft_atoi(temp);
-			i++;
-			while (ft_isdigit(*temp))
-				temp++;
-		}
+		result = ft_atoi_rgb(token);
+		target[i] = result;
+//		if (result < 0)
+//			return (BAD_RGB);
+		token = ft_strtok(NULL, ',');
+		printf("token created:%s\n", token);
+		i++;
 	}
 	printf("value of r in floor:%d\n", target[0]);
 	printf("value of g in floor:%d\n", target[1]);
@@ -90,7 +141,6 @@ int	load_colorschemes(char *str, unsigned char *target)
 	printf("temp in load colorscheme:%s\n", temp);
 	return (0);
 }
-
 /*
 	TODO:
 increment pointer to skip non-digits
@@ -112,8 +162,8 @@ void	scene_parsing(t_file *scenedata)
 	if (verify_paths_data(paths))
 		error_free(BAD_SCENE, data, scenedata);
 	print_paths(paths);
-	if (load_colorschemes(paths->floor_colorscheme, data->floor)
-		|| load_colorschemes(paths->ceiling_colorscheme, data->ceiling))
+	if (load_colorschemes(paths->floor_colorscheme, data->floor))
+//		|| load_colorschemes(paths->ceiling_colorscheme, data->ceiling))
 		error_free(BAD_RGB, data, scenedata);
 	if (load_map(scenedata, data))
 		error_free(INVALID_MAP, data, scenedata);

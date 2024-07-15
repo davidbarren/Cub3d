@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:58:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/12 13:58:02 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:13:40 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void	error_free(int status, t_gamedata *data, t_file *scenedata)
 	free_2d(scenedata->scene_data);
 	free_data_content(data);
 	free(data);
-	exit(EXIT_FAILURE);		
+	exit(EXIT_FAILURE);
 }

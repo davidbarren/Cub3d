@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 05:29:47 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:43:52 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_border(char *line)
 		return (0);
 	while (*line)
 	{
-		if (*line != '1' && *line != ' ' && *line != '\n') 
+		if (*line != '1' && *line != ' ' && *line != '\n')
 			return (0);
 		line++;
 	}
@@ -29,7 +29,7 @@ int	is_border(char *line)
 
 void	ft_skip_spaces(char **str)
 {
-	while (**str && (**str == ' ' || **str == '\t' || **str == '\v'))
+	while (**str && ft_is_whitespace(**str))
 		*str += 1;
 }
 
@@ -59,66 +59,8 @@ void	load_paths(t_file *scenedata, t_paths *paths)
 			paths->floor_colorscheme = ft_strdup(temp);
 		i++;
 	}
-	scenedata->map_index = i;
-//	printf("index where map begins:%d\n", i);
+	scenedata->map_index = i; // index of scene 2darr where map begins
 }
-
-int	ft_is_whitespace(char c)
-{
-	if (c == 9 || c == 32)
-		return (1);
-	if (c >= 11 && c <= 13 )
-		return (1);
-	return (0);
-}
-
-int	ft_atoi_rgb(char *str)
-{
-	int	result;
-
-	result = 0;
-	while (ft_is_whitespace(*str))
-		str++;
-	if (*str == '-')
-		return (-1);
-	while (*str >= 48 && *str <= 57)
-	{
-		result = result * 10 + (*str - '0');
-		str++;
-		if (result > 255)
-			return (-1);
-	}
-	while (*str && ft_is_whitespace(*str))
-		str++;
-	if (*str)
-		return (-1);
-	return (result);
-}
-
-char	*ft_strtok(char *str, char delim)
-{
-	static char *ptr;
-	char		*token;
-
-	if (!str)
-		token = ptr;
-	if (str)
-	{
-		ptr = str;
-		token = ptr;
-	}
-	if (!ptr || !*ptr)
-		return (NULL);
-	while (*ptr && *ptr != delim)
-		ptr++;
-	if (*ptr)
-	{
-		*ptr = 0;
-		ptr++;
-	}
-	return (token);
-}
-
 
 int	load_colorschemes(char *str, unsigned char *target)
 {
@@ -147,16 +89,6 @@ int	load_colorschemes(char *str, unsigned char *target)
 		return (BAD_RGB);
 	return (0);
 }
-
-void	print_colorschemes(t_gamedata *data)
-{
-	printf("floor colorschemes in R G B:\n");
-	printf("R:%d\nG:%d\nB:%d\n",
-			data->floor[0], data->floor[1], data->floor[2]);
-	printf("ceiling colorschemes in R G B:\n");
-	printf("R:%d\nG:%d\nB:%d\n",
-			data->ceiling[0], data->ceiling[1], data->ceiling[2]);
-}
 /*
 	TODO:
 increment pointer to skip non-digits
@@ -166,7 +98,8 @@ change atoi so that it returns error whenever it encounters nondigit since
 tokens that are only  digits are passed to it
 
 */
-void	scene_parsing(t_file *scenedata)
+
+t_gamedata	*scene_parsing(t_file *scenedata)
 {
 	t_gamedata	*data;
 	t_paths		*paths;	
@@ -176,14 +109,18 @@ void	scene_parsing(t_file *scenedata)
 	load_paths(scenedata, paths);
 	data->paths = paths;
 	if (verify_paths_data(paths))
+	{
+		printf("error from verify paths\n");
 		error_free(BAD_SCENE, data, scenedata);
-//	print_paths(paths);
+	}
+	print_paths(paths);
 	if (load_colorschemes(paths->floor_colorscheme, data->floor)
 		|| load_colorschemes(paths->ceiling_colorscheme, data->ceiling))
 		error_free(BAD_RGB, data, scenedata);
 	print_colorschemes(data);
 	if (load_map(scenedata, data))
 		error_free(INVALID_MAP, data, scenedata);
-	free_data_content(data);
-	free(data);
+//	free_data_content(data);
+//	free(data);
+	return (data);
 }

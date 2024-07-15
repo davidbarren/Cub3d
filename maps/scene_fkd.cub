@@ -5,7 +5,7 @@
      C	      				 225	,	123,234
 
 
-     SO ./path_to_the_south_texture
+	SO ./assets/south_texture
 
 
 
@@ -13,14 +13,14 @@
 
 
 
-	NO ./path_to_the_north_texture
+	NO												./assets/north_texture
 
 
-F  220	,0		    ,20
+F  220		    ,20, 169
 
-WE ./path_to_the_west_texture
+WE ./assets/west_texture
 
-EA ./path_to_the_east_texture
+EA ./assets/east_texture
 
 
 1111111111111111111111111

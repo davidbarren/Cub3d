@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 04:20:39 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:59:52 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	file_validation(t_file *filedata, int argc, char **av)
 		error_exit(BAD_ARGS);
 	filedata->filename = av[1];
 	temp = ft_strrchr(filedata->filename, 0) - 4;
-	if (ft_strcmp(temp, ".cub"))
+	if (ft_strcmp(temp, ".cub")) // consider a file named .cub, error or not?
 		error_exit(BAD_FORMAT);
 }
 
@@ -28,7 +28,7 @@ void	scene_opening(t_file *filedata)
 {
 	int	fd;
 
-	if (access(filedata->filename, F_OK))
+	if (access(filedata->filename, F_OK)) // checar si es directorio
 		error_exit(NONEXISTING_FILE);
 	fd = open(filedata->filename, O_RDONLY);
 	if (fd == -1)
@@ -38,23 +38,26 @@ void	scene_opening(t_file *filedata)
 	if (fd == -1)
 		error_exit(CLOSE_FAILURE);
 }
+/*
+ * try to get rid of fullscene inside the the t_file struct and make
+ * load_scene have it as a local variable with under 25 lines
+ */
 
 void	load_scene(t_file *filedata, int fd)
 {
 	char	*temp;
-	char	*fullscene;
 	char	*oneline;
 	char	in_map;
 
 	in_map = 0;
-	fullscene = NULL;
+	filedata->fullscene = NULL;
 	oneline = get_next_line(fd);
 	temp = oneline;
 	if (!oneline)
 		return ;
 	while (oneline)
 	{
-		fullscene = ft_strjoin_flex(fullscene, oneline, 3);
+		filedata->fullscene = ft_strjoin_flex(filedata->fullscene, oneline, 3);
 		oneline = get_next_line(fd);
 		if (oneline && is_border(oneline) && !in_map)
 			in_map = 1;
@@ -63,29 +66,10 @@ void	load_scene(t_file *filedata, int fd)
 	}
 	free(temp);
 	if (in_map != INVALID_MAP)
-		filedata->scene_data = ft_split(fullscene, '\n');
-	free(fullscene);
-	if (in_map == INVALID_MAP)
+		filedata->scene_data = ft_split(filedata->fullscene, '\n');
+	free(filedata->fullscene);
+	if (in_map == INVALID_MAP || !filedata->scene_data)
 		error_exit(INVALID_MAP);
-	if (!filedata->scene_data)
-		error_exit(SPLIT_FAILURE);
-}
-
-int	verify_paths_data(t_paths *paths)
-{
-	if (!paths->east_path)
-		return (1);
-	if (!paths->west_path)
-		return (1);
-	if (!paths->north_path)
-		return (1);
-	if (!paths->south_path)
-		return (1);
-	if (!paths->floor_colorscheme)
-		return (1);
-	if (!paths->ceiling_colorscheme)
-		return (1);
-	return (0);
 }
 
 int	copy_map(t_file *scenedata, t_gamedata *data)
@@ -108,13 +92,7 @@ int	copy_map(t_file *scenedata, t_gamedata *data)
 	}
 	return (0);
 }
-/*
-int	verify_map(t_gamedata *data)
-{
 
-	return (0);
-}
-*/
 int	load_map(t_file *scenedata, t_gamedata *data)
 {
 	if (copy_map(scenedata, data))

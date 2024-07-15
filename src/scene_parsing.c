@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/12 20:15:49 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/15 05:29:47 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,21 @@ void	load_paths(t_file *scenedata, t_paths *paths)
 //	printf("index where map begins:%d\n", i);
 }
 
+int	ft_is_whitespace(char c)
+{
+	if (c == 9 || c == 32)
+		return (1);
+	if (c >= 11 && c <= 13 )
+		return (1);
+	return (0);
+}
+
 int	ft_atoi_rgb(char *str)
 {
 	int	result;
 
 	result = 0;
-	while (*str == ' ')
+	while (ft_is_whitespace(*str))
 		str++;
 	if (*str == '-')
 		return (-1);
@@ -79,6 +88,8 @@ int	ft_atoi_rgb(char *str)
 		if (result > 255)
 			return (-1);
 	}
+	while (*str && ft_is_whitespace(*str))
+		str++;
 	if (*str)
 		return (-1);
 	return (result);
@@ -105,8 +116,6 @@ char	*ft_strtok(char *str, char delim)
 		*ptr = 0;
 		ptr++;
 	}
-	else 
-		return (NULL);
 	return (token);
 }
 
@@ -120,26 +129,33 @@ int	load_colorschemes(char *str, unsigned char *target)
 
 	i = 0;
 	temp = str;
-
-	while (!ft_isdigit(*temp))
+	printf("in load colors:%s\n", temp);
+	while (*temp && (ft_is_whitespace(*temp) || *temp == 'F' || *temp == 'C' ))
 		temp++;
 	token = ft_strtok(temp, ',');
-	printf("value of token after 1st call:%s\n", token);
 	while (token && i < 3)
 	{
 		result = ft_atoi_rgb(token);
+		printf("result:%d\n", result);
+		if (result < 0)
+			return (BAD_RGB);
 		target[i] = result;
-//		if (result < 0)
-//			return (BAD_RGB);
 		token = ft_strtok(NULL, ',');
-		printf("token created:%s\n", token);
 		i++;
 	}
-	printf("value of r in floor:%d\n", target[0]);
-	printf("value of g in floor:%d\n", target[1]);
-	printf("value of b in floor:%d\n", target[2]);
-	printf("temp in load colorscheme:%s\n", temp);
+	if (token || i != 3)
+		return (BAD_RGB);
 	return (0);
+}
+
+void	print_colorschemes(t_gamedata *data)
+{
+	printf("floor colorschemes in R G B:\n");
+	printf("R:%d\nG:%d\nB:%d\n",
+			data->floor[0], data->floor[1], data->floor[2]);
+	printf("ceiling colorschemes in R G B:\n");
+	printf("R:%d\nG:%d\nB:%d\n",
+			data->ceiling[0], data->ceiling[1], data->ceiling[2]);
 }
 /*
 	TODO:
@@ -161,10 +177,11 @@ void	scene_parsing(t_file *scenedata)
 	data->paths = paths;
 	if (verify_paths_data(paths))
 		error_free(BAD_SCENE, data, scenedata);
-	print_paths(paths);
-	if (load_colorschemes(paths->floor_colorscheme, data->floor))
-//		|| load_colorschemes(paths->ceiling_colorscheme, data->ceiling))
+//	print_paths(paths);
+	if (load_colorschemes(paths->floor_colorscheme, data->floor)
+		|| load_colorschemes(paths->ceiling_colorscheme, data->ceiling))
 		error_free(BAD_RGB, data, scenedata);
+	print_colorschemes(data);
 	if (load_map(scenedata, data))
 		error_free(INVALID_MAP, data, scenedata);
 	free_data_content(data);

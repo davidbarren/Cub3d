@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/12 00:22:46 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/15 04:20:39 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	load_scene(t_file *filedata, int fd)
 		error_exit(INVALID_MAP);
 	if (!filedata->scene_data)
 		error_exit(SPLIT_FAILURE);
-	printf("value of in_map:%d\n", in_map);
 }
 
 int	verify_paths_data(t_paths *paths)
@@ -120,7 +119,7 @@ int	load_map(t_file *scenedata, t_gamedata *data)
 {
 	if (copy_map(scenedata, data))
 		return (1);
-//	print_2d(data->map);
+	print_2d(data->map);
 	free_2d(scenedata->scene_data);
 //	if (verify_map(data))
 //		return (1);

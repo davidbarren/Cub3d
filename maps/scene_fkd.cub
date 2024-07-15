@@ -2,7 +2,7 @@
 
 
 
-     C				 225,300, 42
+     C	      				 225	,	123,234
 
 
      SO ./path_to_the_south_texture
@@ -16,7 +16,7 @@
 	NO ./path_to_the_north_texture
 
 
-F 220,200,0
+F  220	,0		    ,20
 
 WE ./path_to_the_west_texture
 

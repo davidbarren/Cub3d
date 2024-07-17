@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 13:59:52 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:52:44 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	file_validation(t_file *filedata, int argc, char **av)
 	if (argc != 2)
 		error_exit(BAD_ARGS);
 	filedata->filename = av[1];
+	if (ft_strlen(filedata->filename) < 5)
+		error_exit(BAD_FORMAT);
 	temp = ft_strrchr(filedata->filename, 0) - 4;
 	if (ft_strcmp(temp, ".cub")) // consider a file named .cub, error or not?
 		error_exit(BAD_FORMAT);
@@ -54,7 +56,7 @@ void	load_scene(t_file *filedata, int fd)
 	oneline = get_next_line(fd);
 	temp = oneline;
 	if (!oneline)
-		return ;
+		error_exit(EMPTY_FILE);
 	while (oneline)
 	{
 		filedata->fullscene = ft_strjoin_flex(filedata->fullscene, oneline, 3);

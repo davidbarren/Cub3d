@@ -6,7 +6,7 @@
 #    By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/07/15 13:54:28 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/07/17 11:56:47 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3d
 
 
 CC	= cc
-CFLAGS = -Wall -Wextra -g -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -g -Werror -Og #-fsanitize=address
 
 SRCDIR = src
 OBJDIR = obj
@@ -60,7 +60,7 @@ $(OBJDIR):
 
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(COBJS) $(BOBJS)
 	make clean -C $(LIBFTPATH)
 
 fclean: clean

@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:28:36 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/11 15:08:55 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:55:26 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	free_path_content(t_paths *paths)
 {
-	if (paths->east_path)
-		free(paths->east_path);
-	if (paths->west_path)
-		free(paths->west_path);
-	if (paths->north_path)
-		free(paths->north_path);
-	if (paths->south_path)
-		free(paths->south_path);
-	if (paths->floor_colorscheme)
-		free(paths->floor_colorscheme);
-	if (paths->ceiling_colorscheme)
-		free(paths->ceiling_colorscheme);
+	if (paths->east)
+		free(paths->east);
+	if (paths->west)
+		free(paths->west);
+	if (paths->north)
+		free(paths->north);
+	if (paths->south)
+		free(paths->south);
+	if (paths->floor)
+		free(paths->floor);
+	if (paths->ceiling)
+		free(paths->ceiling);
 }
 
 void	free_data_content(t_gamedata *data)

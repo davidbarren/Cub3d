@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:58:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 11:13:40 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:46:38 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	error_exit(int status)
 {
+	if (status == EMPTY_FILE)
+		ft_printerror("Error: please ensure the file has content");
 	if (status == OPEN_FAILURE)
 		ft_printerror("Error opening input file, exiting");
 	if (status == CLOSE_FAILURE)

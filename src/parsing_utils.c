@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:24:44 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 11:08:06 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:59:40 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,10 @@ char	*ft_strtok(char *str, char delim)
 		ptr++;
 	}
 	return (token);
+}
+
+void	ft_skip_spaces(char **str)
+{
+	while (**str && ft_is_whitespace(**str))
+		*str += 1;
 }

@@ -23,9 +23,10 @@
 /****************************
  * *********MACROS***********
  * *************************/
-# define WINDOW_HEIGHT 1920
-# define WINDOW_WIDTH 1080
+# define WINDOW_HEIGHT 1200
+# define WINDOW_WIDTH 2080
 # define PI 3.141592653589793
+# define PIXEL_SIZE 50
 /****************************
  * *********TYPEDEFS*********
  * *************************/
@@ -99,6 +100,11 @@ typedef struct s_gamedata
 	t_paths		*paths;
 	uint8_t		floor[3];
 	uint8_t		ceiling[3];
+	int x_pos;//just for test
+	int y_pos;//
+	mlx_image_t* player;
+	mlx_texture_t* texture;
+	mlx_image_t* img;
 	mlx_t		*window;
 	size_t		height;
 	size_t		width;

@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 16:52:56 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:48:00 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ typedef struct s_gamedata
 	mlx_t		*window;
 	size_t		height;
 	size_t		width;
-	t_player	*player;
 }	t_gamedata;
 
 // debug and print functions

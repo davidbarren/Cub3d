@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:41:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 17:05:48 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:49:27 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	print_playerdata(t_gamedata *data)
 	printf("PRINTING GAMEDATA:\n");
 	printf("height of map:%zu\n", data->height);
 	printf("width of map:%zu\n", data->width);
-	printf("player x pos: %f\n", data->player->x_pos);
-	printf("player y pos: %f\n", data->player->y_pos);
-	printf("player dir :%d\n", data->player->dir);
+	printf("player x pos: %f\n", data->playerdata->x_pos);
+	printf("player y pos: %f\n", data->playerdata->y_pos);
+	printf("player dir :%d\n", data->playerdata->dir);
 }
 
 void	print_gamedata(t_gamedata *data)

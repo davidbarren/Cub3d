@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 17:04:56 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:51:55 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	verify_map(t_gamedata *data)
 {
 	if (map_validation(data->map))
 		error_free(BAD_MAP, data, NULL);
-	data->player = ft_calloc(1, sizeof(t_player));
+	data->playerdata = ft_calloc(1, sizeof(t_player));
 	find_player_pos(data, data->map);
 }
 /*

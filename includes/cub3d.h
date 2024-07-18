@@ -69,8 +69,8 @@ typedef struct s_file
 
 typedef struct s_player
 {
-	double x_pos;
-	double y_pos;
+	int x_pos;
+	int y_pos;
 }	t_player;
 
 typedef struct s_spritedata
@@ -92,6 +92,11 @@ typedef struct s_gamedata
 	t_paths		*paths;
 	uint8_t		floor[3];
 	uint8_t		ceiling[3];
+	int x_pos;//just for test
+	int y_pos;//
+	mlx_image_t* player;
+	mlx_texture_t* texture;
+	mlx_image_t* img;
 	mlx_t		*window;
 }	t_gamedata;
 

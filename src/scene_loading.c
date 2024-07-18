@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/17 14:36:35 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/07/18 16:57:32 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,6 @@ void	load_scene(t_file *filedata, int fd)
 	if (in_map == INVALID_MAP || !filedata->scene_data)
 		error_exit(INVALID_MAP);
 }
-char	*ft_strdup_cub3d(const char *s)
-{
-	char	*dup;
-	int		i;
-	int		i2;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	dup = (char *)malloc (1 + ft_strlen(s) * sizeof (char));
-	if (!dup)
-		return (NULL);
-	i2 = 0;
-	while (s[i] != 0)
-	{
-		while (s[i] && ft_is_whitespace(s[i]) == 1)
-			i++;
-		dup[i2] = s[i];
-		i2++;
-		i++;
-	}
-	dup[i] = 0;
-	return (dup);
-}
 
 int	copy_map(t_file *scenedata, t_gamedata *data)
 {
@@ -109,7 +85,7 @@ int	copy_map(t_file *scenedata, t_gamedata *data)
 	data->map = ft_calloc(arrlen + 1, sizeof (char *));
 	while (fullscene[i])
 	{
-		data->map[i] = ft_strdup_cub3d(fullscene[i]);
+		data->map[i] = ft_strdup(fullscene[i]);
 		if (!data->map[i])
 			return (1);
 		i++;
@@ -119,9 +95,10 @@ int	copy_map(t_file *scenedata, t_gamedata *data)
 
 int	load_map(t_file *scenedata, t_gamedata *data)
 {
+
 	if (copy_map(scenedata, data))
 		return (1);
-	printf("this is the last map:\n");
+	printf("this is the last map: \n");
 	print_2d(data->map);
 	free_2d(scenedata->scene_data);
 //	if (verify_map(data))

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/07/15 13:54:28 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/07/18 16:41:57 by dzurita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

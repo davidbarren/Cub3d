@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:58:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 11:13:40 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:50:54 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	error_exit(int status)
 {
+	if (status == EMPTY_FILE)
+		ft_printerror("Error: please ensure the file has content");
 	if (status == OPEN_FAILURE)
 		ft_printerror("Error opening input file, exiting");
 	if (status == CLOSE_FAILURE)
@@ -35,7 +37,10 @@ void	error_free(int status, t_gamedata *data, t_file *scenedata)
 		ft_printerror("Error: incorrect file content\n");
 	if (status == BAD_RGB)
 		ft_printerror("Error: RGB values must be within 0 and 255\n");
-	free_2d(scenedata->scene_data);
+	if (status == BAD_MAP)
+		ft_printerror("Error: incorrect map configuration\n");
+	if (status != BAD_MAP)
+		free_2d(scenedata->scene_data);
 	free_data_content(data);
 	free(data);
 	exit(EXIT_FAILURE);

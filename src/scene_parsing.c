@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/17 13:05:55 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/07/18 16:53:13 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_border(char *line)
 {
-	if (!line)
+	if (!line || !*line)
 		return (0);
 	if (line[0] == '\n')
 		return (0);
@@ -27,10 +27,22 @@ int	is_border(char *line)
 	return (1);
 }
 
-void	ft_skip_spaces(char **str)
+/* 
+ * in set_path function:
+ * send entire temp, not strchrd version and then check if 
+ * characters after identifier are whitespace,
+ * if not then return NULL error
+ *
+ * */
+char	*set_path(char *pathdest, char *pathsrc)
 {
-	while (**str && ft_is_whitespace(**str))
-		*str += 1;
+	if (pathdest)
+	{
+		free(pathdest);
+		return (NULL);
+	}
+	ft_skip_spaces(&pathsrc);
+	return (ft_strdup(pathsrc));
 }
 
 void	load_paths(t_file *scenedata, t_paths *paths)
@@ -46,20 +58,20 @@ void	load_paths(t_file *scenedata, t_paths *paths)
 		temp = scene[i];
 		ft_skip_spaces(&temp);
 		if (!ft_strncmp(temp, "NO", 2))
-			paths->north_path = ft_strdup(ft_strchr(temp, '.'));
+			paths->north = set_path(paths->north, (temp + 2));
 		else if (!ft_strncmp(temp, "SO", 2))
-			paths->south_path = ft_strdup(ft_strchr(temp, '.'));
-		else if (!ft_strncmp(temp, "WE", 2))
-			paths->west_path = ft_strdup(ft_strchr(temp, '.'));
+			paths->south = set_path(paths->south, (temp + 2));
 		else if (!ft_strncmp(temp, "EA", 2))
-			paths->east_path = ft_strdup(ft_strchr(temp, '.'));
+			paths->east = set_path(paths->east, (temp + 2));
+		else if (!ft_strncmp(temp, "WE", 2))
+			paths->west = set_path(paths->west, (temp + 2));
 		else if (!ft_strncmp(temp, "C", 1))
-			paths->ceiling_colorscheme = ft_strdup(temp);
+			paths->ceiling = set_path(paths->ceiling, temp + 1);
 		else if (!ft_strncmp(temp, "F", 1))
-			paths->floor_colorscheme = ft_strdup(temp);
+			paths->floor = set_path(paths->floor, temp + 1);
 		i++;
 	}
-	scenedata->map_index = i; // index of scene 2darr where map begins
+	scenedata->map_index = i;
 }
 
 int	load_colorschemes(char *str, unsigned char *target)
@@ -71,14 +83,12 @@ int	load_colorschemes(char *str, unsigned char *target)
 
 	i = 0;
 	temp = str;
-	printf("in load colors:%s\n", temp);
 	while (*temp && (ft_is_whitespace(*temp) || *temp == 'F' || *temp == 'C' ))
 		temp++;
 	token = ft_strtok(temp, ',');
 	while (token && i < 3)
 	{
 		result = ft_atoi_rgb(token);
-		printf("result:%d\n", result);
 		if (result < 0)
 			return (BAD_RGB);
 		target[i] = result;
@@ -89,15 +99,6 @@ int	load_colorschemes(char *str, unsigned char *target)
 		return (BAD_RGB);
 	return (0);
 }
-/*
-	TODO:
-increment pointer to skip non-digits
-make ft_strtok and split by commas
-if not 3 tokens then return error
-change atoi so that it returns error whenever it encounters nondigit since
-tokens that are only  digits are passed to it
-
-*/
 
 t_gamedata	*scene_parsing(t_file *scenedata)
 {
@@ -108,19 +109,12 @@ t_gamedata	*scene_parsing(t_file *scenedata)
 	paths = ft_calloc (1, sizeof(t_paths));
 	load_paths(scenedata, paths);
 	data->paths = paths;
-	/*if (verify_paths_data(paths))
-	{
-		printf("error from verify paths\n");
+	if (verify_paths_data(paths))
 		error_free(BAD_SCENE, data, scenedata);
-	}*/
-	print_paths(paths);
-	if (load_colorschemes(paths->floor_colorscheme, data->floor)
-		|| load_colorschemes(paths->ceiling_colorscheme, data->ceiling))
+	if (load_colorschemes(paths->floor, data->floor)
+		|| load_colorschemes(paths->ceiling, data->ceiling))
 		error_free(BAD_RGB, data, scenedata);
-	print_colorschemes(data);
 	if (load_map(scenedata, data))
 		error_free(INVALID_MAP, data, scenedata);
-//	free_data_content(data);
-//	free(data);
 	return (data);
 }

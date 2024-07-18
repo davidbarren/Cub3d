@@ -1,12 +1,12 @@
-/* ************************************************************************* */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/01 09:11:32 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 12:37:02 by dbarrene         ###   ########.fr       */
+/*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
+/*   Updated: 2024/07/18 16:52:56 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <stdio.h>
 # include <math.h>
 # include <string.h>
-
-
 
 /****************************
  * *********MACROS***********
@@ -45,17 +43,26 @@ enum e_errors
 	BAD_RGB,
 	BAD_SCENE,
 	INVALID_MAP,
+	EMPTY_FILE,
+	BAD_MAP,
+};
 
+enum	e_player_orientation
+{
+	NORTH = 1,
+	EAST,
+	SOUTH,
+	WEST,
 };
 
 typedef struct s_paths
 {
-	char	*north_path;
-	char	*south_path;
-	char	*east_path;
-	char	*west_path;
-	char	*floor_colorscheme;
-	char	*ceiling_colorscheme;
+	char	*north;
+	char	*south;
+	char	*east;
+	char	*west;
+	char	*floor;
+	char	*ceiling;
 }	t_paths;
 
 typedef struct s_file
@@ -69,20 +76,21 @@ typedef struct s_file
 
 typedef struct s_player
 {
-	int x_pos;
-	int y_pos;
+	double	x_pos;
+	double	y_pos;
+	int		dir;
 }	t_player;
 
 typedef struct s_spritedata
 {
-	mlx_texture_t *north_wall_txt;
-	mlx_texture_t *south_wall_txt;
-	mlx_texture_t *east_wall_txt;
-	mlx_texture_t *west_wall_txt;
-	mlx_image_t *north_wall_img;
-	mlx_image_t *south_wall_img;
-	mlx_image_t *east_wall_img;
-	mlx_image_t *west_wall_img;
+	mlx_texture_t	*north_wall_txt;
+	mlx_texture_t	*south_wall_txt;
+	mlx_texture_t	*east_wall_txt;
+	mlx_texture_t	*west_wall_txt;
+	mlx_image_t		*north_wall_img;
+	mlx_image_t		*south_wall_img;
+	mlx_image_t		*east_wall_img;
+	mlx_image_t		*west_wall_img;
 }	t_spritedata;
 
 typedef struct s_gamedata
@@ -98,32 +106,41 @@ typedef struct s_gamedata
 	mlx_texture_t* texture;
 	mlx_image_t* img;
 	mlx_t		*window;
+	size_t		height;
+	size_t		width;
+	t_player	*player;
 }	t_gamedata;
 
 // debug and print functions
-void	print_2d(char **arr);
-void	print_paths(t_paths *paths);
-void	print_colorschemes(t_gamedata *data);
+void		print_2d(char **arr);
+void		print_paths(t_paths *paths);
+void		print_colorschemes(t_gamedata *data);
+void		print_playerdata(t_gamedata *data);
+void		print_gamedata(t_gamedata *data);
 // errors_and_freeing
-void	error_exit(int status);
-void	error_free(int status, t_gamedata *data, t_file *scenedata);
-void	free_data_content(t_gamedata *data);
+void		error_exit(int status);
+void		error_free(int status, t_gamedata *data, t_file *scenedata);
+void		free_data_content(t_gamedata *data);
 // reading scene file
-void	scene_opening(t_file *filedata);
-void	load_scene(t_file *filedata, int fd);
-void	file_validation(t_file *filedata, int argc, char **av);
+void		scene_opening(t_file *filedata);
+void		load_scene(t_file *filedata, int fd);
+void		file_validation(t_file *filedata, int argc, char **av);
 // parsing scene file
 int			map_validation(char	**map);
-t_gamedata *scene_parsing(t_file *scenedata);
 int			verify_paths_data(t_paths *paths);
 int			load_map(t_file *scenedata, t_gamedata *data);
 int			is_border(char *line);
+t_gamedata	*scene_parsing(t_file *scenedata);
 //parsing utils
-int		ft_is_whitespace(char c);
-int		ft_atoi_rgb(char *str);
-char	*ft_strtok(char *str, char delim);
+int			ft_is_whitespace(char c);
+int			ft_atoi_rgb(char *str);
+char		*ft_strtok(char *str, char delim);
+void		ft_skip_spaces(char **str);
 // scene_validation
-int		verify_paths_data(t_paths *paths);
+int			verify_paths_data(t_paths *paths);
+void		verify_map(t_gamedata *data);
 // gamestate
-void	init_gamestate(t_gamedata *data);
+void		init_gamestate(t_gamedata *data);
+// player_data
+void	find_player_pos(t_gamedata *data, char **map);
 #endif

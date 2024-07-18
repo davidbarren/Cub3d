@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 14:44:44 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:04:56 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,57 @@ int	verify_path_access(char *path)
 
 int	verify_paths_data(t_paths *paths)
 {
-	if (!paths->east_path|| verify_path_access(paths->east_path))
+	if (!paths->east || verify_path_access(paths->east))
 		return (1);
-	if (!paths->west_path || verify_path_access(paths->west_path))
+	if (!paths->west || verify_path_access(paths->west))
 		return (1);
-	if (!paths->north_path || verify_path_access(paths->north_path))
+	if (!paths->north || verify_path_access(paths->north))
 		return (1);
-	if (!paths->south_path || verify_path_access(paths->south_path))
+	if (!paths->south || verify_path_access(paths->south))
 		return (1);
-	if (!paths->floor_colorscheme)
+	if (!paths->floor)
 		return (1);
-	if (!paths->ceiling_colorscheme)
+	if (!paths->ceiling)
 		return (1);
 	return (0);
-	// checar si en verdad existen estos paths
 }
 
+void	verify_map(t_gamedata *data)
+{
+	if (map_validation(data->map))
+		error_free(BAD_MAP, data, NULL);
+	data->player = ft_calloc(1, sizeof(t_player));
+	find_player_pos(data, data->map);
+}
 /*
+ * check that every 0 or player is not next to null terminator or  emptyspace!!!
+ */
+
 int	map_validation(char **map)
 {
+	int	x;
+	int	y;
+
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == '0')
+			{
+				if (ft_is_whitespace(map[y][x + 1]) || !map[y][x + 1])
+					return (1);
+				if (ft_is_whitespace(map[y][x - 1]) || !map[y][x - 1])
+					return (1);
+				if (ft_is_whitespace(map[y + 1][x]) || !map[y + 1][x])
+					return (1);
+				if (ft_is_whitespace(map[y - 1][x]) || !map[y - 1][x])
+					return (1);
+			}
+			x++;
+		}
+		y++;
+	}
 	return (0);
-}*/
+}

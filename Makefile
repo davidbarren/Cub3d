@@ -14,7 +14,7 @@ NAME = cub3d
 
 
 CC	= cc
-CFLAGS = -Wall -Wextra -g -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -g -Werror -Og #-fsanitize=address
 
 SRCDIR = src
 OBJDIR = obj
@@ -34,6 +34,7 @@ CSRCS = $(SRCDIR)/scene_loading.c\
 		$(SRCDIR)/parsing_utils.c\
 		$(SRCDIR)/scene_validation.c\
 		$(SRCDIR)/gamestate.c\
+		$(SRCDIR)/player_data.c\
 
 OBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 BOBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(BSRCS))
@@ -60,7 +61,8 @@ $(OBJDIR):
 
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(COBJS) $(BOBJS)
+	rm -rf $(OBJDIR)
 	make clean -C $(LIBFTPATH)
 
 fclean: clean

@@ -25,9 +25,10 @@
 /****************************
  * *********MACROS***********
  * *************************/
-# define WINDOW_HEIGHT 1920
-# define WINDOW_WIDTH 1080
+# define WINDOW_HEIGHT 1200
+# define WINDOW_WIDTH 2080
 # define PI 3.141592653589793
+# define PIXEL_SIZE 50
 /****************************
  * *********TYPEDEFS*********
  * *************************/

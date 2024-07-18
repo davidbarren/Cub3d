@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/15 14:43:52 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:05:55 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ t_gamedata	*scene_parsing(t_file *scenedata)
 	paths = ft_calloc (1, sizeof(t_paths));
 	load_paths(scenedata, paths);
 	data->paths = paths;
-	if (verify_paths_data(paths))
+	/*if (verify_paths_data(paths))
 	{
 		printf("error from verify paths\n");
 		error_free(BAD_SCENE, data, scenedata);
-	}
+	}*/
 	print_paths(paths);
 	if (load_colorschemes(paths->floor_colorscheme, data->floor)
 		|| load_colorschemes(paths->ceiling_colorscheme, data->ceiling))

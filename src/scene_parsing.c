@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/17 14:10:31 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:53:13 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_border(char *line)
  * characters after identifier are whitespace,
  * if not then return NULL error
  *
- * */ 
+ * */
 char	*set_path(char *pathdest, char *pathsrc)
 {
 	if (pathdest)
@@ -41,6 +41,7 @@ char	*set_path(char *pathdest, char *pathsrc)
 		free(pathdest);
 		return (NULL);
 	}
+	ft_skip_spaces(&pathsrc);
 	return (ft_strdup(pathsrc));
 }
 
@@ -57,20 +58,20 @@ void	load_paths(t_file *scenedata, t_paths *paths)
 		temp = scene[i];
 		ft_skip_spaces(&temp);
 		if (!ft_strncmp(temp, "NO", 2))
-			paths->north = set_path(paths->north, ft_strchr(temp, '.'));
+			paths->north = set_path(paths->north, (temp + 2));
 		else if (!ft_strncmp(temp, "SO", 2))
-			paths->south = set_path(paths->south, ft_strchr(temp, '.'));
+			paths->south = set_path(paths->south, (temp + 2));
 		else if (!ft_strncmp(temp, "EA", 2))
-			paths->east = set_path(paths->east, ft_strchr(temp, '.'));
+			paths->east = set_path(paths->east, (temp + 2));
 		else if (!ft_strncmp(temp, "WE", 2))
-			paths->west = set_path(paths->west, ft_strchr(temp, '.'));
+			paths->west = set_path(paths->west, (temp + 2));
 		else if (!ft_strncmp(temp, "C", 1))
-			paths->ceiling = set_path(paths->ceiling, temp);
+			paths->ceiling = set_path(paths->ceiling, temp + 1);
 		else if (!ft_strncmp(temp, "F", 1))
-			paths->floor = set_path(paths->floor, temp);
+			paths->floor = set_path(paths->floor, temp + 1);
 		i++;
 	}
-	scenedata->map_index = i; // index of scene 2darr where map begins
+	scenedata->map_index = i;
 }
 
 int	load_colorschemes(char *str, unsigned char *target)
@@ -108,20 +109,12 @@ t_gamedata	*scene_parsing(t_file *scenedata)
 	paths = ft_calloc (1, sizeof(t_paths));
 	load_paths(scenedata, paths);
 	data->paths = paths;
-	print_paths(paths);
 	if (verify_paths_data(paths))
-	{
-//		printf("error from verify paths\n");
 		error_free(BAD_SCENE, data, scenedata);
-	}
-	print_paths(paths);
 	if (load_colorschemes(paths->floor, data->floor)
 		|| load_colorschemes(paths->ceiling, data->ceiling))
 		error_free(BAD_RGB, data, scenedata);
-	print_colorschemes(data);
 	if (load_map(scenedata, data))
 		error_free(INVALID_MAP, data, scenedata);
-//	free_data_content(data);
-//	free(data);
 	return (data);
 }

@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:41:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/17 13:54:48 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:05:48 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	print_2d(char **arr)
 
 void	print_paths(t_paths *paths)
 {
+	printf("PRINTING PATHS:\n");
 	printf("north:%s\n", paths->north);
 	printf("south:%s\n", paths->south);
 	printf("west_path:%s\n", paths->west);
@@ -33,8 +34,30 @@ void	print_paths(t_paths *paths)
 
 void	print_colorschemes(t_gamedata *data)
 {
+	printf("PRINTING COLORS:\n");
 	printf("floor colorschemes in R G B:\n");
 	printf("R:%d\nG:%d\nB:%d\n", data->floor[0], data->floor[1], data->floor[2]);
 	printf("ceiling colorschemes in R G B:\n");
-	printf("R:%d\nG:%d\nB:%d\n", data->ceiling[0], data->ceiling[1], data->ceiling[2]);
+	printf("R:%d\nG:%d\nB:%d\n", data->ceiling[0],
+		data->ceiling[1], data->ceiling[2]);
+}
+
+void	print_playerdata(t_gamedata *data)
+{
+	printf("PRINTING GAMEDATA:\n");
+	printf("height of map:%zu\n", data->height);
+	printf("width of map:%zu\n", data->width);
+	printf("player x pos: %f\n", data->player->x_pos);
+	printf("player y pos: %f\n", data->player->y_pos);
+	printf("player dir :%d\n", data->player->dir);
+}
+
+void	print_gamedata(t_gamedata *data)
+{
+	printf("PRINTING FULL DATA:\n");
+	print_paths(data->paths);
+	print_colorschemes(data);
+	printf("PRINTING MAP:\n");
+	print_2d(data->map);
+	print_playerdata(data);
 }

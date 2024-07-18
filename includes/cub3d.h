@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/17 14:02:48 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:52:56 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ enum e_errors
 	BAD_SCENE,
 	INVALID_MAP,
 	EMPTY_FILE,
+	BAD_MAP,
+};
+
+enum	e_player_orientation
+{
+	NORTH = 1,
+	EAST,
+	SOUTH,
+	WEST,
 };
 
 typedef struct s_paths
@@ -68,6 +77,7 @@ typedef struct s_player
 {
 	double	x_pos;
 	double	y_pos;
+	int		dir;
 }	t_player;
 
 typedef struct s_spritedata
@@ -90,12 +100,17 @@ typedef struct s_gamedata
 	uint8_t		floor[3];
 	uint8_t		ceiling[3];
 	mlx_t		*window;
+	size_t		height;
+	size_t		width;
+	t_player	*player;
 }	t_gamedata;
 
 // debug and print functions
 void		print_2d(char **arr);
 void		print_paths(t_paths *paths);
 void		print_colorschemes(t_gamedata *data);
+void		print_playerdata(t_gamedata *data);
+void		print_gamedata(t_gamedata *data);
 // errors_and_freeing
 void		error_exit(int status);
 void		error_free(int status, t_gamedata *data, t_file *scenedata);
@@ -117,6 +132,9 @@ char		*ft_strtok(char *str, char delim);
 void		ft_skip_spaces(char **str);
 // scene_validation
 int			verify_paths_data(t_paths *paths);
+void		verify_map(t_gamedata *data);
 // gamestate
 void		init_gamestate(t_gamedata *data);
+// player_data
+void	find_player_pos(t_gamedata *data, char **map);
 #endif

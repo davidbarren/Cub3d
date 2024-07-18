@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:28:36 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/17 13:55:26 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:19:35 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,6 @@ void	free_data_content(t_gamedata *data)
 		free_path_content(data->paths);
 		free(data->paths);
 	}
+	if (data->player)
+		free(data->player);
 }

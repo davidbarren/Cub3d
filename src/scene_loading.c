@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/17 13:52:44 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:54:11 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	file_validation(t_file *filedata, int argc, char **av)
 	if (ft_strlen(filedata->filename) < 5)
 		error_exit(BAD_FORMAT);
 	temp = ft_strrchr(filedata->filename, 0) - 4;
-	if (ft_strcmp(temp, ".cub")) // consider a file named .cub, error or not?
+	if (ft_strcmp(temp, ".cub"))
 		error_exit(BAD_FORMAT);
 }
 
@@ -30,7 +30,7 @@ void	scene_opening(t_file *filedata)
 {
 	int	fd;
 
-	if (access(filedata->filename, F_OK)) // checar si es directorio
+	if (access(filedata->filename, F_OK))
 		error_exit(NONEXISTING_FILE);
 	fd = open(filedata->filename, O_RDONLY);
 	if (fd == -1)
@@ -40,10 +40,6 @@ void	scene_opening(t_file *filedata)
 	if (fd == -1)
 		error_exit(CLOSE_FAILURE);
 }
-/*
- * try to get rid of fullscene inside the the t_file struct and make
- * load_scene have it as a local variable with under 25 lines
- */
 
 void	load_scene(t_file *filedata, int fd)
 {
@@ -99,9 +95,8 @@ int	load_map(t_file *scenedata, t_gamedata *data)
 {
 	if (copy_map(scenedata, data))
 		return (1);
-	print_2d(data->map);
 	free_2d(scenedata->scene_data);
-//	if (verify_map(data))
-//		return (1);
+	verify_map(data);
+	print_gamedata(data);
 	return (0);
 }

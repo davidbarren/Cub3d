@@ -6,7 +6,7 @@
 #    By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/07/17 11:56:47 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/07/18 16:42:50 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ CSRCS = $(SRCDIR)/scene_loading.c\
 		$(SRCDIR)/parsing_utils.c\
 		$(SRCDIR)/scene_validation.c\
 		$(SRCDIR)/gamestate.c\
+		$(SRCDIR)/player_data.c\
 
 OBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 BOBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(BSRCS))
@@ -61,6 +62,7 @@ $(OBJDIR):
 
 clean:
 	rm -f $(OBJS) $(COBJS) $(BOBJS)
+	rm -rf $(OBJDIR)
 	make clean -C $(LIBFTPATH)
 
 fclean: clean

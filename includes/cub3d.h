@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 17:48:00 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:05:44 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,15 @@
 # define WINDOW_WIDTH 2080
 # define PI 3.141592653589793
 # define PIXEL_SIZE 50
+# define FOV 60
+# define CUBE_HEIGHT 64
+# define PLAYER_HEIGHT 32
 /****************************
  * *********TYPEDEFS*********
  * *************************/
 enum e_errors
 {
-	OPEN_FAILURE,
+	OPEN_FAILURE = 1,
 	CLOSE_FAILURE,
 	MALLOC_FAILURE,
 	SPLIT_FAILURE,
@@ -76,8 +79,8 @@ typedef struct s_file
 
 typedef struct s_player
 {
-	double	x_pos;
-	double	y_pos;
+	int		x_pos;
+	int		y_pos;
 	int		dir;
 }	t_player;
 
@@ -142,4 +145,5 @@ void		verify_map(t_gamedata *data);
 void		init_gamestate(t_gamedata *data);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
+int		is_player_dir(char c);
 #endif

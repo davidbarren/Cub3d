@@ -6,57 +6,69 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 17:08:54 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/07/19 15:11:21 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void    move_left(t_gamedata *content)
+void	move_left(t_gamedata *content)
 {
-    if (content->map[content->y_pos][content->x_pos - 1] == '1'
-	|| ft_is_whitespace(content->map[content->y_pos][content->x_pos - 1]) == 1)
+	t_player	*player;
+
+	player = content->playerdata;
+	if (content->map[player->y_pos][player->x_pos - 1] == '1'
+		|| ft_is_whitespace(content->map[player->y_pos][player->x_pos - 1]) == 1)
         return ;
-    else
+	else
     {   
         content->player->instances[0].x -= PIXEL_SIZE;
-        content->x_pos -= 1;
+        player->x_pos -= 1;
     }
 }
 
-void    move_right(t_gamedata *content)
+void	move_right(t_gamedata *content)
 {
-    if (content->map[content->y_pos][content->x_pos + 1] == '1'
-	|| ft_is_whitespace(content->map[content->y_pos][content->x_pos + 1]) == 1)
+	t_player *player;
+
+	player = content->playerdata;
+    if (content->map[player->y_pos][player->x_pos + 1] == '1'
+	|| ft_is_whitespace(content->map[player->y_pos][player->x_pos + 1]) == 1)
         return ;
     else
     {
-        content->x_pos += 1;
+        player->x_pos += 1;
         content->player->instances[0].x += PIXEL_SIZE;
     }
     //printf("x: %d\n", content->x);
 }
 void    move_up(t_gamedata *content)
 {
-    if (content->map[content->y_pos - 1][content->x_pos] == '1'
-	|| ft_is_whitespace(content->map[content->y_pos - 1][content->x_pos]) == 1)
+	t_player *player;
+
+	player = content->playerdata;
+    if (content->map[player->y_pos - 1][player->x_pos] == '1'
+	|| ft_is_whitespace(content->map[player->y_pos - 1][player->x_pos]) == 1)
         return ;
     else
     {   
         content->player->instances[0].y -= PIXEL_SIZE;;
-        content->y_pos -= 1;
+        player->y_pos -= 1;
     }
     //printf("y: %d\n", content->y);
 }
 void    move_down(t_gamedata *content)
 {
-    if (content->map[content->y_pos + 1][content->x_pos] == '1'
-	|| ft_is_whitespace(content->map[content->y_pos + 1][content->x_pos]) == 1)
+	t_player *player;
+
+	player = content->playerdata;
+    if (content->map[player->y_pos + 1][player->x_pos] == '1'
+	|| ft_is_whitespace(content->map[player->y_pos + 1][player->x_pos]) == 1)
         return ;
     else
     {   
         content->player->instances[0].y += PIXEL_SIZE;;
-        content->y_pos += 1;
+        player->y_pos += 1;
     }
    //printf("y: %d\n", content->y);
 }
@@ -118,7 +130,7 @@ void	display_map(t_gamedata *data)
 				i++;
 				}
 			}
-            if (data->map[y][x] == 'N')
+            if (is_player_dir(data->map[y][x]))
 				ft_player(data->window, data, x, y);
 			x++;
 		}

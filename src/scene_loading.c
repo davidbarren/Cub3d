@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 16:54:11 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:10:01 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	copy_map(t_file *scenedata, t_gamedata *data)
 
 int	load_map(t_file *scenedata, t_gamedata *data)
 {
-
 	if (copy_map(scenedata, data))
 		return (1);
 	free_2d(scenedata->scene_data);

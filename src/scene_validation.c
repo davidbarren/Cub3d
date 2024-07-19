@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 17:51:55 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:50:04 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	verify_path_access(char *path)
 
 int	verify_paths_data(t_paths *paths)
 {
-	if (!paths->east || verify_path_access(paths->east))
+	if (!paths->east) //|| verify_path_access(paths->east))
 		return (1);
-	if (!paths->west || verify_path_access(paths->west))
+	if (!paths->west) //|| verify_path_access(paths->west))
 		return (1);
-	if (!paths->north || verify_path_access(paths->north))
+	if (!paths->north) //|| verify_path_access(paths->north))
 		return (1);
-	if (!paths->south || verify_path_access(paths->south))
+	if (!paths->south)// || verify_path_access(paths->south))
 		return (1);
 	if (!paths->floor)
 		return (1);
@@ -68,6 +68,14 @@ int	map_validation(char **map)
 					return (1);
 				if (ft_is_whitespace(map[y - 1][x]) || !map[y - 1][x])
 					return (1);
+//				if (ft_is_whitespace(map[y + 1][x + 1]) || !map[y + 1][x + 1])
+//					return (1);
+//				if (ft_is_whitespace(map[y + 1][x - 1]) || !map[y + 1][x - 1])
+//					return (1);
+//				if (ft_is_whitespace(map[y - 1][x + 1]) || !map[y - 1][x + 1])
+//					return (1);
+//				if (ft_is_whitespace(map[y - 1][x - 1]) || !map[y - 1][x - 1])
+//					return (1);
 			}
 			x++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:31:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 17:48:42 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:01:53 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	update_player_pos(t_gamedata *data, int pcount, int x, int y)
 		error_free(BAD_MAP, data, NULL);
 	data->playerdata->x_pos = x;
 	data->playerdata->y_pos = y;
-	data->playerdata->dir = is_player_dir(data->map[y][x]);
+	data->playerdata->angle = is_player_dir(data->map[y][x]);
 }
 
 void	find_player_pos(t_gamedata *data, char **map)

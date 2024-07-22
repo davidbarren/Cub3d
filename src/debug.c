@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:41:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/19 14:53:10 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:03:11 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_colorschemes(t_gamedata *data)
 		data->ceiling[1], data->ceiling[2]);
 }
 
-void	print_playerdata(t_gamedata *data)
+/* void	print_playerdata(t_gamedata *data)
 {
 	printf("PRINTING GAMEDATA:\n");
 	printf("height of map:%zu\n", data->height);
@@ -50,7 +50,7 @@ void	print_playerdata(t_gamedata *data)
 	printf("player x pos: %d\n", data->playerdata->x_pos);
 	printf("player y pos: %d\n", data->playerdata->y_pos);
 	printf("player dir :%d\n", data->playerdata->dir);
-}
+} */
 
 void	print_gamedata(t_gamedata *data)
 {
@@ -59,5 +59,5 @@ void	print_gamedata(t_gamedata *data)
 	print_colorschemes(data);
 	printf("PRINTING MAP:\n");
 	print_2d(data->map);
-	print_playerdata(data);
+	//print_playerdata(data);
 }

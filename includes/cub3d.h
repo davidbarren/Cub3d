@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/19 15:05:44 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:46:16 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define FOV 60
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
+# define MOVE_SPEED 0.1 // Velocidad de movimiento
+# define TURN_SPEED 0.1 // Velocidad de giro
 /****************************
  * *********TYPEDEFS*********
  * *************************/
@@ -79,9 +81,9 @@ typedef struct s_file
 
 typedef struct s_player
 {
-	int		x_pos;
-	int		y_pos;
-	int		dir;
+	float		x_pos;
+	float		y_pos;
+	float		angle;
 }	t_player;
 
 typedef struct s_spritedata
@@ -117,7 +119,7 @@ typedef struct s_gamedata
 void		print_2d(char **arr);
 void		print_paths(t_paths *paths);
 void		print_colorschemes(t_gamedata *data);
-void		print_playerdata(t_gamedata *data);
+//void		print_playerdata(t_gamedata *data);
 void		print_gamedata(t_gamedata *data);
 // errors_and_freeing
 void		error_exit(int status);

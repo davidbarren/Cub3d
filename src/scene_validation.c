@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/19 17:50:04 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:22:59 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	verify_path_access(char *path)
 
 int	verify_paths_data(t_paths *paths)
 {
-	if (!paths->east) //|| verify_path_access(paths->east))
+	if (!paths->east || verify_path_access(paths->east))
 		return (1);
-	if (!paths->west) //|| verify_path_access(paths->west))
+	if (!paths->west || verify_path_access(paths->west))
 		return (1);
-	if (!paths->north) //|| verify_path_access(paths->north))
+	if (!paths->north || verify_path_access(paths->north))
 		return (1);
-	if (!paths->south)// || verify_path_access(paths->south))
+	if (!paths->south || verify_path_access(paths->south))
 		return (1);
 	if (!paths->floor)
 		return (1);
@@ -47,6 +47,27 @@ void	verify_map(t_gamedata *data)
  * check that every 0 or player is not next to null terminator or  emptyspace!!!
  */
 
+int	check_floor_validity(char **map, int x, int y)
+{
+	if (!map[y][x + 1] || ft_is_whitespace(map[y][x + 1]))
+		return (1);
+	if (!map[y][x - 1] || ft_is_whitespace(map[y][x - 1]))
+		return (1);
+	if (!map[y + 1][x] || ft_is_whitespace(map[y + 1][x]))
+		return (1);
+	if (!map[y - 1][x] || ft_is_whitespace(map[y - 1][x]))
+		return (1);
+	if (!map[y - 1][x + 1] || ft_is_whitespace(map[y - 1][x + 1]))
+		return (1);
+	if (!map[y - 1][x - 1] || ft_is_whitespace(map[y - 1][x - 1]))
+		return (1);
+	if (!map[y + 1][x - 1] || ft_is_whitespace(map[y - 1][x - 1]))
+		return (1);
+	if (!map[y + 1][x + 1] || ft_is_whitespace(map[y + 1][x + 1]))
+		return (1);
+	return (0);
+}
+
 int	map_validation(char **map)
 {
 	int	x;
@@ -60,22 +81,8 @@ int	map_validation(char **map)
 		{
 			if (map[y][x] == '0')
 			{
-				if (ft_is_whitespace(map[y][x + 1]) || !map[y][x + 1])
+				if (check_floor_validity(map, x, y))
 					return (1);
-				if (ft_is_whitespace(map[y][x - 1]) || !map[y][x - 1])
-					return (1);
-				if (ft_is_whitespace(map[y + 1][x]) || !map[y + 1][x])
-					return (1);
-				if (ft_is_whitespace(map[y - 1][x]) || !map[y - 1][x])
-					return (1);
-//				if (ft_is_whitespace(map[y + 1][x + 1]) || !map[y + 1][x + 1])
-//					return (1);
-//				if (ft_is_whitespace(map[y + 1][x - 1]) || !map[y + 1][x - 1])
-//					return (1);
-//				if (ft_is_whitespace(map[y - 1][x + 1]) || !map[y - 1][x + 1])
-//					return (1);
-//				if (ft_is_whitespace(map[y - 1][x - 1]) || !map[y - 1][x - 1])
-//					return (1);
 			}
 			x++;
 		}

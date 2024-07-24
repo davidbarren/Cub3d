@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/22 16:46:16 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/07/24 17:35:05 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define FOV 60
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
-# define MOVE_SPEED 0.1 // Velocidad de movimiento
+# define MOVE_SPEED 0.08 // Velocidad de movimiento
 # define TURN_SPEED 0.1 // Velocidad de giro
 /****************************
  * *********TYPEDEFS*********
@@ -103,10 +103,9 @@ typedef struct s_gamedata
 	t_player	*playerdata;
 	char		**map;
 	t_paths		*paths;
+	int c;
 	uint8_t		floor[3];
 	uint8_t		ceiling[3];
-	int x_pos;//just for test
-	int y_pos;//
 	mlx_image_t* player;
 	mlx_texture_t* texture;
 	mlx_image_t* img;

@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/24 17:35:05 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/07/25 17:39:43 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define FOV 60
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
-# define MOVE_SPEED 0.08 // Velocidad de movimiento
-# define TURN_SPEED 0.1 // Velocidad de giro
+# define MOVE_SPEED 0.05 // Velocidad de movimiento
+# define TURN_SPEED 0.1// Velocidad de giro
 /****************************
  * *********TYPEDEFS*********
  * *************************/

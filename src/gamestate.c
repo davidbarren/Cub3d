@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/24 17:52:20 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/07/25 18:00:07 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,24 @@ void initializePlayer(t_gamedata *data, char **map)
 	player = data->playerdata;
     if (map[(int)player->y_pos][(int)player->x_pos] == 'N')
 	{
-		player->x_pos += 0.5;
-        player->y_pos += 0.5;
         player->angle = 3 * PI / 2; // Mirando hacia arriba (270 grados)
+/* 		player->x_pos = 0.5;
+		player->y_pos = 0.5; */
         return ;
 	}
 	if (map[(int)player->y_pos][(int)player->x_pos] == 'S')
 	{
-		player->x_pos += 0.6;
-        player->y_pos += 0.6;
         player->angle = PI / 2; // Mirando hacia abajo (90 grados)
         return ;
 	}
 	if (map[(int)player->y_pos][(int)player->x_pos] == 'E')
 	{
-		player->x_pos += 0.6;
-        player->y_pos += 0.6;
-        player->angle = 0; // Mirando hacia abajo (90 grados)
+        player->angle = 0; // Mirando hacia derecha (90 grados)
         return ;
 	}
 	if (map[(int)player->y_pos][(int)player->x_pos] == 'W')
 	{
-		player->x_pos += 0.5;
-        player->y_pos += 0.5;
-        player->angle = PI; // Mirando hacia abajo (90 grados)
+        player->angle = PI; // Mirando hacia izquierda (90 grados)
         return ;
 	}
 }
@@ -51,21 +45,30 @@ void moving(t_gamedata *data, int direction)
 {
 	t_player *player;
 
+	float t1;
+	float t2;
+
 	player = data->playerdata;
 	printf("x %f y %f angle %f c= %d\n", player->x_pos, player->y_pos, player->angle, data->c);
-	data->c++;
-/* 	if (direction ==  -1 && data->map[(int)player->y_pos - 1][(int)player->x_pos] == '1')
-        return ;
-	if (direction ==  1 && data->map[(int)player->y_pos + 1][(int)player->x_pos] == '1')
-        return ; */
+	printf("type int x %d y %d angle %f c= %d\n", (int)player->x_pos, (int)player->y_pos, player->angle, data->c);
     float new_x = player->x_pos + direction * MOVE_SPEED * sin(player->angle);
     float new_y = player->y_pos + direction * MOVE_SPEED * cos(player->angle);
-  /*   if (data->map[(int)newY][(int)newX] == '0') 
-	{*/
-		//printf("hola\n"); 
-        player->x_pos = new_x;
-        player->y_pos = new_y;
-   // }
+
+	if (direction < 0)
+	{
+	t1 = 0.4 + new_x;
+	t2 = 0.4 + new_y;
+	}
+	else
+	{
+	t1 = -0.1 + new_x;
+	t2 = 0.3 + new_y;
+	}
+	printf("map %c\n", data->map[(int)t2][(int)t1]);
+	if (data->map[(int)(t2)][(int)(t1)] ==  '1')
+		return ;
+    player->x_pos = new_x;
+    player->y_pos = new_y;
 }
 
 void turnPlayer(t_gamedata *data, int direction)
@@ -74,7 +77,7 @@ void turnPlayer(t_gamedata *data, int direction)
 
 	player = data->playerdata;
     player->angle += direction * TURN_SPEED;
-    if (player->angle < 0) 
+    if (player->angle < 0)
 	{
         player->angle += 2 * PI;
     } 
@@ -83,110 +86,33 @@ void turnPlayer(t_gamedata *data, int direction)
         player->angle -= 2 * PI;
     }
 }
-
-void	move_left(t_gamedata *content)
+uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue)
 {
-	t_player	*player;
-
-	player = content->playerdata;
-	if (content->map[(int)player->y_pos][(int)player->x_pos - 1] == '1')
-        return ;
-	else
-    { 
-		turnPlayer(content, -1);
-		printf("letf %f\n", player->angle);
-        //content->player->instances[0].x -= player->x_pos;
-    }
-}
-
-void	move_right(t_gamedata *content)
-{
-	t_player *player;
-
-	player = content->playerdata;
-    if (content->map[(int)player->y_pos][(int)player->x_pos + 1] == '1')
-        return ;
-    else
-    {
-        turnPlayer(content, 1);
-		printf("right %f\n", player->angle); 
-        //content->player->instances[0].x += player->x_pos;
-    }
-    //printf("x: %d\n", content->x);
-}
-void    move_up(t_gamedata *content)
-{
-	t_player *player;
-
-	//movePlayer(content, -1);
-	player = content->playerdata;
-    if (content->map[(int)player->y_pos - 1][(int)player->x_pos] == '1')
-        return ;
-    else
-    {   
-		//movePlayer(content, -1);
-		printf("normal %f  %f\n", player->y_pos, player->x_pos);
-		printf("intances %d  %d\n", content->player->instances[0].y, content->player->instances[0].x);
-		//printf("down %d  %d\n", content->player->instances[0].x, content->player->instances[0].y);
-        //content->player->instances[0].z = player->angle;
-		//content->player->instances[0].x = player->x_pos;
-        content->player->instances[0].y -= (int)player->y_pos;
-        //player->y_pos -= 1;
-    }
-    //printf("y: %d\n", content->y);
-}
-void    move_down(t_gamedata *content)
-{
-	t_player *player;
-
-	//movePlayer(content, 1);
-	player = content->playerdata;
-    if (content->map[(int)player->y_pos + 1][(int)player->x_pos] == '1')
-        return ;
-    else
-    {  
-		//movePlayer(content, 1); 
-		printf("normal %f  %f\n", player->y_pos, player->x_pos);
-		printf("intances %d  %d\n", content->player->instances[0].y, content->player->instances[0].x);;
-        //content->player->instances[0].z = player->angle;
-		//content->player->instances[0].x = player->x_pos;
-        content->player->instances[0].y += (int)player->y_pos;
-        //player->y_pos += 1;
-    }
-   //printf("y: %d\n", content->y);
-}
-void	move_player(t_gamedata *data)
-{
+	// Componentes de color
+	//red
+	//green
+	//blue
+	uint8_t alpha;
 	
-    if (mlx_is_key_down(data->window, MLX_KEY_W ))
-        moving(data, -1);
-   	else if (mlx_is_key_down(data->window, MLX_KEY_S))
-        moving(data, 1);
-	else if (mlx_is_key_down(data->window, MLX_KEY_A))
-		turnPlayer(data, -1);
-	else if (mlx_is_key_down(data->window, MLX_KEY_D))
-        turnPlayer(data, 1);  
+	alpha = 255;   // Máximo para opacidad
+	// Combinar los componentes
+	return (red << 24) | (green << 16) | (blue << 8) | alpha;
+	//return (color);
 }
 
 
-void    ft_player(t_gamedata *data, int x, int y)
+void    ft_player(t_gamedata *data)
 {
- 		// Componentes de color
-uint8_t red = 255;     // Máximo para rojo
-uint8_t green = 0;     // Mínimo para verde
-uint8_t blue = 0;      // Mínimo para azul
-uint8_t alpha = 255;   // Máximo para opacidad
 
-// Combinar los componentes
-uint32_t color = (red << 24) | (green << 16) | (blue << 8) | alpha;
-
+	uint32_t color;
  	int player_size;
-    int centerX;
-    int centerY;
+    float centerX;
+    float centerY;
 
-	player_size = PIXEL_SIZE / 4;
-	centerX = x * PIXEL_SIZE + PIXEL_SIZE / 2;
-	centerY = y * PIXEL_SIZE + PIXEL_SIZE / 2;
+	player_size = 10;
+	centerX =  (float)PIXEL_SIZE * data->playerdata->x_pos + (float)player_size;
+	centerY =  (float)PIXEL_SIZE * data->playerdata->y_pos + (float)player_size;
+	color = get_color (data->ceiling[0] , data->ceiling[1], data->ceiling[2]);
 	int i = -player_size / 2;
 	while (i < player_size / 2) 
 	{
@@ -198,18 +124,6 @@ uint32_t color = (red << 24) | (green << 16) | (blue << 8) | alpha;
     	}
     	++i;
 	}
-  
-
-/*  	content->texture = mlx_load_png("rojo.png");
-    // chequear por    error(); 
-	content->player = mlx_texture_to_image(content->window, content->texture);
-   // chequear por    error(); 
-	mlx_resize_image(content->player, PIXEL_SIZE / 4, PIXEL_SIZE / 4);
-	   // chequear por    error(); 
-	mlx_image_to_window(content->window, content->player, x * PIXEL_SIZE + 3, y * PIXEL_SIZE + 2);
-   // chequear por    error();
-   		printf("normal %f  %f\n", content->playerdata->y_pos, content->playerdata->x_pos);
-		printf("intances %d  %d\n", content->player->instances[0].y, content->player->instances[0].x);*/
 }
 void	display_map(t_gamedata *data)
 {
@@ -217,9 +131,10 @@ void	display_map(t_gamedata *data)
 	int y;
 	int i;
 	int i2;
-	
+	uint32_t color;
 
 	y = 0;
+	color = get_color(data->floor[0], data->floor[1], data->floor[2]);
 	while (data->map[y] != NULL)
 	{
 		x = 0;
@@ -233,7 +148,7 @@ void	display_map(t_gamedata *data)
 					i2 = 0;
 					while(i2 < PIXEL_SIZE)
 					{
-						mlx_put_pixel(data->img, x * PIXEL_SIZE + i, y * PIXEL_SIZE + i2, 255);
+						mlx_put_pixel(data->img, x * PIXEL_SIZE + i, y * PIXEL_SIZE + i2, color);
 						i2++;
 					}
 				i++;
@@ -243,7 +158,7 @@ void	display_map(t_gamedata *data)
 		}
 		y++;
 	}
-	ft_player(data, data->playerdata->x_pos, data->playerdata->y_pos);
+	ft_player(data);
 }
 
 void my_keyhook(void* param)
@@ -254,7 +169,14 @@ void my_keyhook(void* param)
     data = param;
 
 	ft_memset(data->img->pixels, 0, WINDOW_WIDTH * WINDOW_HEIGHT * 4);
-	move_player(data);
+	if (mlx_is_key_down(data->window, MLX_KEY_W ))
+        moving(data, 1);
+   	if (mlx_is_key_down(data->window, MLX_KEY_S))
+        moving(data, -1);
+	if (mlx_is_key_down(data->window, MLX_KEY_A))
+		turnPlayer(data, 1);
+	if (mlx_is_key_down(data->window, MLX_KEY_D))
+        turnPlayer(data, -1);  
 	display_map(data);
 	if (mlx_is_key_down(data->window, MLX_KEY_ESCAPE))
 		mlx_close_window(data->window);
@@ -268,6 +190,7 @@ void	init_gamestate(t_gamedata *data)
 	data->img = mlx_new_image(data->window, WINDOW_WIDTH, WINDOW_HEIGHT);
 	initializePlayer(data, data->map);
 	mlx_image_to_window(data->window, data->img, 0, 0);
+	display_map(data);
 	mlx_loop_hook(data->window, my_keyhook, data);
 	//mlx_key_hook(data->window, &my_keyhook, data);
     mlx_loop(data->window);

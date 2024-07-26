@@ -81,3 +81,31 @@ void	move_player(t_gamedata *data)
 	else if (mlx_is_key_down(data->window, MLX_KEY_D))
         turnPlayer(data, 1);  
 }
+
+
+	if (direction < 0)// press s
+	{
+		if (player->angle > PI)
+		{
+			t1 = 0.7 + new_x;
+			t2 = 0.6 + new_y;
+		}
+		else
+		{
+			t1 = -0.05 + new_x;
+			t2 = 0.0 + new_y;
+		}
+	}
+	else //pres w
+	{
+		if (player->angle > PI )
+		{
+			t1 = -0.1 + new_x;
+			t2 = -0.03 + new_y;
+		}
+		else
+		{
+			t1 = 0.7 + new_x;
+			t2 = 0.7 + new_y;
+		}
+	}

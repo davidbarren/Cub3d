@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/25 17:39:43 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/07/26 17:07:47 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 # define WINDOW_HEIGHT 1200
 # define WINDOW_WIDTH 2080
 # define PI 3.141592653589793
-# define PIXEL_SIZE 50
+# define PIXEL_SIZE 30
 # define FOV 60
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
-# define MOVE_SPEED 0.05 // Velocidad de movimiento
+# define MOVE_SPEED 0.1 // Velocidad de movimiento
 # define TURN_SPEED 0.1// Velocidad de giro
 /****************************
  * *********TYPEDEFS*********
@@ -110,6 +110,7 @@ typedef struct s_gamedata
 	mlx_texture_t* texture;
 	mlx_image_t* img;
 	mlx_t		*window;
+	int	flag;
 	size_t		height;
 	size_t		width;
 }	t_gamedata;

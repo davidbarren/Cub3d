@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/25 18:00:07 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/07/26 17:05:45 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,45 @@ void initializePlayer(t_gamedata *data, char **map)
 void moving(t_gamedata *data, int direction)
 {
 	t_player *player;
+	float t;
 
-	float t1;
-	float t2;
+	player = data->playerdata;
+	printf("x %f y %f angle %f c= %d\n", player->x_pos, player->y_pos, player->angle, data->c);
+	printf("type int x %d y %d angle %f c= %d\n", (int)player->x_pos, (int)player->y_pos, player->angle, data->c);
+    float new_x = player->x_pos + direction * MOVE_SPEED * sin(player->angle + (PI / 2));
+    float new_y = player->y_pos + direction * MOVE_SPEED * cos(player->angle + (PI / 2));
+	printf("map %d %d\n", (int)new_x, (int)new_y);
+	if (direction > 0)
+		t = 0.7 + new_y;
+	else
+		t = new_y;
+	if (data->map[(int)(t)][(int)(new_x)] ==  '1')
+		return ;
+    player->x_pos = new_x;
+    player->y_pos = new_y;
+}
+void moving_side(t_gamedata *data, int direction)
+{
+	t_player *player;
+
+	float t;
 
 	player = data->playerdata;
 	printf("x %f y %f angle %f c= %d\n", player->x_pos, player->y_pos, player->angle, data->c);
 	printf("type int x %d y %d angle %f c= %d\n", (int)player->x_pos, (int)player->y_pos, player->angle, data->c);
     float new_x = player->x_pos + direction * MOVE_SPEED * sin(player->angle);
     float new_y = player->y_pos + direction * MOVE_SPEED * cos(player->angle);
-
 	if (direction < 0)
-	{
-	t1 = 0.4 + new_x;
-	t2 = 0.4 + new_y;
-	}
+		t = 0.7 + new_x;
 	else
-	{
-	t1 = -0.1 + new_x;
-	t2 = 0.3 + new_y;
-	}
-	printf("map %c\n", data->map[(int)t2][(int)t1]);
-	if (data->map[(int)(t2)][(int)(t1)] ==  '1')
+		t = new_x;
+	printf("map %d %d\n", (int)new_x, (int)new_y);
+	if (data->map[(int)(new_y)][(int)(t)] ==  '1')
 		return ;
     player->x_pos = new_x;
     player->y_pos = new_y;
 }
+
 
 void turnPlayer(t_gamedata *data, int direction)
 {
@@ -85,6 +98,7 @@ void turnPlayer(t_gamedata *data, int direction)
 	{
         player->angle -= 2 * PI;
     }
+	printf("angle %f\n", player->angle);
 }
 uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue)
 {
@@ -109,7 +123,7 @@ void    ft_player(t_gamedata *data)
     float centerX;
     float centerY;
 
-	player_size = 10;
+	player_size = PIXEL_SIZE / 3;
 	centerX =  (float)PIXEL_SIZE * data->playerdata->x_pos + (float)player_size;
 	centerY =  (float)PIXEL_SIZE * data->playerdata->y_pos + (float)player_size;
 	color = get_color (data->ceiling[0] , data->ceiling[1], data->ceiling[2]);
@@ -167,15 +181,18 @@ void my_keyhook(void* param)
     t_gamedata *data;
 
     data = param;
-
 	ft_memset(data->img->pixels, 0, WINDOW_WIDTH * WINDOW_HEIGHT * 4);
 	if (mlx_is_key_down(data->window, MLX_KEY_W ))
-        moving(data, 1);
+        moving(data, - 1);
    	if (mlx_is_key_down(data->window, MLX_KEY_S))
-        moving(data, -1);
-	if (mlx_is_key_down(data->window, MLX_KEY_A))
+        moving(data, + 1);
+	if (mlx_is_key_down(data->window, MLX_KEY_A ))
+        moving_side(data, 1);
+   	if (mlx_is_key_down(data->window, MLX_KEY_D))
+        moving_side(data, -1);
+	if (mlx_is_key_down(data->window, MLX_KEY_LEFT))
 		turnPlayer(data, 1);
-	if (mlx_is_key_down(data->window, MLX_KEY_D))
+	if (mlx_is_key_down(data->window, MLX_KEY_RIGHT))
         turnPlayer(data, -1);  
 	display_map(data);
 	if (mlx_is_key_down(data->window, MLX_KEY_ESCAPE))

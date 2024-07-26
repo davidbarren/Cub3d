@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/19 18:22:59 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:19:22 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,25 @@ int	verify_paths_data(t_paths *paths)
 	return (0);
 }
 
-void	verify_map(t_gamedata *data)
+int	verify_path(char **map)
 {
-	if (map_validation(data->map))
-		error_free(BAD_MAP, data, NULL);
-	data->playerdata = ft_calloc(1, sizeof(t_player));
-	find_player_pos(data, data->map);
+	int	y;
+	int	x;
+
+	y = 0;
+	x = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 0)
+				return (1);
+			x++;
+		}
+		y++;
+	}
+	return (0);
 }
 /*
  * check that every 0 or player is not next to null terminator or  emptyspace!!!

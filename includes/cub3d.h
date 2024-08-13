@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/26 17:07:47 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/13 15:36:10 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,16 @@
 # define WINDOW_WIDTH 2080
 # define PI 3.141592653589793
 # define PIXEL_SIZE 30
-# define FOV 60
+#define COLLISION_MARGIN 0.2f 
+# define FOV 60 * (PI / 180)  // Campo de visión en radianes
+# define NUM_RAYS WINDOW_WIDTH
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
 # define MOVE_SPEED 0.1 // Velocidad de movimiento
 # define TURN_SPEED 0.1// Velocidad de giro
+#define MAP_WIDTH  100 
+#define MAP_HEIGHT 100
+#define MAX_DISTANCE 1e6
 /****************************
  * *********TYPEDEFS*********
  * *************************/
@@ -59,6 +64,13 @@ enum	e_player_orientation
 	SOUTH,
 	WEST,
 };
+
+typedef struct s_intersection
+{
+    float distance;
+    float x;
+    float y;
+} t_intersection;
 
 typedef struct s_paths
 {
@@ -126,6 +138,7 @@ void		error_exit(int status);
 void		error_free(int status, t_gamedata *data, t_file *scenedata);
 void		free_data_content(t_gamedata *data);
 // reading scene file
+uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue);
 void		scene_opening(t_file *filedata);
 void		load_scene(t_file *filedata, int fd);
 void		file_validation(t_file *filedata, int argc, char **av);

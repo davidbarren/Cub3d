@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:31:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/13 12:08:57 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/14 12:01:49 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static void	update_player_pos(t_gamedata *data, int pcount, int x, int y)
 {
 	if (pcount)
 		error_free(BAD_MAP, data, NULL);
-	data->playerdata->x_pos = x;
-	data->playerdata->y_pos = y;
+	data->playerdata->x_pos = x + 0.5;
+	data->playerdata->y_pos = y + 0.5;
 	data->playerdata->angle = is_player_dir(data->map[y][x]);
 }
 

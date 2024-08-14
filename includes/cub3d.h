@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/13 15:36:10 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/14 15:29:57 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,23 @@ typedef struct s_spritedata
 	mlx_image_t		*west_wall_img;
 }	t_spritedata;
 
+typedef struct s_line_params
+{
+    int dx;
+    int dy;
+    int ray_xdir;
+    int ray_ydir;
+	int x_ray;
+	int y_ray;
+}   t_line_params;
+
 typedef struct s_gamedata
 {
 	t_player	*playerdata;
+	t_intersection intersection;
+	t_line_params line;
 	char		**map;
 	t_paths		*paths;
-	int c;
 	uint8_t		floor[3];
 	uint8_t		ceiling[3];
 	mlx_image_t* player;
@@ -158,6 +169,7 @@ int			verify_paths_data(t_paths *paths);
 void		verify_map(t_gamedata *data);
 // gamestate
 void		init_gamestate(t_gamedata *data);
+void 		cast_rays(t_gamedata *data);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);

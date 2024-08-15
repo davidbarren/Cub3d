@@ -6,13 +6,47 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/14 16:09:32 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/15 16:58:54 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// algoritmo de Bresenham 
+void render_walls(t_gamedata *data) 
+{
+    float ray_angle = data->playerdata->angle - (FOV / 2);
+    float angle_step = FOV / NUM_RAYS;
+    int i;
+    int y;
+    float corrected_distance;
+    int wall_height;
+    int wall_top;
+    int wall_bottom;
+    uint32_t color;
+
+    i = 0;
+    while (i < NUM_RAYS) 
+    {
+        cast_ray(data, ray_angle);
+        corrected_distance = data->intersection.distance * cos(data->playerdata->angle - ray_angle);
+        wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
+        wall_top = (WINDOW_HEIGHT / 2) - (wall_height / 2);
+        wall_bottom = wall_top + wall_height;
+        y = wall_top;
+        while (y < wall_bottom) 
+        {
+            if (y >= 0 && y < WINDOW_HEIGHT) 
+            {
+                color = get_color(0, 0, 255,255);
+                mlx_put_pixel(data->img, i, y, color);
+            }
+            y++;
+        }
+        i++;
+        ray_angle += angle_step;
+    }
+}
+
 
 int ft_abs(int n)
 {
@@ -21,7 +55,7 @@ int ft_abs(int n)
     else
         return (n);
 }
-
+// algoritmo de Bresenham 
 void draw_line(t_gamedata *data, int x1, int y1)
 {
 	int color;
@@ -29,7 +63,7 @@ void draw_line(t_gamedata *data, int x1, int y1)
 	int e2;
 
 	err = data->line.dx - data->line.dy;
-	color = get_color(255, 0, 0);
+    color = get_color(255, 0, 0, 255);
 	while (42)
     {
         mlx_put_pixel(data->img, data->line.x_ray, data->line.y_ray, color);
@@ -79,30 +113,30 @@ void cast_ray(t_gamedata *data, float ray_angle)
 {
     float ray_x;
     float ray_y;
+    float step_x;
+    float step_y;
 
-	ray_x = data->playerdata->x_pos;
-	ray_y = data->playerdata->y_pos;
-    while (1)
+    ray_x = data->playerdata->x_pos;
+    ray_y = data->playerdata->y_pos;
+    step_x = cos(ray_angle) * 0.01f;
+    step_y = sin(ray_angle) * 0.01f;
+    while ((int)ray_x >= 0 && (int)ray_x  < MAP_WIDTH && (int)ray_y >= 0 && (int)ray_y < MAP_HEIGHT)
     {
-        ray_x += cos(ray_angle) * 0.1f;
-        ray_y += sin(ray_angle) * 0.1f;
-        if ((int)ray_x < 0 || (int)ray_x >= MAP_WIDTH ||
-			(int)ray_y < 0 || (int)ray_y >= MAP_HEIGHT)
-        {
-            data->intersection.x = ray_x;
-            data->intersection.y = ray_y;
-            data->intersection.distance = MAX_DISTANCE;
-            return ;
-        }
-        if (data->map[(int)ray_y][(int)ray_x] == '1')
+        if (data->map[(int)ray_y][(int)ray_x ] == '1')
         {
             data->intersection.x = ray_x;
             data->intersection.y = ray_y;
             data->intersection.distance = get_distan(data, ray_x, ray_y);
-            return ;
+            return;
         }
+        ray_x += step_x;
+        ray_y += step_y;
     }
+    data->intersection.x = ray_x;
+    data->intersection.y = ray_y;
+    data->intersection.distance = MAX_DISTANCE;
 }
+
 
 void cast_rays(t_gamedata *data)
 {
@@ -110,7 +144,7 @@ void cast_rays(t_gamedata *data)
     float angle_step;
     int i;
 
-    ray_angle = data->playerdata->angle - (FOV / 2); // Comienza en el ángulo izquierdo
+    ray_angle = data->playerdata->angle - (FOV / 2);
 	angle_step = FOV / NUM_RAYS;
     i = 0;
     while (i < NUM_RAYS)

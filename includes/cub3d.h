@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/14 15:29:57 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/15 15:36:42 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@
 # define WINDOW_HEIGHT 1200
 # define WINDOW_WIDTH 2080
 # define PI 3.141592653589793
-# define PIXEL_SIZE 30
-#define COLLISION_MARGIN 0.2f 
-# define FOV 60 * (PI / 180)  // Campo de visión en radianes
+# define PIXEL_SIZE 10
+# define COLLISION_MARGIN 0.2f 
+# define FOV 0.88  // Campo de visión en radianes
 # define NUM_RAYS WINDOW_WIDTH
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
-# define MOVE_SPEED 0.1 // Velocidad de movimiento
-# define TURN_SPEED 0.1// Velocidad de giro
-#define MAP_WIDTH  100 
-#define MAP_HEIGHT 100
-#define MAX_DISTANCE 1e6
+# define MOVE_SPEED 0.1f // Velocidad de movimiento
+# define TURN_SPEED 0.1f// Velocidad de giro
+# define MAP_WIDTH  100 
+# define MAP_HEIGHT 100
+# define MAX_DISTANCE 1e6
+# define WALL_HEIGHT 1.0f
 /****************************
  * *********TYPEDEFS*********
  * *************************/
@@ -149,7 +150,7 @@ void		error_exit(int status);
 void		error_free(int status, t_gamedata *data, t_file *scenedata);
 void		free_data_content(t_gamedata *data);
 // reading scene file
-uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue);
+uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha);
 void		scene_opening(t_file *filedata);
 void		load_scene(t_file *filedata, int fd);
 void		file_validation(t_file *filedata, int argc, char **av);
@@ -169,7 +170,10 @@ int			verify_paths_data(t_paths *paths);
 void		verify_map(t_gamedata *data);
 // gamestate
 void		init_gamestate(t_gamedata *data);
+void 		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
+void 		cast_ray(t_gamedata *data, float ray_angle);
 void 		cast_rays(t_gamedata *data);
+void 		render_walls(t_gamedata *data);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);

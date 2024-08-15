@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/14 12:31:32 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/15 15:37:52 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,8 @@ void turnPlayer(t_gamedata *data, int direction)
         player->angle -= 2 * PI;
     }
 }
-uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue)
+uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 {
-	uint8_t alpha;
-	
-	alpha = 255; 
 	return (red << 24) | (green << 16) | (blue << 8) | alpha;
 }
 
@@ -125,7 +122,7 @@ void    ft_player(t_gamedata *data)
 	player_size = PIXEL_SIZE / 2;
 	centerX =  PIXEL_SIZE * data->playerdata->x_pos;
 	centerY =  PIXEL_SIZE * data->playerdata->y_pos;
-	color = get_color (data->ceiling[0] , data->ceiling[1], data->ceiling[2]);
+	color = get_color (data->ceiling[0] , data->ceiling[1], data->ceiling[2], 255);
 	int i = -player_size / 2;
 	while (i < player_size / 3) 
 	{
@@ -147,7 +144,7 @@ void draw_flor(t_gamedata *data)
 	uint32_t color;
 
 	y = 0;
-	color = get_color(255, 255, 255); //white color
+	color = get_color(255, 255, 255, 255); //white color
 	while (data->map[y] != NULL)
 	{
 		x = 0;
@@ -181,7 +178,7 @@ void display_map(t_gamedata *data)
 	uint32_t color;
 
 	y = 0;
-	color = get_color(data->floor[0], data->floor[1], data->floor[2]);
+	color = get_color(data->floor[0], data->floor[1], data->floor[2], 255);
 	while (data->map[y] != NULL)
 	{
 		x = 0;
@@ -209,6 +206,7 @@ void display_map(t_gamedata *data)
     ft_player(data);
 }
 
+
 void my_keyhook(void* param)
 {
     t_gamedata *data;
@@ -226,11 +224,13 @@ void my_keyhook(void* param)
     if (mlx_is_key_down(data->window, MLX_KEY_LEFT))
         turnPlayer(data, -1);
     if (mlx_is_key_down(data->window, MLX_KEY_RIGHT))
-        turnPlayer(data, 1);   
-    display_map(data);
+    {   turnPlayer(data, 1);   }
+	render_walls(data);
+	display_map(data);
     cast_rays(data);
     if (mlx_is_key_down(data->window, MLX_KEY_ESCAPE))
-        mlx_close_window(data->window);
+    {    mlx_close_window(data->window);}
+	
 }
 
 

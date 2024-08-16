@@ -6,11 +6,21 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/15 16:58:54 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/16 12:28:55 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void render_flor(t_gamedata *data, int wall_bottom, int i)
+{
+        while (wall_bottom < WINDOW_HEIGHT) 
+        {
+            mlx_put_pixel(data->img, i, wall_bottom, get_color(255, 0, 0, 255));
+            wall_bottom++;
+        }
+
+}
 
 void render_walls(t_gamedata *data) 
 {
@@ -32,6 +42,15 @@ void render_walls(t_gamedata *data)
         wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
         wall_top = (WINDOW_HEIGHT / 2) - (wall_height / 2);
         wall_bottom = wall_top + wall_height;
+        y = 0;
+        while (y < wall_top)
+        {
+            if (y >= 0 && y < WINDOW_HEIGHT) 
+            {
+                mlx_put_pixel(data->img, i, y, get_color(0, 255, 0, 255));
+                y++;
+            }
+        }
         y = wall_top;
         while (y < wall_bottom) 
         {
@@ -42,6 +61,7 @@ void render_walls(t_gamedata *data)
             }
             y++;
         }
+        render_flor(data, wall_bottom, i);
         i++;
         ray_angle += angle_step;
     }

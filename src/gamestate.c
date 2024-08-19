@@ -6,12 +6,11 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/15 15:37:52 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:16:21 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
 
 void initializePlayer(t_gamedata *data, char **map)
 {
@@ -233,12 +232,41 @@ void my_keyhook(void* param)
 	
 }
 
+void	load_texture(t_gamedata *data)
+{
+	data->texture = mlx_load_png("src/rojo.png");//oeste
+    if (!data->texture)
+    {
+        // Manejo del error
+        printf("error to load\n");
+    }
+	data->nort = mlx_load_png("src/nort.png");
+    if (!data->nort)
+    {
+        // Manejo del error
+        printf("error to load\n");
+    }
+	data->surt = mlx_load_png("src/surt.png");
+    if (!data->surt)
+    {
+        // Manejo del error
+        printf("error to load\n");
+    }
+	data->este = mlx_load_png("src/este.png");
+    if (!data->este)
+    {
+        // Manejo del error
+        printf("error to load\n");
+    }
+}
+
 
 void	init_gamestate(t_gamedata *data)
 {
  	data->window = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", false);
 	data->img = mlx_new_image(data->window, WINDOW_WIDTH, WINDOW_HEIGHT);
 	initializePlayer(data, data->map);
+	load_texture(data);
 	mlx_image_to_window(data->window, data->img, 0, 0);
 	display_map(data);
 	mlx_loop_hook(data->window, my_keyhook, data);

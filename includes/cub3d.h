@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/15 15:36:42 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/19 16:13:42 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 # define PI 3.141592653589793
 # define PIXEL_SIZE 10
 # define COLLISION_MARGIN 0.2f 
-# define FOV 0.88  // Campo de visión en radianes
+# define FOV 0.66  // Campo de visión en radianes
 # define NUM_RAYS WINDOW_WIDTH
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
-# define MOVE_SPEED 0.1f // Velocidad de movimiento
-# define TURN_SPEED 0.1f// Velocidad de giro
+# define MOVE_SPEED 0.06f // Velocidad de movimiento
+# define TURN_SPEED 0.06f// Velocidad de giro
 # define MAP_WIDTH  100 
 # define MAP_HEIGHT 100
 # define MAX_DISTANCE 1e6
@@ -41,6 +41,18 @@
 /****************************
  * *********TYPEDEFS*********
  * *************************/
+
+typedef struct s_image
+{
+    void    *img;
+    char    *data_addr;
+    int     bpp;
+    int     line_length;
+    int     endian;
+    int     width;
+    int     height;
+}               t_image;
+
 enum e_errors
 {
 	OPEN_FAILURE = 1,
@@ -71,6 +83,9 @@ typedef struct s_intersection
     float distance;
     float x;
     float y;
+    int side;
+    float ray_dir_x;
+    float ray_dir_y;
 } t_intersection;
 
 typedef struct s_paths
@@ -126,12 +141,16 @@ typedef struct s_gamedata
 	t_player	*playerdata;
 	t_intersection intersection;
 	t_line_params line;
+	//t_image			*texture;
 	char		**map;
 	t_paths		*paths;
 	uint8_t		floor[3];
 	uint8_t		ceiling[3];
 	mlx_image_t* player;
 	mlx_texture_t* texture;
+	mlx_texture_t* nort;
+	mlx_texture_t* surt;
+	mlx_texture_t* este;
 	mlx_image_t* img;
 	mlx_t		*window;
 	int	flag;

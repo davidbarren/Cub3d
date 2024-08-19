@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 16:25:50 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/20 01:14:50 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,26 @@ uint32_t get_texture_color(t_image *texture, int x, int y)
 
 void render_flor(t_gamedata *data, int wall_bottom, int i)
 {
+	uint32_t color;
+
+	color = get_color(data->floor[0], data->floor[1], data->floor[2], 255);
         while (wall_bottom < WINDOW_HEIGHT) 
         {
-            mlx_put_pixel(data->img, i, wall_bottom, get_color(255, 0, 0, 255));
+            mlx_put_pixel(data->img, i, wall_bottom, color);
             wall_bottom++;
+        }
+
+}
+void render_ceiling(t_gamedata *data, int wall_top, int i)
+{
+	uint32_t color;
+
+	color = get_color(data->ceiling[0], data->ceiling[1]
+			, data->ceiling[2], 255);
+        while (wall_top > 0) 
+        {
+            mlx_put_pixel(data->img, i, wall_top, color);
+            wall_top--;
         }
 
 }
@@ -43,12 +59,13 @@ void render_walls(t_gamedata *data)
     int tex_y;
     uint32_t color;
     float wall_x;
-    mlx_texture_t *texture = data->este; 
+    mlx_texture_t *texture;
 
     i = 0;
     while (i < NUM_RAYS) 
     {
         cast_ray(data, ray_angle);
+		texture = data->txtrs[data->intersection.direction - 1];
         corrected_distance = data->intersection.distance * cos(data->playerdata->angle - ray_angle);
         wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
         wall_top = (WINDOW_HEIGHT / 2) - (wall_height / 2);
@@ -57,13 +74,25 @@ void render_walls(t_gamedata *data)
             wall_top = 0;
         if (wall_bottom >= WINDOW_HEIGHT) 
             wall_bottom = WINDOW_HEIGHT - 1;
-        wall_x = fmod(data->intersection.x, 1.0f);
-        tex_x = (int)(wall_x * (int)texture->width);
+		wall_x = fmod(data->intersection.y, 1.0f);
+		if (data->intersection.side)
+			wall_x = fmod(data->intersection.x, 1.0f);
+//		wall_x = fmod(wall_x + 1.0f, 1.0f);
+//		if (wall_x > 1.0f)
+//			wall_x = 1.0f;
+//		if (wall_x < 0.0f)
+//			wall_x = 0.0f;
+        tex_x = (int)(wall_x * texture->width);
         if (tex_x < 0) 
             tex_x = 0;
         if ((uint32_t)tex_x >= texture->width) 
             tex_x = texture->width - 1;
         y = wall_top;
+		render_ceiling(data, wall_top, i);
+//		printf("value of wall_x:%f\n", wall_x);
+//		printf("value of intersectionx%f\n", data->intersection.x);
+//		printf("value of intersectiony%f\n", data->intersection.y);
+//		printf("value of tex_x:%d\n", tex_x);
         while (y < wall_bottom)
         {
             if (y >= 0 && y < WINDOW_HEIGHT)
@@ -73,16 +102,19 @@ void render_walls(t_gamedata *data)
                     tex_y = 0;
                 if ((uint32_t)tex_y >= texture->height)
                     tex_y = texture->height - 1;
-                color = ((uint32_t *)texture->pixels)[tex_y * texture->width + tex_x];
+				uint8_t* test = texture->pixels + (tex_y * texture->width + tex_x) * texture->bytes_per_pixel;
+				color = get_color(*test, *(test + 1), *(test + 2), *(test + 3));
+//                color = ((uint32_t *)texture->pixels)[tex_y  * texture->width + tex_x];
                 mlx_put_pixel(data->img, i, y, color);
             }
             y++;
         }
-        //render_flor(data, wall_bottom, i);
+        render_flor(data, wall_bottom, i);
         i++;
         ray_angle += angle_step;
     }
 }
+
 
 int ft_abs(int n)
 {
@@ -166,9 +198,21 @@ void cast_ray(t_gamedata *data, float ray_angle)
             data->intersection.y = ray_y;
             data->intersection.distance = get_distan(data, ray_x, ray_y);
             if (fabs(step_x) > fabs(step_y))
+			{
                 data->intersection.side = 0; // Pared vertical
-            else
+				if (data->intersection.ray_dir_x > 0)
+						data->intersection.direction = WEST;
+				else
+					data->intersection.direction = EAST;
+			}
+            else if (fabs(step_y) > fabs(step_x))
+			{
                 data->intersection.side = 1; // Pared horizontal
+				if (data->intersection.ray_dir_y > 0)
+						data->intersection.direction = NORTH;
+				else
+					data->intersection.direction = SOUTH;
+			}
             return ;
         }
         ray_x += step_x;

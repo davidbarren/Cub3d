@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 16:13:42 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/19 23:36:33 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,15 @@ enum e_errors
 	INVALID_MAP,
 	EMPTY_FILE,
 	BAD_MAP,
+	BAD_LOADING,
 };
 
 enum	e_player_orientation
 {
 	NORTH = 1,
-	EAST,
-	SOUTH,
-	WEST,
+	EAST = 2,
+	SOUTH = 3,
+	WEST = 4,
 };
 
 typedef struct s_intersection
@@ -86,6 +87,7 @@ typedef struct s_intersection
     int side;
     float ray_dir_x;
     float ray_dir_y;
+	int direction;
 } t_intersection;
 
 typedef struct s_paths
@@ -147,11 +149,8 @@ typedef struct s_gamedata
 	uint8_t		floor[3];
 	uint8_t		ceiling[3];
 	mlx_image_t* player;
-	mlx_texture_t* texture;
-	mlx_texture_t* nort;
-	mlx_texture_t* surt;
-	mlx_texture_t* este;
 	mlx_image_t* img;
+	mlx_texture_t *txtrs[4];
 	mlx_t		*window;
 	int	flag;
 	size_t		height;
@@ -196,4 +195,7 @@ void 		render_walls(t_gamedata *data);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);
+// textures
+void	load_texture(t_gamedata *data);
+void	delete_textures(t_gamedata *data);
 #endif

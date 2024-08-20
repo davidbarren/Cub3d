@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/20 03:18:21 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/20 03:55:25 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	initializePlayer(t_gamedata *data, char **map)
 	if (map[(int)player->y_pos][(int)player->x_pos] == 'S')
 	{
 		player->angle = PI / 2; // Mirando hacia abajo (90 grados)
+		printf("player  angle start:%f\n", player->angle);
 		return ;
 	}
 	if (map[(int)player->y_pos][(int)player->x_pos] == 'E')

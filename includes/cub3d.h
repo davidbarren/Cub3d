@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 23:36:33 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/20 05:18:36 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,23 @@ typedef struct s_intersection
     int side;
     float ray_dir_x;
     float ray_dir_y;
+	float true_ang;
 	int direction;
 } t_intersection;
+
+typedef struct s_raydata
+{
+	float	ray_dir_x;
+	int		x_step;
+	int		dx;
+	float	ray_dir_y;
+	int		dy;
+	int		y_step;
+	int		direction;
+	bool	vertical;
+	bool	collided;
+
+} t_raydata;
 
 typedef struct s_paths
 {

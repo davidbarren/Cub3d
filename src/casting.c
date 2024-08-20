@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/20 03:03:20 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/20 05:20:49 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ void	render_walls(t_gamedata *data)
 		if (data->intersection.side)
 			wall_x = fmod(data->intersection.x, 1.0f);
 		//		wall_x = fmod(wall_x + 1.0f, 1.0f);
-		//		if (wall_x > 1.0f)
-		//			wall_x = 1.0f;
-		//		if (wall_x < 0.0f)
-		//			wall_x = 0.0f;
+				if (wall_x > 1.0f)
+					wall_x = 1.0f;
+				if (wall_x < 0.0f)
+					wall_x = 0.0f;
 		tex_x = (int)(wall_x * texture->width);
 		if (tex_x < 0)
 			tex_x = 0;
@@ -174,7 +174,7 @@ float	get_distan(t_gamedata *data, float ray_x, float ray_y)
 	return (sqrtf(pow(ray_x - data->playerdata->x_pos, 2) + pow
 			(ray_y - data->playerdata->y_pos, 2)));
 }
-
+/*
 void	cast_ray(t_gamedata *data, float ray_angle)
 {
 	float	ray_x;
@@ -186,8 +186,8 @@ void	cast_ray(t_gamedata *data, float ray_angle)
 	data->intersection.ray_dir_y = sin(ray_angle);
 	ray_x = data->playerdata->x_pos;
 	ray_y = data->playerdata->y_pos;
-	step_x = cos(ray_angle) * 0.001f;
-	step_y = sin(ray_angle) * 0.001f;
+	step_x = cos(ray_angle) * 0.005f;
+	step_y = sin(ray_angle) * 0.005f;
 	while ((int)ray_x >= 0 && (int)ray_x < MAP_WIDTH && (int)ray_y >= 0 && (int)ray_y < MAP_HEIGHT)
 	{
 		if (data->map[(int)ray_y][(int)ray_x] == '1')
@@ -195,18 +195,23 @@ void	cast_ray(t_gamedata *data, float ray_angle)
 			data->intersection.x = ray_x;
 			data->intersection.y = ray_y;
 			data->intersection.distance = get_distan(data, ray_x, ray_y);
+			data->intersection.true_ang = atan2(data->intersection.ray_dir_x, data->intersection.ray_dir_y);
+//			printf("value of true ang:%f\n", data->intersection.true_ang);
 			if (fabs(step_x) > fabs(step_y))
 			{
 				data->intersection.side = 0; // Pared vertical
-				if (data->intersection.ray_dir_x > 0)
+				if (data->intersection.ray_dir_y > 0)
+				{
+//					printf("raydir%f\n", data->intersection.ray_dir_x);
 					data->intersection.direction = WEST;
+				}
 				else
 					data->intersection.direction = EAST;
 			}
 			else if (fabs(step_y) > fabs(step_x))
 			{
 				data->intersection.side = 1; // Pared horizontal
-				if (data->intersection.ray_dir_y > 0)
+				if (data->intersection.ray_dir_x > 0)
 					data->intersection.direction = NORTH;
 				else
 					data->intersection.direction = SOUTH;
@@ -219,6 +224,84 @@ void	cast_ray(t_gamedata *data, float ray_angle)
 	data->intersection.x = ray_x;
 	data->intersection.y = ray_y;
 	data->intersection.distance = MAX_DISTANCE;
+}
+*/
+void cast_ray(t_gamedata *data, float ray_angle) {
+    float ray_dir_x = cos(ray_angle);
+    float ray_dir_y = sin(ray_angle);
+
+    // Map grid coordinates of the player
+    int map_x = (int)data->playerdata->x_pos;
+    int map_y = (int)data->playerdata->y_pos;
+
+    // Distance to next x and y side (deltaX, deltaY)
+    float delta_dist_x = fabs(1 / ray_dir_x);
+    float delta_dist_y = fabs(1 / ray_dir_y);
+
+    // Step direction and initial side distances
+    int step_x, step_y;
+    float side_dist_x, side_dist_y;
+
+    if (ray_dir_x < 0) {
+        step_x = -1;
+        side_dist_x = (data->playerdata->x_pos - map_x) * delta_dist_x;
+    } else {
+        step_x = 1;
+        side_dist_x = (map_x + 1.0 - data->playerdata->x_pos) * delta_dist_x;
+    }
+
+    if (ray_dir_y < 0) {
+        step_y = -1;
+        side_dist_y = (data->playerdata->y_pos - map_y) * delta_dist_y;
+    } else {
+        step_y = 1;
+        side_dist_y = (map_y + 1.0 - data->playerdata->y_pos) * delta_dist_y;
+    }
+
+    // Perform the DDA
+    int hit = 0; // Was there a wall hit?
+    int side;    // Was a NS or EW wall hit?
+    while (hit == 0) {
+        // Jump to the next map square, either in x-direction, or in y-direction
+        if (side_dist_x < side_dist_y) {
+            side_dist_x += delta_dist_x;
+            map_x += step_x;
+            side = 0; // Vertical wall
+        } else {
+            side_dist_y += delta_dist_y;
+            map_y += step_y;
+            side = 1; // Horizontal wall
+        }
+        
+        // Check if ray has hit a wall
+        if (data->map[map_y][map_x] == '1') hit = 1;
+    }
+
+    // Calculate the distance projected on the camera direction (Euclidean distance will give a fisheye effect)
+    float perp_wall_dist;
+    if (side == 0) {
+        perp_wall_dist = (map_x - data->playerdata->x_pos + (1 - step_x) / 2) / ray_dir_x;
+    } else {
+        perp_wall_dist = (map_y - data->playerdata->y_pos + (1 - step_y) / 2) / ray_dir_y;
+    }
+
+    // Save intersection data
+    data->intersection.distance = perp_wall_dist;
+    data->intersection.x = data->playerdata->x_pos + perp_wall_dist * ray_dir_x;
+    data->intersection.y = data->playerdata->y_pos + perp_wall_dist * ray_dir_y;
+    data->intersection.side = side;
+    
+    if (side == 0) { // Vertical wall
+        if (ray_dir_x > 0)
+            data->intersection.direction = WEST;
+        else
+            data->intersection.direction = EAST;
+    } else { // Horizontal wall
+        if (ray_dir_y > 0)
+            data->intersection.direction = NORTH;
+        else
+            data->intersection.direction = SOUTH;
+    }
 }
 
 

@@ -6,7 +6,7 @@
 #    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/08/19 21:22:11 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/08/20 16:29:24 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ CSRCS = $(SRCDIR)/scene_loading.c\
 		$(SRCDIR)/player_data.c\
 		$(SRCDIR)/casting.c\
 		$(SRCDIR)/textures.c\
+		$(SRCDIR)/dda.c\
 
 OBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 BOBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(BSRCS))

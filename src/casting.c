@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/20 05:20:49 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:29:11 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	render_flor(t_gamedata *data, int wall_bottom, int i)
 		wall_bottom++;
 	}
 }
-
+ /* hay veces que hace segfault mlx_put_pixel en estas funciones, deberiamos de proteger?
+  * o estoy haciendo algo mal*/
 void	render_ceiling(t_gamedata *data, int wall_top, int i)
 {
 	uint32_t	color;
@@ -66,8 +67,8 @@ void	render_walls(t_gamedata *data)
 	i = 0;
 	while (i < NUM_RAYS)
 	{
-		cast_ray(data, ray_angle);
-		texture = data->txtrs[data->intersection.direction - 1];
+		cast_ray_dda(data, ray_angle);
+		texture = data->txtrs[data->intersection.direction - 1]; // usa la textura correcta en array dependiendo de orientacion de pared
 		corrected_distance = data->intersection.distance * cos(data->playerdata->angle - ray_angle);
 		wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
 		wall_top = (WINDOW_HEIGHT / 2) - (wall_height / 2);
@@ -76,9 +77,9 @@ void	render_walls(t_gamedata *data)
 			wall_top = 0;
 		if (wall_bottom >= WINDOW_HEIGHT)
 			wall_bottom = WINDOW_HEIGHT - 1;
-		wall_x = fmod(data->intersection.y, 1.0f);
+		wall_x = fmod(data->intersection.y, 1.0f); // dando valor de y si es colision horizontal
 		if (data->intersection.side)
-			wall_x = fmod(data->intersection.x, 1.0f);
+			wall_x = fmod(data->intersection.x, 1.0f); // valor de x si es vertical
 		//		wall_x = fmod(wall_x + 1.0f, 1.0f);
 				if (wall_x > 1.0f)
 					wall_x = 1.0f;
@@ -100,8 +101,8 @@ void	render_walls(t_gamedata *data)
 					tex_y = 0;
 				if ((uint32_t)tex_y >= texture->height)
 					tex_y = texture->height - 1;
-				uint8_t* test = texture->pixels + (tex_y * texture->width + tex_x) * texture->bytes_per_pixel;
-				color = get_color(*test, *(test + 1), *(test + 2), *(test + 3));
+				uint8_t* test = texture->pixels + (tex_y * texture->width + tex_x) * texture->bytes_per_pixel; 
+				color = get_color(*test, *(test + 1), *(test + 2), *(test + 3)); // obtiene color de textura sin estar rojo
 				//                color = ((uint32_t *)texture->pixels)[tex_y  * texture->width + tex_x];
 				mlx_put_pixel(data->img, i, y, color);
 			}
@@ -195,14 +196,11 @@ void	cast_ray(t_gamedata *data, float ray_angle)
 			data->intersection.x = ray_x;
 			data->intersection.y = ray_y;
 			data->intersection.distance = get_distan(data, ray_x, ray_y);
-			data->intersection.true_ang = atan2(data->intersection.ray_dir_x, data->intersection.ray_dir_y);
-//			printf("value of true ang:%f\n", data->intersection.true_ang);
 			if (fabs(step_x) > fabs(step_y))
 			{
 				data->intersection.side = 0; // Pared vertical
 				if (data->intersection.ray_dir_y > 0)
 				{
-//					printf("raydir%f\n", data->intersection.ray_dir_x);
 					data->intersection.direction = WEST;
 				}
 				else
@@ -224,85 +222,7 @@ void	cast_ray(t_gamedata *data, float ray_angle)
 	data->intersection.x = ray_x;
 	data->intersection.y = ray_y;
 	data->intersection.distance = MAX_DISTANCE;
-}
-*/
-void cast_ray(t_gamedata *data, float ray_angle) {
-    float ray_dir_x = cos(ray_angle);
-    float ray_dir_y = sin(ray_angle);
-
-    // Map grid coordinates of the player
-    int map_x = (int)data->playerdata->x_pos;
-    int map_y = (int)data->playerdata->y_pos;
-
-    // Distance to next x and y side (deltaX, deltaY)
-    float delta_dist_x = fabs(1 / ray_dir_x);
-    float delta_dist_y = fabs(1 / ray_dir_y);
-
-    // Step direction and initial side distances
-    int step_x, step_y;
-    float side_dist_x, side_dist_y;
-
-    if (ray_dir_x < 0) {
-        step_x = -1;
-        side_dist_x = (data->playerdata->x_pos - map_x) * delta_dist_x;
-    } else {
-        step_x = 1;
-        side_dist_x = (map_x + 1.0 - data->playerdata->x_pos) * delta_dist_x;
-    }
-
-    if (ray_dir_y < 0) {
-        step_y = -1;
-        side_dist_y = (data->playerdata->y_pos - map_y) * delta_dist_y;
-    } else {
-        step_y = 1;
-        side_dist_y = (map_y + 1.0 - data->playerdata->y_pos) * delta_dist_y;
-    }
-
-    // Perform the DDA
-    int hit = 0; // Was there a wall hit?
-    int side;    // Was a NS or EW wall hit?
-    while (hit == 0) {
-        // Jump to the next map square, either in x-direction, or in y-direction
-        if (side_dist_x < side_dist_y) {
-            side_dist_x += delta_dist_x;
-            map_x += step_x;
-            side = 0; // Vertical wall
-        } else {
-            side_dist_y += delta_dist_y;
-            map_y += step_y;
-            side = 1; // Horizontal wall
-        }
-        
-        // Check if ray has hit a wall
-        if (data->map[map_y][map_x] == '1') hit = 1;
-    }
-
-    // Calculate the distance projected on the camera direction (Euclidean distance will give a fisheye effect)
-    float perp_wall_dist;
-    if (side == 0) {
-        perp_wall_dist = (map_x - data->playerdata->x_pos + (1 - step_x) / 2) / ray_dir_x;
-    } else {
-        perp_wall_dist = (map_y - data->playerdata->y_pos + (1 - step_y) / 2) / ray_dir_y;
-    }
-
-    // Save intersection data
-    data->intersection.distance = perp_wall_dist;
-    data->intersection.x = data->playerdata->x_pos + perp_wall_dist * ray_dir_x;
-    data->intersection.y = data->playerdata->y_pos + perp_wall_dist * ray_dir_y;
-    data->intersection.side = side;
-    
-    if (side == 0) { // Vertical wall
-        if (ray_dir_x > 0)
-            data->intersection.direction = WEST;
-        else
-            data->intersection.direction = EAST;
-    } else { // Horizontal wall
-        if (ray_dir_y > 0)
-            data->intersection.direction = NORTH;
-        else
-            data->intersection.direction = SOUTH;
-    }
-}
+}*/
 
 
 void cast_rays(t_gamedata *data)
@@ -316,7 +236,7 @@ void cast_rays(t_gamedata *data)
 	i = 0;
 	while (i < NUM_RAYS)
 	{
-		cast_ray(data, ray_angle);
+		cast_ray_dda(data, ray_angle);
 		init_draw_line_param(data, data->intersection.x * PIXEL_SIZE,
 			data->intersection.y * PIXEL_SIZE);
 		ray_angle += angle_step;

@@ -6,7 +6,7 @@
 #    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/08/14 12:07:40 by dzurita          ###   ########.fr        #
+#    Updated: 2024/08/21 10:51:52 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3d
 
 
 CC	= cc
-CFLAGS = -Wall -Wextra -g -Werror -Og #-fsanitize=address
+CFLAGS = -Wall -Wextra -g -Werror -O3 -fsanitize=address
 
 SRCDIR = src
 OBJDIR = obj
@@ -36,6 +36,8 @@ CSRCS = $(SRCDIR)/scene_loading.c\
 		$(SRCDIR)/gamestate.c\
 		$(SRCDIR)/player_data.c\
 		$(SRCDIR)/casting.c\
+		$(SRCDIR)/textures.c\
+		$(SRCDIR)/dda.c\
 
 OBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 BOBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(BSRCS))

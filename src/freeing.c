@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:28:36 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/18 17:56:25 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/19 21:25:04 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ void	free_data_content(t_gamedata *data)
 	}
 	if (data->playerdata)
 		free(data->playerdata);
+	delete_textures(data);
 }

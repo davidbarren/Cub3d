@@ -6,141 +6,143 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/20 15:42:16 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/21 14:41:24 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../includes/cub3d.h"
 
-void initializePlayer(t_gamedata *data, char **map)
+void	initializePlayer(t_gamedata *data, char **map)
 {
-	t_player *player;
+	t_player	*player;
 
 	player = data->playerdata;
-    if (map[(int)player->y_pos][(int)player->x_pos] == 'N')
+	if (map[(int)player->y_pos][(int)player->x_pos] == 'N')
 	{
-        player->angle = 3 * PI / 2; // Mirando hacia arriba (270 grados)
-        return ;
+		player->angle = 3 * PI / 2; // Mirando hacia arriba (270 grados)
+		return ;
 	}
 	if (map[(int)player->y_pos][(int)player->x_pos] == 'S')
 	{
-        player->angle = PI / 2; // Mirando hacia abajo (90 grados)
-        return ;
+		player->angle = PI / 2; // Mirando hacia abajo (90 grados)
+		printf("player  angle start:%f\n", player->angle);
+		return ;
 	}
 	if (map[(int)player->y_pos][(int)player->x_pos] == 'E')
 	{
-        player->angle = 0; // Mirando hacia derecha (90 grados)
-        return ;
+		player->angle = 0; // Mirando hacia derecha (90 grados)
+		return ;
 	}
 	if (map[(int)player->y_pos][(int)player->x_pos] == 'W')
 	{
-        player->angle = PI; // Mirando hacia izquierda (90 grados)
-        return ;
+		player->angle = PI; // Mirando hacia izquierda (90 grados)
+		return ;
 	}
 }
 
-void moving_forward_backward(t_gamedata *data, int direction)
+void	moving_forward_backward(t_gamedata *data, int direction)
 {
-    t_player *player;
-    int map_x;
-    int map_y;
-    float move_x;
-    float move_y;
-
-    player = data->playerdata;
-    move_x = direction * MOVE_SPEED * cos(player->angle);
-    move_y = direction * MOVE_SPEED * sin(player->angle);
-    if (move_x > 0)
-        map_x = (int)((player->x_pos + move_x) + COLLISION_MARGIN);
-    else
-        map_x = (int)((player->x_pos + move_x) - COLLISION_MARGIN);
-    if (move_y > 0)
-        map_y = (int)((player->y_pos + move_y) + COLLISION_MARGIN);
-    else
-        map_y = (int)((player->y_pos + move_y) - COLLISION_MARGIN);
-    if (data->map[map_y][map_x] == '1')
-        return;
-    player->x_pos += move_x;
-    player->y_pos += move_y;
-}
-
-void moving_side(t_gamedata *data, int direction)
-{
-    t_player *player;
-    int map_x;
-    int map_y;
-    float move_x;
-    float move_y;
-
-    player = data->playerdata;
-    move_x = direction * MOVE_SPEED * cos(player->angle + (PI / 2));
-    move_y = direction * MOVE_SPEED * sin(player->angle + (PI / 2));
-    if (move_x > 0)
-        map_x = (int)((player->x_pos + move_x) + COLLISION_MARGIN);
-    else
-        map_x = (int)((player->x_pos + move_x) - COLLISION_MARGIN);
-    if (move_y > 0)
-        map_y = (int)((player->y_pos + move_y) + COLLISION_MARGIN);
-    else
-        map_y = (int)((player->y_pos + move_y) - COLLISION_MARGIN);
-    if (data->map[map_y][map_x] == '1')
-        return;
-    player->x_pos += move_x;
-    player->y_pos += move_y;
-}
-
-void turnPlayer(t_gamedata *data, int direction)
-{
-	t_player *player;
+	t_player	*player;
+	int			map_x;
+	int			map_y;
+	float		move_x;
+	float		move_y;
 
 	player = data->playerdata;
-    player->angle += direction * TURN_SPEED;
-    if (player->angle < 0)
-	{
-        player->angle += 2 * PI;
-    } 
-	else if (player->angle >= 2 * PI) 
-	{
-        player->angle -= 2 * PI;
-    }
+	move_x = direction * MOVE_SPEED * cos(player->angle);
+	move_y = direction * MOVE_SPEED * sin(player->angle);
+	if (move_x > 0)
+		map_x = (int)((player->x_pos + move_x) + COLLISION_MARGIN);
+	else
+		map_x = (int)((player->x_pos + move_x) - COLLISION_MARGIN);
+	if (move_y > 0)
+		map_y = (int)((player->y_pos + move_y) + COLLISION_MARGIN);
+	else
+		map_y = (int)((player->y_pos + move_y) - COLLISION_MARGIN);
+	if (data->map[map_y][map_x] == '1')
+		return ;
+	player->x_pos += move_x;
+	player->y_pos += move_y;
 }
-uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
+
+void	moving_side(t_gamedata *data, int direction)
 {
-	return (red << 24) | (green << 16) | (blue << 8) | alpha;
+	t_player	*player;
+	int			map_x;
+	int			map_y;
+	float		move_x;
+	float		move_y;
+
+	player = data->playerdata;
+	move_x = direction * MOVE_SPEED * cos(player->angle + (PI / 2));
+	move_y = direction * MOVE_SPEED * sin(player->angle + (PI / 2));
+	if (move_x > 0)
+		map_x = (int)((player->x_pos + move_x) + COLLISION_MARGIN);
+	else
+		map_x = (int)((player->x_pos + move_x) - COLLISION_MARGIN);
+	if (move_y > 0)
+		map_y = (int)((player->y_pos + move_y) + COLLISION_MARGIN);
+	else
+		map_y = (int)((player->y_pos + move_y) - COLLISION_MARGIN);
+	if (data->map[map_y][map_x] == '1')
+		return ;
+	player->x_pos += move_x;
+	player->y_pos += move_y;
 }
 
-
-void    ft_player(t_gamedata *data)
+void	turnPlayer(t_gamedata *data, int direction)
 {
+	t_player	*player;
 
-	uint32_t color;
- 	int player_size;
-    int centerX;
-    int centerY;
-
-	player_size = PIXEL_SIZE / 2;
-	centerX =  PIXEL_SIZE * data->playerdata->x_pos;
-	centerY =  PIXEL_SIZE * data->playerdata->y_pos;
-	color = get_color (data->ceiling[0] , data->ceiling[1], data->ceiling[2], 255);
-	int i = -player_size / 2;
-	while (i < player_size / 3) 
+	player = data->playerdata;
+	player->angle += direction * TURN_SPEED;
+	if (player->angle < 0)
 	{
-    	int j = -player_size / 3;
-    	while (j < player_size / 3) 
-		{
-        	mlx_put_pixel(data->img, centerX + j, centerY + i, color);
-        	++j;
-    	}
-    	++i;
+		player->angle += 2 * PI;
+	}
+	else if (player->angle >= 2 * PI)
+	{
+		player->angle -= 2 * PI;
 	}
 }
-void draw_flor(t_gamedata *data)
+
+uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 {
-    int x;
-	int y;
-	int i;
-	int i2;
-	uint32_t color;
+	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
+}
+
+void	ft_player(t_gamedata *data)
+{
+	uint32_t	color;
+	int			player_size;
+	int			centerx;
+	int			centery;
+
+	player_size = PIXEL_SIZE / 2;
+	centerx = PIXEL_SIZE * data->playerdata->x_pos;
+	centery = PIXEL_SIZE * data->playerdata->y_pos;
+	color = get_color(0, 0, 255, 255);
+	int	i = -player_size / 2;
+	while (i < player_size / 3)
+	{
+		int	j = -player_size / 3;
+		while (j < player_size / 3)
+		{
+			mlx_put_pixel(data->img, centerx + j, centery + i, color);
+			++j;
+		}
+		++i;
+	}
+}
+
+void	draw_flor(t_gamedata *data)
+{
+	int			x;
+	int			y;
+	int			i;
+	int			i2;
+	uint32_t	color;
 
 	y = 0;
 	color = get_color(255, 255, 255, 255); //white color
@@ -155,12 +157,12 @@ void draw_flor(t_gamedata *data)
 				while (i < PIXEL_SIZE)
 				{
 					i2 = 0;
-					while(i2 < PIXEL_SIZE)
+					while (i2 < PIXEL_SIZE)
 					{
 						mlx_put_pixel(data->img, x * PIXEL_SIZE + i, y * PIXEL_SIZE + i2, color);
 						i2++;
 					}
-				i++;
+					i++;
 				}
 			}
 			x++;
@@ -168,16 +170,17 @@ void draw_flor(t_gamedata *data)
 		y++;
 	}
 }
-void display_map(t_gamedata *data)
+
+void	display_map(t_gamedata *data)
 {
-	int x;
-	int y;
-	int i;
-	int i2;
-	uint32_t color;
+	int			x;
+	int			y;
+	int			i;
+	int			i2;
+	uint32_t	color;
 
 	y = 0;
-	color = get_color(data->floor[0], data->floor[1], data->floor[2], 255);
+	color = get_color(0, 0, 0, 255);
 	while (data->map[y] != NULL)
 	{
 		x = 0;
@@ -189,50 +192,51 @@ void display_map(t_gamedata *data)
 				while (i < PIXEL_SIZE)
 				{
 					i2 = 0;
-					while(i2 < PIXEL_SIZE)
+					while (i2 < PIXEL_SIZE)
 					{
 						mlx_put_pixel(data->img, x * PIXEL_SIZE + i, y * PIXEL_SIZE + i2, color);
 						i2++;
 					}
-				i++;
+					i++;
 				}
 			}
 			x++;
 		}
 		y++;
 	}
+	draw_flor(data);
+	ft_player(data);
     draw_flor(data);
     //ft_player(data);
 }
 
 
-void my_keyhook(void* param)
+void	my_keyhook(void* param)
 {
-    t_gamedata *data;
+	t_gamedata	*data;
 
-    data = param;
-    ft_memset(data->img->pixels, 0, WINDOW_WIDTH * WINDOW_HEIGHT * 4);
-    if (mlx_is_key_down(data->window, MLX_KEY_W))
-        moving_forward_backward(data, 1);
-    if (mlx_is_key_down(data->window, MLX_KEY_S))
-        moving_forward_backward(data, -1);
-    if (mlx_is_key_down(data->window, MLX_KEY_A))
-        moving_side(data, -1);
-    if (mlx_is_key_down(data->window, MLX_KEY_D))
-        moving_side(data, + 1);
-    if (mlx_is_key_down(data->window, MLX_KEY_LEFT))
-        turnPlayer(data, -1);
-    if (mlx_is_key_down(data->window, MLX_KEY_RIGHT))
-    {   turnPlayer(data, 1);   }
+	data = param;
+	ft_memset(data->img->pixels, 0, WINDOW_WIDTH * WINDOW_HEIGHT * 4);
+	if (mlx_is_key_down(data->window, MLX_KEY_W))
+		moving_forward_backward(data, 1);
+	if (mlx_is_key_down(data->window, MLX_KEY_S))
+		moving_forward_backward(data, -1);
+	if (mlx_is_key_down(data->window, MLX_KEY_A))
+		moving_side(data, -1);
+	if (mlx_is_key_down(data->window, MLX_KEY_D))
+		moving_side(data, 1);
+	if (mlx_is_key_down(data->window, MLX_KEY_LEFT))
+		turnPlayer(data, -1);
+	if (mlx_is_key_down(data->window, MLX_KEY_RIGHT))
+		turnPlayer(data, 1);
 	render_walls(data);
 	display_map(data);
-    cast_rays(data);
-    if (mlx_is_key_down(data->window, MLX_KEY_ESCAPE))
-    {    mlx_close_window(data->window);}
-	
+	cast_rays(data);
+	if (mlx_is_key_down(data->window, MLX_KEY_ESCAPE))
+		mlx_close_window(data->window);
 }
 
-void	load_texture(t_gamedata *data)
+/* void	load_texture(t_gamedata *data)
 {
 	data->texture = mlx_load_png("src/wall3.png");//oeste
     if (!data->texture)
@@ -260,22 +264,23 @@ void	load_texture(t_gamedata *data)
         printf("error to load\n");
     } */
 	//data->texture = mlx_resize_image(data->este, PIXEL_SIZE, PIXEL_SIZE);
-}
+} */
 
 
 void	init_gamestate(t_gamedata *data)
 {
- 	data->window = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", false);
+	data->window = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", false);
 	data->img = mlx_new_image(data->window, WINDOW_WIDTH, WINDOW_HEIGHT);
 	initializePlayer(data, data->map);
 	load_texture(data);
 	mlx_image_to_window(data->window, data->img, 0, 0);
 	display_map(data);
+	//	load_texture(data);
 	mlx_loop_hook(data->window, my_keyhook, data);
-    mlx_loop(data->window);
-    mlx_close_window(data->window);
-    mlx_terminate(data->window);
-    free_data_content(data);
-    free(data); 
-    printf("end of game :)\n");
+	mlx_loop(data->window);
+	mlx_close_window(data->window);
+	mlx_terminate(data->window);
+	free_data_content(data);
+	free(data);
+	printf("end of game :)\n");
 }

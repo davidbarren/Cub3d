@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 16:25:50 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/21 14:13:55 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void render_walls(t_gamedata *data)
     int tex_y;
     uint32_t color;
     float wall_x;
-    mlx_texture_t *texture = data->este; 
+    mlx_texture_t *texture = data->texture;
 
     i = 0;
     while (i < NUM_RAYS) 
@@ -53,9 +53,10 @@ void render_walls(t_gamedata *data)
         wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
         wall_top = (WINDOW_HEIGHT / 2) - (wall_height / 2);
         wall_bottom = wall_top + wall_height;
-        if (wall_top < 0) 
+        int original_wall_top = wall_top;
+        if (wall_top < 0)
             wall_top = 0;
-        if (wall_bottom >= WINDOW_HEIGHT) 
+        if (wall_bottom >= WINDOW_HEIGHT)
             wall_bottom = WINDOW_HEIGHT - 1;
         wall_x = fmod(data->intersection.x, 1.0f);
         tex_x = (int)(wall_x * (int)texture->width);
@@ -63,12 +64,19 @@ void render_walls(t_gamedata *data)
             tex_x = 0;
         if ((uint32_t)tex_x >= texture->width) 
             tex_x = texture->width - 1;
+        int y_offset = 0;
+        if (original_wall_top < 0)
+        {
+            y_offset = -original_wall_top;
+        }
         y = wall_top;
+        //if(cos(data->playerdata->angle) > 0)
+        //    texture = data->nort;
         while (y < wall_bottom)
         {
             if (y >= 0 && y < WINDOW_HEIGHT)
             {
-                tex_y = (int)((y - wall_top) * (float)texture->height / wall_height);
+                tex_y = (int)((y - wall_top + y_offset) * (float)texture->height / wall_height);
                 if (tex_y < 0) 
                     tex_y = 0;
                 if ((uint32_t)tex_y >= texture->height)
@@ -78,7 +86,6 @@ void render_walls(t_gamedata *data)
             }
             y++;
         }
-        //render_flor(data, wall_bottom, i);
         i++;
         ray_angle += angle_step;
     }
@@ -156,8 +163,8 @@ void cast_ray(t_gamedata *data, float ray_angle)
     data->intersection.ray_dir_y = sin(ray_angle);
     ray_x = data->playerdata->x_pos;
     ray_y = data->playerdata->y_pos;
-    step_x = cos(ray_angle) * 0.001f;
-    step_y = sin(ray_angle) * 0.001f;
+    step_x = cos(ray_angle) * 0.01f;
+    step_y = sin(ray_angle) * 0.01f;
     while ((int)ray_x >= 0 && (int)ray_x  < MAP_WIDTH && (int)ray_y >= 0 && (int)ray_y < MAP_HEIGHT)
     {
         if (data->map[(int)ray_y][(int)ray_x ] == '1')
@@ -165,7 +172,7 @@ void cast_ray(t_gamedata *data, float ray_angle)
             data->intersection.x = ray_x;
             data->intersection.y = ray_y;
             data->intersection.distance = get_distan(data, ray_x, ray_y);
-            if (fabs(step_x) > fabs(step_y))
+            if (fabs(step_x) < fabs(step_y))
                 data->intersection.side = 0; // Pared vertical
             else
                 data->intersection.side = 1; // Pared horizontal

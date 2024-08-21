@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 15:16:21 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/20 15:42:16 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void display_map(t_gamedata *data)
 		y++;
 	}
     draw_flor(data);
-    ft_player(data);
+    //ft_player(data);
 }
 
 
@@ -234,30 +234,32 @@ void my_keyhook(void* param)
 
 void	load_texture(t_gamedata *data)
 {
-	data->texture = mlx_load_png("src/rojo.png");//oeste
+	data->texture = mlx_load_png("src/wall3.png");//oeste
     if (!data->texture)
     {
         // Manejo del error
         printf("error to load\n");
     }
-	data->nort = mlx_load_png("src/nort.png");
+	//data->texture = mlx_resize_image(data->texture, PIXEL_SIZE, PIXEL_SIZE);
+	data->nort = mlx_load_png("src/rojo.png");
     if (!data->nort)
     {
         // Manejo del error
         printf("error to load\n");
     }
-	data->surt = mlx_load_png("src/surt.png");
+/* 	data->surt = mlx_load_png("src/wall2.png");
     if (!data->surt)
     {
         // Manejo del error
         printf("error to load\n");
     }
-	data->este = mlx_load_png("src/este.png");
+	data->este = mlx_load_png("src/wall1.png");
     if (!data->este)
     {
         // Manejo del error
         printf("error to load\n");
-    }
+    } */
+	//data->texture = mlx_resize_image(data->este, PIXEL_SIZE, PIXEL_SIZE);
 }
 
 

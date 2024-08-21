@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 16:13:42 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/20 13:42:12 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define NUM_RAYS WINDOW_WIDTH
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
-# define MOVE_SPEED 0.06f // Velocidad de movimiento
-# define TURN_SPEED 0.06f// Velocidad de giro
+# define MOVE_SPEED 0.1f // Velocidad de movimiento
+# define TURN_SPEED 0.1f// Velocidad de giro
 # define MAP_WIDTH  100 
 # define MAP_HEIGHT 100
 # define MAX_DISTANCE 1e6

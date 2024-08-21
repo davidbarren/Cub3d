@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/20 16:29:11 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:16:42 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	render_walls(t_gamedata *data)
 		wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
 		wall_top = (WINDOW_HEIGHT / 2) - (wall_height / 2);
 		wall_bottom = wall_top + wall_height;
+		int original_wall_top = wall_top;
 		if (wall_top < 0)
 			wall_top = 0;
 		if (wall_bottom >= WINDOW_HEIGHT)
@@ -90,13 +91,18 @@ void	render_walls(t_gamedata *data)
 			tex_x = 0;
 		if ((uint32_t)tex_x >= texture->width)
 			tex_x = texture->width - 1;
+		int y_offset = 0;
+		if (original_wall_top < 0)
+        {
+            y_offset = -original_wall_top;
+        }
 		y = wall_top;
 		render_ceiling(data, wall_top, i);
 		while (y < wall_bottom)
 		{
 			if (y >= 0 && y < WINDOW_HEIGHT)
 			{
-				tex_y = (int)((y - wall_top) * (float)texture->height / wall_height);
+				tex_y = (int)((y - wall_top + y_offset) * (float)texture->height / wall_height);
 				if (tex_y < 0)
 					tex_y = 0;
 				if ((uint32_t)tex_y >= texture->height)

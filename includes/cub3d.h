@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 16:13:42 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/20 16:27:10 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,15 @@ enum e_errors
 	INVALID_MAP,
 	EMPTY_FILE,
 	BAD_MAP,
+	BAD_LOADING,
 };
 
 enum	e_player_orientation
 {
 	NORTH = 1,
-	EAST,
-	SOUTH,
-	WEST,
+	EAST = 2,
+	SOUTH = 3,
+	WEST = 4,
 };
 
 typedef struct s_intersection
@@ -86,7 +87,28 @@ typedef struct s_intersection
     int side;
     float ray_dir_x;
     float ray_dir_y;
+	float true_ang;
+	int direction;
 } t_intersection;
+
+typedef struct s_raydata
+{
+	float	ray_dir_x; 
+	int		x_step; //cambia dependiendo de orientacion
+	int		dx;// incremento usado en DDA
+	float	ray_dir_y;
+	int		dy;
+	int		y_step;
+	int		direction; // en que lado de la pared hay colision
+	bool	vertical; // 0 si es horizontal 1 si es vertical
+	bool	collided; // para detectar colisiones
+	float	camera_dist; // distancia al plano perpendicular al jugador (camara)
+	float	x_wall_dist; // distancia a la siguiente coordenada usada en DDA
+	float	y_wall_dist;
+	int		x_grid; // valor int a nuestro punto en el mapa
+	int		y_grid;
+
+} t_raydata;
 
 typedef struct s_paths
 {
@@ -147,17 +169,15 @@ typedef struct s_gamedata
 	uint8_t		floor[3];
 	uint8_t		ceiling[3];
 	mlx_image_t* player;
-	mlx_texture_t* texture;
-	mlx_texture_t* nort;
-	mlx_texture_t* surt;
-	mlx_texture_t* este;
 	mlx_image_t* img;
+	mlx_texture_t *txtrs[4]; // array de texturas
 	mlx_t		*window;
 	int	flag;
 	size_t		height;
 	size_t		width;
 }	t_gamedata;
 
+void	cast_ray_2(t_gamedata *data, float ray_angle);
 // debug and print functions
 void		print_2d(char **arr);
 void		print_paths(t_paths *paths);
@@ -196,4 +216,9 @@ void 		render_walls(t_gamedata *data);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);
+// textures
+void	load_texture(t_gamedata *data);
+void	delete_textures(t_gamedata *data);
+// dda
+void cast_ray_dda(t_gamedata *data, float ray_angle);
 #endif

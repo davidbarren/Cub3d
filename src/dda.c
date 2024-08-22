@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:25:08 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/21 18:15:02 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:30:13 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	cast_ray_dda(t_gamedata *data, float ray_angle)
 	else 
 		camera_dist = (map_y - data->playerdata->y_pos + (1 - step_y) / 2) / ray_dir_y;
 
+//	data->intersection.distance = data->intersection.distance * cos(data->playerdata->angle - ray_angle);
 	data->intersection.distance = camera_dist;
 	data->intersection.x = data->playerdata->x_pos + camera_dist * ray_dir_x;
 	data->intersection.y = data->playerdata->y_pos + camera_dist * ray_dir_y;
@@ -119,7 +120,6 @@ void	update_intersect(t_gamedata *data, t_raydata *rays)
 		else
 			data->intersection.direction = SOUTH;
 	}
-
 }
 
 void	check_collisions(t_gamedata *data, t_raydata *rays)
@@ -142,9 +142,9 @@ void	check_collisions(t_gamedata *data, t_raydata *rays)
 			rays->collided = 1;
 	}
 	if (!rays->side)
-		rays->camera_dist = (rays->map_x - data->playerdata->x_pos + (1 - rays->step_x) /2) / rays->ray_dir_x;
+		rays->camera_dist = (rays->map_x - data->playerdata->x_pos + (int)(1 - rays->step_x) /2) / rays->ray_dir_x;
 	else 
-		rays->camera_dist = (rays->map_y - data->playerdata->y_pos + (1 - rays->step_y) / 2) / rays->ray_dir_y;
+		rays->camera_dist = (rays->map_y - data->playerdata->y_pos + (int)(1 - rays->step_y) / 2) / rays->ray_dir_y;
 }
 
 
@@ -183,13 +183,37 @@ void	init_raydata(t_gamedata *data, t_raydata *rays, float ray_angle)
 	rays->dy = fabs(1 / rays->ray_dir_y);
 }
 
+
+void	print_raydata(t_raydata *rays)
+{
+	printf("printing raydata contents:\n");
+	printf("ray_dir_x:%f\n", rays->ray_dir_x);
+	printf("step_x:%d\n", rays->step_x);
+	printf("dx:%d\n", rays->dx);
+	printf("ray_dir_y:%f\n", rays->ray_dir_y);
+	printf("step_y:%d\n", rays->step_y);
+	printf("dy:%d\n", rays->dy);
+	printf("direction:%d\n", rays->direction);
+	printf("side:%d\n", rays->side);
+	printf("collision status:%d\n", rays->collided);
+	printf("camera distance:%f\n", rays->camera_dist);
+	printf("x_distance:%f\n", rays->x_dist);
+	printf("y_distance:%f\n", rays->y_dist);
+	printf("map x value:%d\n", rays->map_x);
+	printf("map y value:%d\n", rays->map_y);
+}
+
 void	dda_new(t_gamedata *data, float rayangle)
 {
 	t_raydata rays;
+
+//	rays = data->rays;
 	ft_memset(&rays, 0, sizeof(t_raydata));
 	init_raydata(data, &rays, rayangle);
 	calculate_step(data, &rays);
 	check_collisions(data, &rays);
 	update_intersect(data, &rays);
-
+	print_raydata(&rays);
+//	printf("value of x intersection:%f\n", data->intersection.x);
+//	printf("value of y intersection:%f\n", data->intersection.y);
 }

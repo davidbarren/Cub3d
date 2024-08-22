@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/21 18:15:17 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:03:00 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ typedef struct s_gamedata
 	t_player	*playerdata;
 	t_intersection intersection;
 	t_line_params line;
+	t_raydata rays;
 	//t_image			*texture;
 	char		**map;
 	t_paths		*paths;

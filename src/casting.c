@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/21 14:16:42 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:30:29 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ void	render_walls(t_gamedata *data)
 	i = 0;
 	while (i < NUM_RAYS)
 	{
-		cast_ray_dda(data, ray_angle);
+		dda_new(data, ray_angle);
+//		cast_ray_dda(data, ray_angle);
 		texture = data->txtrs[data->intersection.direction - 1]; // usa la textura correcta en array dependiendo de orientacion de pared
 		corrected_distance = data->intersection.distance * cos(data->playerdata->angle - ray_angle);
+//		corrected_distance = data->intersection.distance;
 		wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
 		wall_top = (WINDOW_HEIGHT / 2) - (wall_height / 2);
 		wall_bottom = wall_top + wall_height;

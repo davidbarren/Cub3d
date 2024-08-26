@@ -6,6 +6,7 @@
 #    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
+
 #    Updated: 2024/08/26 16:02:18 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -13,8 +14,10 @@
 NAME = cub3D
 
 
-#CC	= $(HOME)/Documents/42Cursus/AFL/afl-gcc
-CFLAGS = -Wall -Wextra -g -Werror -O3 -fsanitize=leak
+
+CC	= cc
+CFLAGS = -Wall -Wextra -g -Werror -O3
+
 
 SRCDIR = src
 OBJDIR = obj

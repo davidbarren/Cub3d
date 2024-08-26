@@ -32,8 +32,8 @@
 # define NUM_RAYS WINDOW_WIDTH
 # define CUBE_HEIGHT 64
 # define PLAYER_HEIGHT 32
-# define MOVE_SPEED 0.06f // Velocidad de movimiento
-# define TURN_SPEED 0.06f// Velocidad de giro
+# define MOVE_SPEED 0.1f // Velocidad de movimiento
+# define TURN_SPEED 0.1f// Velocidad de giro
 # define MAP_WIDTH  100 
 # define MAP_HEIGHT 100
 # define MAX_DISTANCE 1e6
@@ -158,12 +158,23 @@ typedef struct s_line_params
 	int y_ray;
 }   t_line_params;
 
+typedef struct s_render_params
+{
+	int				wall_height;
+	int				wall_top;
+	int				wall_bottom;
+	int 			y_offset;
+	int				tex_x;
+	int				tex_y;
+	float			wall_x;
+}   t_render_params;
+
 typedef struct s_gamedata
 {
 	t_player	*playerdata;
 	t_intersection intersection;
 	t_line_params line;
-	t_raydata rays;
+	t_render_params render;
 	//t_image			*texture;
 	char		**map;
 	t_paths		*paths;
@@ -213,7 +224,7 @@ void		init_gamestate(t_gamedata *data);
 void 		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
 void 		cast_ray(t_gamedata *data, float ray_angle);
 void 		cast_rays(t_gamedata *data);
-void 		render_walls(t_gamedata *data);
+void 		render_walls(t_gamedata *data, mlx_texture_t	*texture);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);

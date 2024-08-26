@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:31:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/14 12:01:49 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/27 00:45:01 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	is_player_dir(char c)
 
 static void	update_player_pos(t_gamedata *data, int pcount, int x, int y)
 {
-	if (pcount)
+	if (pcount || y >= (ft_arrlen(data->map) - 1))
 		error_free(BAD_MAP, data, NULL);
 	data->playerdata->x_pos = x + 0.5;
 	data->playerdata->y_pos = y + 0.5;

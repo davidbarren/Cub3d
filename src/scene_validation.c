@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/26 16:57:10 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/27 00:46:39 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,34 @@ void	verify_map(t_gamedata *data)
  * check that every 0 or player is not next to null terminator or  emptyspace!!!
  */
 
+int	check_directions(char **map, int *x, int *y)
+{
+	while (map[*y][*x])
+	{
+		if (map[*y][*x] == '0' || is_player_dir(map[*y][*x]))
+		{
+			if (ft_is_whitespace(map[*y][*x + 1]) || !map[*y][*x + 1])
+				return (1);
+			if (ft_is_whitespace(map[*y][*x - 1]) || !map[*y][*x - 1])
+				return (1);
+			if (ft_is_whitespace(map[*y + 1][*x]) || !map[*y + 1][*x])
+				return (1);
+			if (ft_is_whitespace(map[*y - 1][*x]) || !map[*y - 1][*x])
+				return (1);
+			if (ft_is_whitespace(map[*y + 1][*x + 1]) || !map[*y + 1][*x + 1])
+				return (1);
+			if (ft_is_whitespace(map[*y + 1][*x - 1]) || !map[*y + 1][*x - 1])
+				return (1);
+			if (ft_is_whitespace(map[*y - 1][*x + 1]) || !map[*y - 1][*x + 1])
+				return (1);
+			if (ft_is_whitespace(map[*y - 1][*x - 1]) || !map[*y - 1][*x - 1])
+				return (1);
+		}
+		*x += 1;
+	}
+	return (0);
+}
+
 int	map_validation(char **map)
 {
 	int	x;
@@ -55,32 +83,8 @@ int	map_validation(char **map)
 	y = 0;
 	while (map[y])
 	{
-		x = 0;
-		while (map[y][x])
-		{
-			if (map[y][x] == '0' || is_player_dir(map[y][x]))
-			{
-				if (is_player_dir(map[y][x]) && y >= ft_arrlen(map) - 1)
-						return (1);
-				if (ft_is_whitespace(map[y][x + 1]) || !map[y][x + 1])
-					return (1);
-				if (ft_is_whitespace(map[y][x - 1]) || !map[y][x - 1])
-					return (1);
-				if (ft_is_whitespace(map[y + 1][x]) || !map[y + 1][x])
-					return (1);
-				if (ft_is_whitespace(map[y - 1][x]) || !map[y - 1][x])
-					return (1);
-				if (ft_is_whitespace(map[y + 1][x + 1]) || !map[y + 1][x + 1])
-					return (1);
-				if (ft_is_whitespace(map[y + 1][x - 1]) || !map[y + 1][x - 1])
-					return (1);
-				if (ft_is_whitespace(map[y - 1][x + 1]) || !map[y - 1][x + 1])
-					return (1);
-				if (ft_is_whitespace(map[y - 1][x - 1]) || !map[y - 1][x - 1])
-					return (1);
-			}
-			x++;
-		}
+		if (check_directions(map, &x, &y))
+			return (1);
 		y++;
 	}
 	return (0);

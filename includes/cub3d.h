@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/22 15:03:00 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:17:52 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ typedef struct s_raydata
 {
 	float	ray_dir_x; 
 	int		step_x; //cambia dependiendo de orientacion
-	int		dx;// incremento usado en DDA
+	float	dx;// incremento usado en DDA
 	float	ray_dir_y;
-	int		dy;
+	float	dy;
 	int		step_y;
 	int		direction; // en que lado de la pared hay colision
 	int		side; // 0 si es horizontal 1 si es vertical

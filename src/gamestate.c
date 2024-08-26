@@ -6,14 +6,14 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/21 14:41:24 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/26 14:15:25 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/cub3d.h"
 
-void	initializePlayer(t_gamedata *data, char **map)
+void	initialize_player(t_gamedata *data, char **map)
 {
 	t_player	*player;
 
@@ -205,13 +205,26 @@ void	display_map(t_gamedata *data)
 		y++;
 	}
 	draw_flor(data);
-	ft_player(data);
-    draw_flor(data);
-    //ft_player(data);
+	//ft_player(data);
 }
 
+void	mouse_move_hook(double xpos, double ypos, void *param)
+{
+	t_gamedata	*data;
+	static double last_x = 0.0;
+	double delta_x;
+	double delta_y;
 
-void	my_keyhook(void* param)
+	data = (t_gamedata *)param;
+	delta_y = ypos;
+	delta_x = xpos - last_x;
+	if (delta_x < 0)
+		turnPlayer(data, -1);
+	else if (delta_x > 0)
+		turnPlayer(data, 1);
+	last_x = xpos;
+}
+void	cub3d_keyhook(void* param)
 {
 	t_gamedata	*data;
 
@@ -229,54 +242,25 @@ void	my_keyhook(void* param)
 		turnPlayer(data, -1);
 	if (mlx_is_key_down(data->window, MLX_KEY_RIGHT))
 		turnPlayer(data, 1);
-	render_walls(data);
+	render_walls(data, NULL);
 	display_map(data);
 	cast_rays(data);
 	if (mlx_is_key_down(data->window, MLX_KEY_ESCAPE))
 		mlx_close_window(data->window);
 }
 
-/* void	load_texture(t_gamedata *data)
-{
-	data->texture = mlx_load_png("src/wall3.png");//oeste
-    if (!data->texture)
-    {
-        // Manejo del error
-        printf("error to load\n");
-    }
-	//data->texture = mlx_resize_image(data->texture, PIXEL_SIZE, PIXEL_SIZE);
-	data->nort = mlx_load_png("src/rojo.png");
-    if (!data->nort)
-    {
-        // Manejo del error
-        printf("error to load\n");
-    }
-/* 	data->surt = mlx_load_png("src/wall2.png");
-    if (!data->surt)
-    {
-        // Manejo del error
-        printf("error to load\n");
-    }
-	data->este = mlx_load_png("src/wall1.png");
-    if (!data->este)
-    {
-        // Manejo del error
-        printf("error to load\n");
-    } */
-	//data->texture = mlx_resize_image(data->este, PIXEL_SIZE, PIXEL_SIZE);
-} */
-
 
 void	init_gamestate(t_gamedata *data)
 {
 	data->window = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", false);
 	data->img = mlx_new_image(data->window, WINDOW_WIDTH, WINDOW_HEIGHT);
-	initializePlayer(data, data->map);
+	initialize_player(data, data->map);
 	load_texture(data);
 	mlx_image_to_window(data->window, data->img, 0, 0);
 	display_map(data);
 	//	load_texture(data);
-	mlx_loop_hook(data->window, my_keyhook, data);
+	mlx_cursor_hook(data->window, &mouse_move_hook, data);
+	mlx_loop_hook(data->window, cub3d_keyhook, data);
 	mlx_loop(data->window);
 	mlx_close_window(data->window);
 	mlx_terminate(data->window);

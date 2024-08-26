@@ -6,11 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/20 13:42:12 by dzurita          ###   ########.fr       */
-=======
-/*   Updated: 2024/08/20 16:27:10 by dbarrene         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2024/08/26 14:15:46 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,11 +158,23 @@ typedef struct s_line_params
 	int y_ray;
 }   t_line_params;
 
+typedef struct s_render_params
+{
+	int				wall_height;
+	int				wall_top;
+	int				wall_bottom;
+	int 			y_offset;
+	int				tex_x;
+	int				tex_y;
+	float			wall_x;
+}   t_render_params;
+
 typedef struct s_gamedata
 {
 	t_player	*playerdata;
 	t_intersection intersection;
 	t_line_params line;
+	t_render_params render;
 	//t_image			*texture;
 	char		**map;
 	t_paths		*paths;
@@ -216,7 +224,7 @@ void		init_gamestate(t_gamedata *data);
 void 		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
 void 		cast_ray(t_gamedata *data, float ray_angle);
 void 		cast_rays(t_gamedata *data);
-void 		render_walls(t_gamedata *data);
+void 		render_walls(t_gamedata *data, mlx_texture_t	*texture);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);

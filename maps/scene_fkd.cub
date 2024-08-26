@@ -2,25 +2,25 @@
 
 
 
-     C						0, 0	,0
+     C						255, 0	,0
 
 
-	SO ./assets/Planks.png
-
-
-
+	SO ./assets/south.png
 
 
 
 
-	NO	./assets/Coal.png
+
+
+
+	NO	./assets/north.png
 
 
 F  0		    ,0, 0
 
-WE ./assets/Sand.png
+WE ./assets/west.png
 
-EA ./assets/Bricks.png
+EA ./assets/east.png
 
 
 1111111111111111111111111

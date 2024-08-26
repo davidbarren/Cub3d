@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/21 14:41:45 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/26 15:36:36 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	render_flor(t_gamedata *data, int wall_bottom, int i)
 		wall_bottom++;
 	}
 }
- /* hay veces que hace segfault mlx_put_pixel en estas funciones, deberiamos de proteger?
-  * o estoy haciendo algo mal*/
+
 void	render_ceiling(t_gamedata *data, int wall_top, int i)
 {
 	uint32_t	color;
@@ -48,73 +47,86 @@ void	render_ceiling(t_gamedata *data, int wall_top, int i)
 	}
 }
 
-void	render_walls(t_gamedata *data)
+void	draw_walls(int x, mlx_texture_t *texture, t_gamedata *data, t_render_params *render)
 {
-	float			ray_angle = data->playerdata->angle - (FOV / 2);
+	int			tex_y;
+	uint8_t 	*test;
+	uint32_t	color;
+	int 		y;
+	
+	y = render->wall_top;
+	while (y < render->wall_bottom)
+	{
+		if (y >= 0 && y < WINDOW_HEIGHT)
+		{
+			tex_y = (int)((y - render->wall_top + render->y_offset) * (float)texture->height / render->wall_height);
+			if (tex_y < 0)
+				tex_y = 0;
+			if ((uint32_t)tex_y >= texture->height)
+				tex_y = texture->height - 1;
+			test = texture->pixels + (tex_y * texture->width + render->tex_x) * texture->bytes_per_pixel; 
+			color = get_color(*test, *(test + 1), *(test + 2), *(test + 3)); // obtiene color de textura sin estar rojo
+			//                color = ((uint32_t *)texture->pixels)[tex_y  * texture->width + tex_x];
+			mlx_put_pixel(data->img, x, y, color);
+		}
+		y++;
+	}
+}
+float	get_wall_x(t_gamedata *data)
+{
+	float wall_x;
+
+	wall_x = fmod(data->intersection.y, 1.0f);
+	if (data->intersection.side)
+		wall_x = fmod(data->intersection.x, 1.0f);
+	if (wall_x > 1.0f)
+		wall_x = 1.0f;
+	if (wall_x < 0.0f)
+		wall_x = 0.0f;
+	return (wall_x);
+}
+
+void	set_render_parameters(float corrected_distance, t_gamedata *data, mlx_texture_t *texture, int i)
+{
+	int original_wall_top;
+	t_render_params render;
+
+	render.wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
+	render.wall_top = (WINDOW_HEIGHT / 2) - (render.wall_height / 2);
+	render.wall_bottom = render.wall_top + render.wall_height;
+	original_wall_top = render.wall_top;
+	if (render.wall_top < 0)
+		render.wall_top = 0;
+	if (render.wall_bottom >= WINDOW_HEIGHT)
+		render.wall_bottom = WINDOW_HEIGHT - 1;
+	render.wall_x = get_wall_x(data);
+	render.tex_x = (int)(render.wall_x * texture->width);
+	if (render.tex_x < 0)
+		render.tex_x = 0;
+	if ((uint32_t)render.tex_x >= texture->width)
+		render.tex_x = texture->width - 1;
+	if (original_wall_top < 0)
+		render.y_offset = -original_wall_top;
+	render_ceiling(data, render.wall_top, i);
+	draw_walls(i, texture, data, &render);
+	render_flor(data, render.wall_bottom, i);
+}
+
+void	render_walls(t_gamedata *data, mlx_texture_t	*texture)
+{
+	float			ray_angle;
 	float			angle_step = FOV / NUM_RAYS;
 	int				i;
-	int				y;
 	float			corrected_distance;
-	int				wall_height;
-	int				wall_top;
-	int				wall_bottom;
-	int				tex_x;
-	int				tex_y;
-	uint32_t		color;
-	float			wall_x;
-	mlx_texture_t	*texture;
 
+	ray_angle = data->playerdata->angle - (FOV / 2);
 	i = 0;
 	while (i < NUM_RAYS)
 	{
 		cast_ray_dda(data, ray_angle);
 		texture = data->txtrs[data->intersection.direction - 1]; // usa la textura correcta en array dependiendo de orientacion de pared
 		corrected_distance = data->intersection.distance * cos(data->playerdata->angle - ray_angle);
-		wall_height = (int)((WINDOW_HEIGHT / corrected_distance) * WALL_HEIGHT);
-		wall_top = (WINDOW_HEIGHT / 2) - (wall_height / 2);
-		wall_bottom = wall_top + wall_height;
-		int original_wall_top = wall_top;
-		if (wall_top < 0)
-			wall_top = 0;
-		if (wall_bottom >= WINDOW_HEIGHT)
-			wall_bottom = WINDOW_HEIGHT - 1;
-		wall_x = fmod(data->intersection.y, 1.0f); // dando valor de y si es colision horizontal
-		if (data->intersection.side)
-			wall_x = fmod(data->intersection.x, 1.0f); // valor de x si es vertical
-		//		wall_x = fmod(wall_x + 1.0f, 1.0f);
-				if (wall_x > 1.0f)
-					wall_x = 1.0f;
-				if (wall_x < 0.0f)
-					wall_x = 0.0f;
-		tex_x = (int)(wall_x * texture->width);
-		if (tex_x < 0)
-			tex_x = 0;
-		if ((uint32_t)tex_x >= texture->width)
-			tex_x = texture->width - 1;
-		int y_offset = 0;
-		if (original_wall_top < 0)
-        {
-            y_offset = -original_wall_top;
-        }
-		y = wall_top;
-		render_ceiling(data, wall_top, i);
-		while (y < wall_bottom)
-		{
-			if (y >= 0 && y < WINDOW_HEIGHT)
-			{
-				tex_y = (int)((y - wall_top + y_offset) * (float)texture->height / wall_height);
-				if (tex_y < 0)
-					tex_y = 0;
-				if ((uint32_t)tex_y >= texture->height)
-					tex_y = texture->height - 1;
-				uint8_t* test = texture->pixels + (tex_y * texture->width + tex_x) * texture->bytes_per_pixel; 
-				color = get_color(*test, *(test + 1), *(test + 2), *(test + 3)); // obtiene color de textura sin estar rojo
-				//                color = ((uint32_t *)texture->pixels)[tex_y  * texture->width + tex_x];
-				mlx_put_pixel(data->img, i, y, color);
-			}
-			y++;
-		}
-		render_flor(data, wall_bottom, i);
+		set_render_parameters(corrected_distance, data, texture, i);
 		i++;
 		ray_angle += angle_step;
 	}
@@ -128,7 +140,6 @@ int	ft_abs(int n)
 		return (n);
 }
 // algoritmo de Bresenham 
-
 void	draw_line(t_gamedata *data, int x1, int y1)
 {
 	int	color;

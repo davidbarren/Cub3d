@@ -41,12 +41,15 @@ CSRCS = $(SRCDIR)/scene_loading.c\
 		$(SRCDIR)/casting.c\
 		$(SRCDIR)/textures.c\
 		$(SRCDIR)/dda.c\
+		$(SRCDIR)/lines.c\
+		$(SRCDIR)/render.c\
+		$(SRCDIR)/movement.c\
 
 OBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 BOBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(BSRCS))
 COBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(CSRCS))
 
-LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L "/home/$(USER)/.brew/opt/glfw/lib/"
+LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L "$(HOME)/.brew/opt/glfw/lib/"
 
 all: libmlx $(NAME)
 

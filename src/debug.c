@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:41:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/26 16:22:06 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/27 00:48:01 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	print_colorschemes(t_gamedata *data)
 {
 	printf("PRINTING COLORS:\n");
 	printf("floor colorschemes in R G B:\n");
-	printf("R:%d\nG:%d\nB:%d\n", data->floor[0], data->floor[1], data->floor[2]);
+	printf("R:%d\nG:%d\nB:%d\n", data->floor[0], data->floor[1],
+		data->floor[2]);
 	printf("ceiling colorschemes in R G B:\n");
 	printf("R:%d\nG:%d\nB:%d\n", data->ceiling[0],
 		data->ceiling[1], data->ceiling[2]);
@@ -59,7 +60,6 @@ void	print_gamedata(t_gamedata *data)
 	print_colorschemes(data);
 	printf("PRINTING MAP:\n");
 	print_2d(data->map);
-	//print_playerdata(data);
 }
 
 void	print_raydata(t_raydata *rays)

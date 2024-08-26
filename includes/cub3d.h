@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/26 16:17:52 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/27 01:02:11 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,13 +225,21 @@ void 		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
 void 		cast_ray(t_gamedata *data, float ray_angle);
 void 		cast_rays(t_gamedata *data);
 void 		render_walls(t_gamedata *data, mlx_texture_t	*texture);
+void		display_map(t_gamedata *data);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);
+//casting
+float	get_wall_x(t_gamedata *data);
+void	draw_walls(int x, mlx_texture_t *texture, t_gamedata *data,
+		t_render_params *render);
 // textures
 void	load_texture(t_gamedata *data);
 void	delete_textures(t_gamedata *data);
 // dda
 void cast_ray_dda(t_gamedata *data, float ray_angle);
 void	dda_new(t_gamedata *data, float rayangle);
+//movement.c
+void	mouse_move_hook(double xpos, double ypos, void *param);
+void	cub3d_keyhook(void* param);
 #endif

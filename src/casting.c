@@ -123,7 +123,7 @@ void	render_walls(t_gamedata *data, mlx_texture_t	*texture)
 	i = 0;
 	while (i < NUM_RAYS)
 	{
-		cast_ray_dda(data, ray_angle);
+		dda_new(data, ray_angle);
 		texture = data->txtrs[data->intersection.direction - 1]; // usa la textura correcta en array dependiendo de orientacion de pared
 		corrected_distance = data->intersection.distance * cos(data->playerdata->angle - ray_angle);
 		set_render_parameters(corrected_distance, data, texture, i);

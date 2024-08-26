@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/26 14:15:46 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/26 16:17:52 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,19 @@ typedef struct s_intersection
 typedef struct s_raydata
 {
 	float	ray_dir_x; 
-	int		x_step; //cambia dependiendo de orientacion
-	int		dx;// incremento usado en DDA
+	int		step_x; //cambia dependiendo de orientacion
+	float	dx;// incremento usado en DDA
 	float	ray_dir_y;
-	int		dy;
-	int		y_step;
+	float	dy;
+	int		step_y;
 	int		direction; // en que lado de la pared hay colision
-	bool	vertical; // 0 si es horizontal 1 si es vertical
+	int		side; // 0 si es horizontal 1 si es vertical
 	bool	collided; // para detectar colisiones
 	float	camera_dist; // distancia al plano perpendicular al jugador (camara)
-	float	x_wall_dist; // distancia a la siguiente coordenada usada en DDA
-	float	y_wall_dist;
-	int		x_grid; // valor int a nuestro punto en el mapa
-	int		y_grid;
+	float	x_dist; // distancia a la siguiente coordenada usada en DDA
+	float	y_dist;
+	int		map_x; // valor int a nuestro punto en el mapa
+	int		map_y;
 
 } t_raydata;
 
@@ -233,4 +233,5 @@ void	load_texture(t_gamedata *data);
 void	delete_textures(t_gamedata *data);
 // dda
 void cast_ray_dda(t_gamedata *data, float ray_angle);
+void	dda_new(t_gamedata *data, float rayangle);
 #endif

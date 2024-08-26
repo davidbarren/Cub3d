@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:41:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/22 15:03:11 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/26 16:22:06 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,23 @@ void	print_gamedata(t_gamedata *data)
 	printf("PRINTING MAP:\n");
 	print_2d(data->map);
 	//print_playerdata(data);
+}
+
+void	print_raydata(t_raydata *rays)
+{
+	printf("printing raydata contents:\n");
+	printf("ray_dir_x:%f\n", rays->ray_dir_x);
+	printf("step_x:%d\n", rays->step_x);
+	printf("dx:%f\n", rays->dx);
+	printf("ray_dir_y:%f\n", rays->ray_dir_y);
+	printf("step_y:%d\n", rays->step_y);
+	printf("dy:%f\n", rays->dy);
+	printf("direction:%d\n", rays->direction);
+	printf("side:%d\n", rays->side);
+	printf("collision status:%d\n", rays->collided);
+	printf("camera distance:%f\n", rays->camera_dist);
+	printf("x_distance:%f\n", rays->x_dist);
+	printf("y_distance:%f\n", rays->y_dist);
+	printf("map x value:%d\n", rays->map_x);
+	printf("map y value:%d\n", rays->map_y);
 }

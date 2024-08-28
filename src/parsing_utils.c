@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:24:44 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/07/17 13:59:40 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:04:49 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	ft_atoi_rgb(char *str)
 	int	result;
 
 	result = 0;
+	if (!*str)
+		return (-1);
 	while (ft_is_whitespace(*str))
 		str++;
 	if (*str == '-')

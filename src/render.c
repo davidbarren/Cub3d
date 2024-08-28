@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 00:07:40 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/27 00:09:34 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 10:37:43 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	set_render_parameters(float corrected_distance, t_gamedata *data
 	int				original_wall_top;
 	t_render_params	render;
 
+	ft_memset(&render, 0, sizeof(t_render_params));
 	render.wall_height = (int)((WINDOW_HEIGHT / corrected_distance)
 			* WALL_HEIGHT);
 	render.wall_top = (WINDOW_HEIGHT / 2) - (render.wall_height / 2);

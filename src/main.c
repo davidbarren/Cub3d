@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:11:12 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/27 01:05:01 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 08:51:25 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 uint32_t	get_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 {
-	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
+	return ((uint32_t)red << 24
+		|(uint32_t)green << 16
+		|(uint32_t)blue << 8
+		|(uint32_t)alpha);
 }
 
 int	main(int argc, char **argv)

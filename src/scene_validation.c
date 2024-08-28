@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/27 12:31:37 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:59:50 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,21 @@ int	verify_paths_data(t_paths *paths)
 	return (0);
 }
 
+void	set_pixel_size(t_gamedata *data)
+{
+	if (data->width > 50 || data->height > 30)
+		data->pixel_size = 5;
+	else
+		data->pixel_size  = 10;
+}
+
 void	verify_map(t_gamedata *data)
 {
 	if (map_validation(data->map))
 		error_free(BAD_MAP, data, NULL);
 	data->playerdata = ft_calloc(1, sizeof(t_player));
 	find_player_pos(data, data->map);
+	set_pixel_size(data);
 }
 /*
 int		map_validation(char **map)

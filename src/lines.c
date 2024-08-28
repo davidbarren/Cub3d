@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lines.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 00:05:49 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/27 00:06:58 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:55:34 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1)
 {
 	t_line_params	line;
 
-	line.x_ray = data->playerdata->x_pos * PIXEL_SIZE;
-	line.y_ray = data->playerdata->y_pos * PIXEL_SIZE;
+	line.x_ray = data->playerdata->x_pos * data->pixel_size;
+	line.y_ray = data->playerdata->y_pos * data->pixel_size;
 	line.dx = ft_abs(inter_x1 - line.x_ray);
 	line.dy = ft_abs(inter_y1 - line.y_ray);
 	if (line.x_ray < inter_x1)

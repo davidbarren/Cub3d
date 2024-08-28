@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 10:35:13 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:58:59 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	cast_rays(t_gamedata *data)
 	while (i < NUM_RAYS)
 	{
 		dda_new(data, ray_angle);
-		init_draw_line_param(data, data->intersection.x * PIXEL_SIZE,
-			data->intersection.y * PIXEL_SIZE);
+		init_draw_line_param(data, data->intersection.x * data->pixel_size,
+			data->intersection.y * data->pixel_size);
 		ray_angle += angle_step;
 		i++;
 	}

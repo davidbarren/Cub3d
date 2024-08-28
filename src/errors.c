@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:58:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 20:12:07 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:39:40 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ void	error_free(int status, t_gamedata *data, t_file *scenedata)
 		ft_printerror("Error: incorrect map configuration\n");
 	if (status != BAD_MAP && scenedata)
 		free_2d(scenedata->scene_data);
+	if (status ==  BAD_LOADING
+		|| status ==  BAD_ADDING_IMG
+		|| status ==  BAD_KEY_LOOP
+		|| status ==  BAD_MLX_INIT
+		|| status == BAD_NEW_IMG)
+	{
+		mlx_close_window(data->window);
+		mlx_terminate(data->window);
+	}
 	free_data_content(data);
 	free(data);
 	exit(EXIT_FAILURE);

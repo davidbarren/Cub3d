@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 15:20:37 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/28 16:37:27 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static void	draw_mini_map_wall(t_gamedata *data, int x, int y)
 	while (i < PIXEL_SIZE)
 	{
 		i2 = 0;
-		while (i2 < PIXEL_SIZE)
+		while (i2 < data->pixel_size)
 		{
-			mlx_put_pixel(data->img, x * PIXEL_SIZE + i,
-				y * PIXEL_SIZE + i2, color);
+			mlx_put_pixel(data->img, x * data->pixel_size + i,
+				y * data->pixel_size + i2, color);
 			i2++;
 		}
 		i++;
@@ -41,13 +41,13 @@ static void	draw_mini_map_flor(t_gamedata *data, int x, int y)
 
 	color = get_color(255, 255, 255, 255);
 	i = 0;
-	while (i < PIXEL_SIZE)
+	while (i < data->pixel_size)
 	{
 		i2 = 0;
-		while (i2 < PIXEL_SIZE)
+		while (i2 < data->pixel_size)
 		{
-			mlx_put_pixel(data->img, x * PIXEL_SIZE + i,
-				y * PIXEL_SIZE + i2, color);
+			mlx_put_pixel(data->img, x * data->pixel_size + i,
+				y * data->pixel_size + i2, color);
 			i2++;
 		}
 		i++;

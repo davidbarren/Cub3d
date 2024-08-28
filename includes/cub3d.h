@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 15:33:17 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/28 16:19:59 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ typedef struct s_gamedata
 	mlx_texture_t *txtrs[4]; // array de texturas
 	mlx_t		*window;
 	int	flag;
+	int pixel_size;
 	size_t		height;
 	size_t		width;
 }	t_gamedata;

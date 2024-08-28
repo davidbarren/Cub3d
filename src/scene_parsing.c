@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/26 15:17:21 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:02:41 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_border(char *line)
 {
-	if (*line == '\n')
+	if (*line == '\n' || *line == EOF)
 		return (0);
 	while (*line)
 	{

@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/27 00:46:39 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:31:37 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,47 @@ void	verify_map(t_gamedata *data)
 	find_player_pos(data, data->map);
 }
 /*
+int		map_validation(char **map)
+{
+	int x;
+	int	y;
+
+	y = 0;
+	x = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == '0' || is_player_dir(map[y][x]))
+			{
+				if (is_player_dir(map[y][x]) && y >= ft_arrlen(map) - 1)
+					return (1);
+				if (ft_is_whitespace(map[y][x + 1]) || !map[y][x + 1])
+					return (1);
+				if (ft_is_whitespace(map[y][x - 1]) || !map[y][x - 1])
+					return (1);
+				if (ft_is_whitespace(map[y + 1][x]) || !map[y + 1][x])
+					return (1);
+				if (ft_is_whitespace(map[y - 1][x]) || !map[y - 1][x])
+					return (1);
+				if (ft_is_whitespace(map[y + 1][x + 1]) || !map[y + 1][x + 1])
+					return (1);
+				if (ft_is_whitespace(map[y + 1][x - 1]) || !map[y + 1][x - 1])
+					return (1);
+				if (ft_is_whitespace(map[y - 1][x + 1]) || !map[y - 1][x + 1])
+					return (1);
+				if (ft_is_whitespace(map[y - 1][x - 1]) || !map[y - 1][x - 1])
+					return (1);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
+
  * check that every 0 or player is not next to null terminator or  emptyspace!!!
  */
 
@@ -83,6 +124,7 @@ int	map_validation(char **map)
 	y = 0;
 	while (map[y])
 	{
+		x = 0;
 		if (check_directions(map, &x, &y))
 			return (1);
 		y++;

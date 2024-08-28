@@ -6,11 +6,38 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:31:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/27 00:45:01 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:22:37 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+static void	initialize_player_angle(t_gamedata *data, char **map)
+{
+	t_player	*player;
+
+	player = data->playerdata;
+	if (map[(int)player->y_pos][(int)player->x_pos] == 'N')
+	{
+		player->angle = 3 * PI / 2;
+		return ;
+	}
+	if (map[(int)player->y_pos][(int)player->x_pos] == 'S')
+	{
+		player->angle = PI / 2;
+		return ;
+	}
+	if (map[(int)player->y_pos][(int)player->x_pos] == 'E')
+	{
+		player->angle = 0;
+		return ;
+	}
+	if (map[(int)player->y_pos][(int)player->x_pos] == 'W')
+	{
+		player->angle = PI;
+		return ;
+	}
+}
 
 int	is_valid_char(char c)
 {
@@ -40,8 +67,9 @@ static void	update_player_pos(t_gamedata *data, int pcount, int x, int y)
 {
 	if (pcount || y >= (ft_arrlen(data->map) - 1))
 		error_free(BAD_MAP, data, NULL);
-	data->playerdata->x_pos = x + 0.5;
-	data->playerdata->y_pos = y + 0.5;
+	data->playerdata->x_pos = x + STARTING_MARG;
+	data->playerdata->y_pos = y + STARTING_MARG;
+	initialize_player_angle(data, data->map);
 	data->playerdata->angle = is_player_dir(data->map[y][x]);
 }
 

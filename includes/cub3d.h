@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/27 01:02:11 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:33:17 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,13 @@
 # define PI 3.141592653589793
 # define PIXEL_SIZE 10
 # define COLLISION_MARGIN 0.2f 
-# define FOV 0.66  // Campo de visión en radianes
+# define FOV 0.66 
 # define NUM_RAYS WINDOW_WIDTH
 # define CUBE_HEIGHT 64
-# define PLAYER_HEIGHT 32
-# define MOVE_SPEED 0.1f // Velocidad de movimiento
-# define TURN_SPEED 0.1f// Velocidad de giro
-# define MAP_WIDTH  100 
-# define MAP_HEIGHT 100
-# define MAX_DISTANCE 1e6
+# define MOVE_SPEED 0.1f
+# define TURN_SPEED 0.1f
+# define TURN_SPEED_MOUSE 0.02f
+# define STARTING_MARG 0.5f
 # define WALL_HEIGHT 1.0f
 /****************************
  * *********TYPEDEFS*********
@@ -69,6 +67,10 @@ enum e_errors
 	EMPTY_FILE,
 	BAD_MAP,
 	BAD_LOADING,
+	BAD_MLX_INIT,
+	BAD_NEW_IMG,
+	BAD_ADDING_IMG,
+	BAD_KEY_LOOP,
 };
 
 enum	e_player_orientation
@@ -175,7 +177,6 @@ typedef struct s_gamedata
 	t_intersection intersection;
 	t_line_params line;
 	t_render_params render;
-	//t_image			*texture;
 	char		**map;
 	t_paths		*paths;
 	uint8_t		floor[3];
@@ -189,12 +190,11 @@ typedef struct s_gamedata
 	size_t		width;
 }	t_gamedata;
 
-void	cast_ray_2(t_gamedata *data, float ray_angle);
+
 // debug and print functions
 void		print_2d(char **arr);
 void		print_paths(t_paths *paths);
 void		print_colorschemes(t_gamedata *data);
-//void		print_playerdata(t_gamedata *data);
 void		print_gamedata(t_gamedata *data);
 // errors_and_freeing
 void		error_exit(int status);
@@ -222,10 +222,9 @@ void		verify_map(t_gamedata *data);
 // gamestate
 void		init_gamestate(t_gamedata *data);
 void 		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
-void 		cast_ray(t_gamedata *data, float ray_angle);
 void 		cast_rays(t_gamedata *data);
 void 		render_walls(t_gamedata *data, mlx_texture_t	*texture);
-void		display_map(t_gamedata *data);
+void		display_mini_map(t_gamedata *data);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);
@@ -237,7 +236,6 @@ void	draw_walls(int x, mlx_texture_t *texture, t_gamedata *data,
 void	load_texture(t_gamedata *data);
 void	delete_textures(t_gamedata *data);
 // dda
-void cast_ray_dda(t_gamedata *data, float ray_angle);
 void	dda_new(t_gamedata *data, float rayangle);
 //movement.c
 void	mouse_move_hook(double xpos, double ypos, void *param);

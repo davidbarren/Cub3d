@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 16:19:59 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/29 14:47:59 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define FOV 0.66 
 # define NUM_RAYS WINDOW_WIDTH
 # define CUBE_HEIGHT 64
-# define MOVE_SPEED 0.1f
-# define TURN_SPEED 0.1f
+# define MOVE_SPEED 0.08f
+# define TURN_SPEED 0.08f
 # define TURN_SPEED_MOUSE 0.02f
 # define STARTING_MARG 0.5f
 # define WALL_HEIGHT 1.0f

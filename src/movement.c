@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 00:58:41 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 15:01:46 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/29 15:15:57 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ void	turn_player(t_gamedata *data, int direction, float speed)
 	t_player	*player;
 
 	player = data->playerdata;
-	if (speed == TURN_SPEED)
-		player->angle += direction * TURN_SPEED;
-	else
-		player->angle += direction * TURN_SPEED_MOUSE;
+	player->angle += direction * TURN_SPEED;
 	if (player->angle < 0)
 		player->angle += 2 * PI;
 	else if (player->angle >= 2 * PI)

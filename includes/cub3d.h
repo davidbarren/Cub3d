@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 14:47:59 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/29 15:15:13 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # define CUBE_HEIGHT 64
 # define MOVE_SPEED 0.08f
 # define TURN_SPEED 0.08f
-# define TURN_SPEED_MOUSE 0.02f
 # define STARTING_MARG 0.5f
 # define WALL_HEIGHT 1.0f
 /****************************
@@ -222,10 +221,7 @@ int			verify_paths_data(t_paths *paths);
 void		verify_map(t_gamedata *data);
 // gamestate
 void		init_gamestate(t_gamedata *data);
-void 		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
-void 		cast_rays(t_gamedata *data);
 void 		render_walls(t_gamedata *data, mlx_texture_t	*texture);
-void		display_mini_map(t_gamedata *data);
 // player_data
 void	find_player_pos(t_gamedata *data, char **map);
 int		is_player_dir(char c);
@@ -239,6 +235,5 @@ void	delete_textures(t_gamedata *data);
 // dda
 void	dda_new(t_gamedata *data, float rayangle);
 //movement.c
-void	mouse_move_hook(double xpos, double ypos, void *param);
 void	cub3d_keyhook(void* param);
 #endif

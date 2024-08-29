@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 00:58:41 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 14:34:06 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/29 15:01:46 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,24 +77,6 @@ void	turn_player(t_gamedata *data, int direction, float speed)
 		player->angle -= 2 * PI;
 }
 
-void	mouse_move_hook(double xpos, double ypos, void *param)
-{
-	t_gamedata		*data;
-	static double	last_x = 0.0;
-	double			delta_x;
-
-	(void) ypos;
-	data = (t_gamedata *)param;
-	delta_x = xpos - last_x;
-	if (delta_x < 0)
-		turn_player(data, -1, TURN_SPEED_MOUSE);
-	else if (delta_x > 0)
-		turn_player(data, 1, TURN_SPEED_MOUSE);
-	last_x = WINDOW_WIDTH / 2.0;
-	mlx_set_cursor_mode(data->window, MLX_MOUSE_HIDDEN);
-	mlx_set_mouse_pos(data->window, WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0);
-}
-
 void	cub3d_keyhook(void *param)
 {
 	t_gamedata	*data;
@@ -114,7 +96,6 @@ void	cub3d_keyhook(void *param)
 	if (mlx_is_key_down(data->window, MLX_KEY_RIGHT))
 		turn_player(data, 1, TURN_SPEED);
 	render_walls(data, NULL);
-	display_mini_map(data);
 	if (mlx_is_key_down(data->window, MLX_KEY_ESCAPE))
 		mlx_close_window(data->window);
 }

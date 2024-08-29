@@ -41,7 +41,6 @@ CSRCS = $(SRCDIR)/scene_loading.c\
 		$(SRCDIR)/casting.c\
 		$(SRCDIR)/textures.c\
 		$(SRCDIR)/dda.c\
-		$(SRCDIR)/lines.c\
 		$(SRCDIR)/render.c\
 		$(SRCDIR)/movement.c\
 

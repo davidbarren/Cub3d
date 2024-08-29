@@ -6,7 +6,7 @@
 #    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/08/29 16:28:26 by dzurita          ###   ########.fr        #
+#    Updated: 2024/08/29 17:01:04 by dzurita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,21 @@ LIBMLX	:= ./MLX42
 LIBFT = $(LIBFTPATH)/libft.a
 
 SRCS = $(SRCDIR)/main.c\
+
+CSRCS = $(SRCDIR)/scene_loading.c\
+		$(SRCDIR)/debug.c\
+		$(SRCDIR)/errors.c\
+		$(SRCDIR)/scene_parsing.c\
+		$(SRCDIR)/freeing.c\
+		$(SRCDIR)/parsing_utils.c\
+		$(SRCDIR)/scene_validation.c\
+		$(SRCDIR)/gamestate.c\
+		$(SRCDIR)/player_data.c\
+		$(SRCDIR)/casting.c\
+		$(SRCDIR)/textures.c\
+		$(SRCDIR)/dda.c\
+		$(SRCDIR)/render.c\
+		$(SRCDIR)/movement.c\
 
 CBNS_SRCS = $(BNSDIR)/scene_loading_bonus.c\
 			$(BNSDIR)/debug_bonus.c\

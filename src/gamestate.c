@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 16:37:27 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/29 14:41:45 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	draw_mini_map_wall(t_gamedata *data, int x, int y)
 	uint32_t	color;
 
 	i = 0;
-	color = get_color(255, 0, 0, 255);
+	color = get_color(0, 0, 0, 255);
 	while (i < PIXEL_SIZE)
 	{
 		i2 = 0;

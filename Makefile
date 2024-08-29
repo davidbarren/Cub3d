@@ -16,7 +16,7 @@ NAME = cub3D
 
 
 CC	= cc
-CFLAGS = -Wall -Wextra -g -Werror -O3
+CFLAGS = -Wall -Wextra -g -Werror -O3 -fsanitize=address
 
 
 SRCDIR = src
@@ -36,6 +36,7 @@ CSRCS = $(SRCDIR)/scene_loading.c\
 		$(SRCDIR)/freeing.c\
 		$(SRCDIR)/parsing_utils.c\
 		$(SRCDIR)/scene_validation.c\
+		$(SRCDIR)/scene_utils.c\
 		$(SRCDIR)/gamestate.c\
 		$(SRCDIR)/player_data.c\
 		$(SRCDIR)/casting.c\

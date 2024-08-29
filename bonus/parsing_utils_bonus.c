@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parsing_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:24:44 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 13:04:49 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:17:07 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 int	ft_is_whitespace(char c)
 {

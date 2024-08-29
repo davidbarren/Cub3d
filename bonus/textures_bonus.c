@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures.c                                         :+:      :+:    :+:   */
+/*   textures_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 19:45:48 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/20 02:44:03 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:43:47 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	load_texture(t_gamedata *data)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   casting.c                                          :+:      :+:    :+:   */
+/*   casting_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 13:39:12 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/29 16:14:29 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 uint32_t	get_texture_color(t_image *texture, int x, int y)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing.c                                          :+:      :+:    :+:   */
+/*   freeing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:28:36 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/19 21:25:04 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:15:21 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	free_path_content(t_paths *paths)
 {

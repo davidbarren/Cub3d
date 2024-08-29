@@ -6,11 +6,11 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:41:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/27 00:48:01 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:13:48 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	print_2d(char **arr)
 {

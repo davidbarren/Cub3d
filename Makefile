@@ -6,12 +6,12 @@
 #    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-
-#    Updated: 2024/08/26 16:02:18 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/08/29 16:28:26 by dzurita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
+BNS_NAME = cub3D_bonus
 
 
 
@@ -19,8 +19,10 @@ CC	= cc
 CFLAGS = -Wall -Wextra -g -Werror -O3
 
 
-SRCDIR = src
+SRCDIR = mandatory
 OBJDIR = obj
+OBJBNSDIR = obj_bonus
+BNSDIR = bonus
 LIBFTPATH = ./libft
 LIBMLX	:= ./MLX42
 
@@ -29,21 +31,23 @@ LIBFT = $(LIBFTPATH)/libft.a
 
 SRCS = $(SRCDIR)/main.c\
 
-CSRCS = $(SRCDIR)/scene_loading.c\
-		$(SRCDIR)/debug.c\
-		$(SRCDIR)/errors.c\
-		$(SRCDIR)/scene_parsing.c\
-		$(SRCDIR)/freeing.c\
-		$(SRCDIR)/parsing_utils.c\
-		$(SRCDIR)/scene_validation.c\
-		$(SRCDIR)/gamestate.c\
-		$(SRCDIR)/player_data.c\
-		$(SRCDIR)/casting.c\
-		$(SRCDIR)/textures.c\
-		$(SRCDIR)/dda.c\
-		$(SRCDIR)/lines.c\
-		$(SRCDIR)/render.c\
-		$(SRCDIR)/movement.c\
+CBNS_SRCS = $(BNSDIR)/scene_loading_bonus.c\
+			$(BNSDIR)/debug_bonus.c\
+			$(BNSDIR)/errors_bonus.c\
+			$(BNSDIR)/scene_parsing_bonus.c\
+			$(BNSDIR)/freeing_bonus.c\
+			$(BNSDIR)/parsing_utils_bonus.c\
+			$(BNSDIR)/scene_validation_bonus.c\
+			$(BNSDIR)/gamestate_bonus.c\
+			$(BNSDIR)/player_data_bonus.c\
+			$(BNSDIR)/casting_bonus.c\
+			$(BNSDIR)/textures_bonus.c\
+			$(BNSDIR)/dda_bonus.c\
+			$(BNSDIR)/lines_bonus.c\
+			$(BNSDIR)/curso_mouse_bonus.c\
+			$(BNSDIR)/mini_map_bonus.c\
+			$(BNSDIR)/render_bonus.c\
+			$(BNSDIR)/movement_bonus.c\
 
 OBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 BOBJS= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(BSRCS))

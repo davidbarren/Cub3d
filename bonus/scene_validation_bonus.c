@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene_validation.c                                 :+:      :+:    :+:   */
+/*   scene_validation_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 16:59:50 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/29 16:18:00 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 int	verify_path_access(char *path)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_data.c                                      :+:      :+:    :+:   */
+/*   player_data_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:31:19 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 13:39:18 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/29 16:17:17 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 static void	initialize_player_angle(t_gamedata *data, char **map)
 {

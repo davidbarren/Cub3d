@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene_loading.c                                    :+:      :+:    :+:   */
+/*   scene_loading_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 13:02:43 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:17:39 by dzurita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../includes/cub3d_bonus.h"
 
 void	file_validation(t_file *filedata, int argc, char **av)
 {

@@ -6,17 +6,15 @@
 #    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-
-#    Updated: 2024/08/26 16:02:18 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/08/30 14:08:14 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 
-
 CC	= cc
-CFLAGS = -Wall -Wextra -g -Werror -O3 -fsanitize=address
+CFLAGS = -Wall -Wextra -g -Werror -O3 #-fsanitize=address
 
 
 SRCDIR = src
@@ -54,7 +52,12 @@ LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L "$(HOME)/.brew/op
 
 all: libmlx $(NAME)
 
-libmlx:
+mlx_clone: 
+	@if [ ! -d "$(LIBMLX)" ]; then \
+		git clone https://github.com/codam-coding-college/MLX42.git $(LIBMLX); \
+	fi
+
+libmlx: mlx_clone
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 	
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

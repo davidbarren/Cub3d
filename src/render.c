@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 00:07:40 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 10:37:43 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/30 12:48:30 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	render_flor(t_gamedata *data, int wall_bottom, int i)
 	color = get_color(data->floor[0], data->floor[1], data->floor[2], 255);
 	while (wall_bottom < WINDOW_HEIGHT)
 	{
-		mlx_put_pixel(data->img, i, wall_bottom, color);
+		ft_put_pixel(data->img, i, wall_bottom, color);
 		wall_bottom++;
 	}
 }
@@ -32,7 +32,7 @@ void	render_ceiling(t_gamedata *data, int wall_top, int i)
 			data->ceiling[2], 255);
 	while (wall_top > 0)
 	{
-		mlx_put_pixel(data->img, i, wall_top, color);
+		ft_put_pixel(data->img, i, wall_top, color);
 		wall_top--;
 	}
 }

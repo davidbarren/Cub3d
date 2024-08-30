@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 13:39:12 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/30 12:48:42 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	draw_walls(int x, mlx_texture_t *texture, t_gamedata *data,
 			test = texture->pixels + (tex_y * texture->width + render->tex_x)
 				* texture->bytes_per_pixel;
 			color = get_color(*test, *(test + 1), *(test + 2), *(test + 3));
-			mlx_put_pixel(data->img, x, y, color);
+			ft_put_pixel(data->img, x, y, color);
 		}
 		y++;
 	}

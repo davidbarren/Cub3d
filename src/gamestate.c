@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:36:06 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 14:41:45 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/30 12:48:11 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	draw_mini_map_wall(t_gamedata *data, int x, int y)
 		i2 = 0;
 		while (i2 < data->pixel_size)
 		{
-			mlx_put_pixel(data->img, x * data->pixel_size + i,
+			ft_put_pixel(data->img, x * data->pixel_size + i,
 				y * data->pixel_size + i2, color);
 			i2++;
 		}
@@ -46,7 +46,7 @@ static void	draw_mini_map_flor(t_gamedata *data, int x, int y)
 		i2 = 0;
 		while (i2 < data->pixel_size)
 		{
-			mlx_put_pixel(data->img, x * data->pixel_size + i,
+			ft_put_pixel(data->img, x * data->pixel_size + i,
 				y * data->pixel_size + i2, color);
 			i2++;
 		}

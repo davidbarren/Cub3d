@@ -6,7 +6,7 @@
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:58:04 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 17:01:35 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/30 13:40:30 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	verify_path_access(char *path)
 {
-	if (access(path, O_RDONLY))
+	int	fd;
+
+	fd = open (path, O_RDONLY);
+	if (fd == -1)
 		return (1);
 	return (0);
 }

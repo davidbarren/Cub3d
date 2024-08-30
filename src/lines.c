@@ -6,11 +6,18 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 00:05:49 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 13:39:14 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/30 14:05:36 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void	ft_put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
+{
+	if (y >= WINDOW_HEIGHT || x >= WINDOW_WIDTH)
+		return ;
+	mlx_put_pixel(img, x, y, color);
+}
 
 int	ft_abs(int n)
 {
@@ -30,7 +37,7 @@ void	draw_line(t_gamedata *data, int x1, int y1)
 	color = get_color(255, 0, 0, 255);
 	while (1)
 	{
-		mlx_put_pixel(data->img, data->line.x_ray, data->line.y_ray, color);
+		ft_put_pixel(data->img, data->line.x_ray, data->line.y_ray, color);
 		if (data->line.x_ray == x1 && data->line.y_ray == y1)
 			break ;
 		e2 = err * 2;

@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/29 14:47:59 by dzurita          ###   ########.fr       */
+/*   Updated: 2024/08/30 13:38:33 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
 # include "../MLX42/include/MLX42/MLX42.h"
-# include "parsing.h"
+//# include "parsing.h"
 # include <stdio.h>
 # include <math.h>
 # include <string.h>
@@ -42,14 +42,14 @@
 
 typedef struct s_image
 {
-    void    *img;
-    char    *data_addr;
-    int     bpp;
-    int     line_length;
-    int     endian;
-    int     width;
-    int     height;
-}               t_image;
+	void	*img;
+	char	*data_addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_image;
 
 enum e_errors
 {
@@ -83,34 +83,34 @@ enum	e_player_orientation
 
 typedef struct s_intersection
 {
-    float distance;
-    float x;
-    float y;
-    int side;
-    float ray_dir_x;
-    float ray_dir_y;
-	float true_ang;
-	int direction;
-} t_intersection;
+	float	distance;
+	float	x;
+	float	y;
+	int		side;
+	float	ray_dir_x;
+	float	ray_dir_y;
+	float	true_ang;
+	int		direction;
+}	t_intersection;
 
 typedef struct s_raydata
 {
-	float	ray_dir_x; 
-	int		step_x; //cambia dependiendo de orientacion
-	float	dx;// incremento usado en DDA
+	float	ray_dir_x;
+	int		step_x;
+	float	dx;
 	float	ray_dir_y;
 	float	dy;
 	int		step_y;
-	int		direction; // en que lado de la pared hay colision
-	int		side; // 0 si es horizontal 1 si es vertical
-	bool	collided; // para detectar colisiones
-	float	camera_dist; // distancia al plano perpendicular al jugador (camara)
-	float	x_dist; // distancia a la siguiente coordenada usada en DDA
+	int		direction;
+	int		side;
+	bool	collided;
+	float	camera_dist;
+	float	x_dist;
 	float	y_dist;
-	int		map_x; // valor int a nuestro punto en el mapa
+	int		map_x;
 	int		map_y;
 
-} t_raydata;
+}	t_raydata;
 
 typedef struct s_paths
 {
@@ -152,45 +152,44 @@ typedef struct s_spritedata
 
 typedef struct s_line_params
 {
-    int dx;
-    int dy;
-    int ray_xdir;
-    int ray_ydir;
-	int x_ray;
-	int y_ray;
-}   t_line_params;
+	int	dx;
+	int	dy;
+	int	ray_xdir;
+	int	ray_ydir;
+	int	x_ray;
+	int	y_ray;
+}	t_line_params;
 
 typedef struct s_render_params
 {
-	int				wall_height;
-	int				wall_top;
-	int				wall_bottom;
-	int 			y_offset;
-	int				tex_x;
-	int				tex_y;
-	float			wall_x;
-}   t_render_params;
+	int		wall_height;
+	int		wall_top;
+	int		wall_bottom;
+	int		y_offset;
+	int		tex_x;
+	int		tex_y;
+	float	wall_x;
+}	t_render_params;
 
 typedef struct s_gamedata
 {
-	t_player	*playerdata;
-	t_intersection intersection;
-	t_line_params line;
-	t_render_params render;
-	char		**map;
-	t_paths		*paths;
-	uint8_t		floor[3];
-	uint8_t		ceiling[3];
-	mlx_image_t* player;
-	mlx_image_t* img;
-	mlx_texture_t *txtrs[4]; // array de texturas
-	mlx_t		*window;
-	int	flag;
-	int pixel_size;
-	size_t		height;
-	size_t		width;
+	t_player		*playerdata;
+	t_intersection	intersection;
+	t_line_params	line;
+	t_render_params	render;
+	char			**map;
+	t_paths			*paths;
+	uint8_t			floor[3];
+	uint8_t			ceiling[3];
+	mlx_image_t		player;
+	mlx_image_t		*img;
+	mlx_texture_t	*txtrs[4];
+	mlx_t			*window;
+	int				flag;
+	int				pixel_size;
+	size_t			height;
+	size_t			width;
 }	t_gamedata;
-
 
 // debug and print functions
 void		print_2d(char **arr);
@@ -222,23 +221,25 @@ int			verify_paths_data(t_paths *paths);
 void		verify_map(t_gamedata *data);
 // gamestate
 void		init_gamestate(t_gamedata *data);
-void 		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
-void 		cast_rays(t_gamedata *data);
-void 		render_walls(t_gamedata *data, mlx_texture_t	*texture);
+void		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
+void		cast_rays(t_gamedata *data);
+void		render_walls(t_gamedata *data, mlx_texture_t	*texture);
 void		display_mini_map(t_gamedata *data);
 // player_data
-void	find_player_pos(t_gamedata *data, char **map);
-int		is_player_dir(char c);
+void		find_player_pos(t_gamedata *data, char **map);
+int			is_player_dir(char c);
 //casting
-float	get_wall_x(t_gamedata *data);
-void	draw_walls(int x, mlx_texture_t *texture, t_gamedata *data,
-		t_render_params *render);
+float		get_wall_x(t_gamedata *data);
+void		draw_walls(int x, mlx_texture_t *texture, t_gamedata *data,
+				t_render_params *render);
 // textures
-void	load_texture(t_gamedata *data);
-void	delete_textures(t_gamedata *data);
+void		load_texture(t_gamedata *data);
+void		delete_textures(t_gamedata *data);
 // dda
-void	dda_new(t_gamedata *data, float rayangle);
+void		dda_new(t_gamedata *data, float rayangle);
 //movement.c
-void	mouse_move_hook(double xpos, double ypos, void *param);
-void	cub3d_keyhook(void* param);
+void		mouse_move_hook(double xpos, double ypos, void *param);
+void		cub3d_keyhook(void *param);
+//lines.c
+void		ft_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
 #endif

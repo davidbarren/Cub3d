@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/30 14:53:59 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:58:18 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
 # include "../MLX42/include/MLX42/MLX42.h"
@@ -126,6 +126,18 @@ typedef struct s_player
 	float		angle;
 }	t_player;
 
+typedef struct s_spritedata
+{
+	mlx_texture_t	*north_wall_txt;
+	mlx_texture_t	*south_wall_txt;
+	mlx_texture_t	*east_wall_txt;
+	mlx_texture_t	*west_wall_txt;
+	mlx_image_t		*north_wall_img;
+	mlx_image_t		*south_wall_img;
+	mlx_image_t		*east_wall_img;
+	mlx_image_t		*west_wall_img;
+}	t_spritedata;
+
 typedef struct s_line_params
 {
 	int	dx;
@@ -197,7 +209,10 @@ int			verify_paths_data(t_paths *paths);
 void		verify_map(t_gamedata *data);
 // gamestate
 void		init_gamestate(t_gamedata *data);
+void		init_draw_line_param(t_gamedata *data, int inter_x1, int inter_y1);
+void		cast_rays(t_gamedata *data);
 void		render_walls(t_gamedata *data, mlx_texture_t	*texture);
+void		display_mini_map(t_gamedata *data);
 // player_data
 void		find_player_pos(t_gamedata *data, char **map);
 int			is_player_dir(char c);
@@ -211,6 +226,7 @@ void		delete_textures(t_gamedata *data);
 // dda
 void		dda_new(t_gamedata *data, float rayangle);
 //movement.c
+void		mouse_move_hook(double xpos, double ypos, void *param);
 void		cub3d_keyhook(void *param);
 //lines.c
 void		ft_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   casting.c                                          :+:      :+:    :+:   */
+/*   casting_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:14 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/30 14:54:39 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:55:14 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	draw_walls(int x, mlx_texture_t *texture, t_gamedata *data,
 		t_render_params *render)
@@ -52,4 +52,23 @@ float	get_wall_x(t_gamedata *data)
 	if (wall_x < 0.0f)
 		wall_x = 0.0f;
 	return (wall_x);
+}
+
+void	cast_rays(t_gamedata *data)
+{
+	float	ray_angle;
+	float	angle_step;
+	int		i;
+
+	ray_angle = data->playerdata->angle - (FOV / 2);
+	angle_step = FOV / NUM_RAYS;
+	i = 0;
+	while (i < NUM_RAYS)
+	{
+		dda_new(data, ray_angle);
+		init_draw_line_param(data, data->intersection.x * data->pixel_size,
+			data->intersection.y * data->pixel_size);
+		ray_angle += angle_step;
+		i++;
+	}
 }

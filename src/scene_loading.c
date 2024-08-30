@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/28 13:02:43 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:11:35 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,5 @@ int	load_map(t_file *scenedata, t_gamedata *data)
 		return (1);
 	free_2d(scenedata->scene_data);
 	verify_map(data);
-	print_gamedata(data);
 	return (0);
 }

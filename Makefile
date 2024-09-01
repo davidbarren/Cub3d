@@ -6,7 +6,7 @@
 #    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/08/30 18:55:26 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/09/01 16:23:05 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3D
 
 
 CC	= cc
-CFLAGS = -Wall -Wextra -g -Werror -O3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -g -Werror -O3 -fsanitize=address
 
 
 SRCDIR = src

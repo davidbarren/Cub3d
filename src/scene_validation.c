@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:19:16 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/30 15:03:08 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/09/01 16:19:26 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_bounds(char **map, int x, int y)
 
 int	check_dir(char **map, int x, int y)
 {
-	if (check_bounds(map, x, y) && (ft_is_whitespace(map[y][x] || !map[y][x])))
+	if (check_bounds(map, x, y) && (ft_is_whitespace(map[y][x]) || !map[y][x]))
 		return (0);
 	else if (!check_bounds(map, x, y))
 		return (0);
@@ -32,6 +32,8 @@ int	check_directions(char **map, int x, int y)
 {
 	if ((map[y][x] == '0' || is_player_dir(map[y][x])) && map[y + 1])
 	{
+		if (!x || !y)
+			return (1);
 		if (!check_dir(map, x + 1, y))
 			return (1);
 		if (!check_dir(map, x - 1, y))

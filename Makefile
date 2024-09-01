@@ -6,7 +6,7 @@
 #    By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/01 09:07:51 by dbarrene          #+#    #+#              #
-#    Updated: 2024/08/30 16:31:17 by dbarrene         ###   ########.fr        #
+#    Updated: 2024/09/01 16:23:05 by dbarrene         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3D
 
 
 CC	= cc
-CFLAGS = -Wall -Wextra -g -Werror -O3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -g -Werror -O3 -fsanitize=address
 
 
 SRCDIR = src
@@ -113,6 +113,6 @@ fclean: clean
 	make fclean -C $(LIBFTPATH)
 	@rm -rf $(LIBMLX)/build
 
-re: fclean libmlx $(NAME)
+re: fclean $(NAME)
 
 .PHONY: all, clean, fclean, libmlx, re, bonus, mlx_clone

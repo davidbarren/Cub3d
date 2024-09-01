@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:00:28 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/30 14:53:59 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/09/01 16:19:51 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define WINDOW_WIDTH 2080
 # define PI 3.141592653589793
 # define PIXEL_SIZE 10
-# define COLLISION_MARGIN 0.2f 
+# define COLLISION_MARGIN 0.1f 
 # define FOV 0.66 
 # define NUM_RAYS WINDOW_WIDTH
 # define CUBE_HEIGHT 64

@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:00:25 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/30 15:01:38 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:08:22 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,13 @@ t_gamedata	*scene_parsing(t_file *scenedata)
 
 	data = ft_calloc (1, sizeof(t_gamedata));
 	paths = ft_calloc (1, sizeof(t_paths));
+	if (!paths || !data)
+	{
+		free(paths);
+		free(data);
+		free_2d (scenedata->scene_data);
+		error_exit(SPLIT_FAILURE);
+	}
 	load_paths(scenedata, paths);
 	data->paths = paths;
 	if (verify_paths_data(paths))

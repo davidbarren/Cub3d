@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene_utils.c                                      :+:      :+:    :+:   */
+/*   scene_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbarrene <dbarrene@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:58:04 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/30 13:40:30 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:14:24 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ void	verify_map(t_gamedata *data)
 	if (map_validation(data->map))
 		error_free(BAD_MAP, data, NULL);
 	data->playerdata = ft_calloc(1, sizeof(t_player));
+	if (!data->playerdata)
+	{
+		ft_printerror("Error allocating memory for playerdata, exiting\n");
+		error_free(42, data, NULL);
+	}
 	find_player_pos(data, data->map);
 	set_pixel_size(data);
 }

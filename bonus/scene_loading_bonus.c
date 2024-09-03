@@ -6,7 +6,7 @@
 /*   By: dzurita <dzurita@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 09:12:34 by dbarrene          #+#    #+#             */
-/*   Updated: 2024/08/30 14:45:25 by dbarrene         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:17:32 by dbarrene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	copy_map(t_file *scenedata, t_gamedata *data)
 	fullscene += scenedata->map_index;
 	arrlen = ft_arrlen(fullscene);
 	data->map = ft_calloc(arrlen + 1, sizeof (char *));
+	if (!data->map)
+		error_free(BAD_MAP, data, scenedata);
 	while (fullscene[i])
 	{
 		data->map[i] = ft_strdup(fullscene[i]);
